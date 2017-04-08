@@ -59,4 +59,36 @@ public class EnumUtil {
 			return name;
 		}
 	}
+	
+	public enum JasperReportType {
+		PDF(0, "Pdf"), 
+		EXCEL(1, "Excel"),
+		WORD(3, "Word"),
+		HTML(4, "Html");
+		private final Integer id;
+		private final String name;
+
+		private JasperReportType(Integer id, String name) {
+			this.id = id;
+			this.name = name;
+		}
+
+		public static JasperReportType parse(Integer id) {
+			for (JasperReportType jasperReportType : JasperReportType.values()) {
+				if (jasperReportType.getId().equals(id)) {
+					return jasperReportType;
+				}
+			}
+			return null;
+		}
+
+		public Integer getId() {
+			return id;
+		}
+
+		public String getName() {
+			return name;
+		}
+	}
+
 }
