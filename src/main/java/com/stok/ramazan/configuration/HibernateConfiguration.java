@@ -33,7 +33,7 @@ public class HibernateConfiguration {
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
-		sessionFactory.setPackagesToScan(new String[] { "com.stok.ramazan.entities" });
+		sessionFactory.setPackagesToScan(new String[] { "com.stok.ramazan.entity" });
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
 	}

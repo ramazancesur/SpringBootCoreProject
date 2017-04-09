@@ -27,7 +27,8 @@ public abstract class BaseEntity implements Serializable {
 
 	// Entity kısmı
 	@Version
-	private long lastUpdated;
+	@Column(name="LAST_UPDATED_VERSION")
+	private Long lastUpdated;
 
 	@Column(name = "CREAYED_DATE")
 	private Date createdDate;
