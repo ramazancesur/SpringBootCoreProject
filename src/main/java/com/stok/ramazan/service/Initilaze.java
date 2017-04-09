@@ -78,8 +78,8 @@ public class Initilaze implements ApplicationRunner {
 			user.setAdi("ramazan");
 			user.setSoyadi("cesur");
 			user.setUserType(UserType.ADMIN);
-			user.setUserName("ramazancesur3@gmail.com");
-			user.setPassword("12345");
+			user.setUserName("admin");
+			user.setPassword("$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi");
 			user.setRole(role);
 			userService.add(user);
 

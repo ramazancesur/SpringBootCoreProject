@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.stok.ramazan.securty.JwtAuthenticationEntryPoint;
 import com.stok.ramazan.securty.JwtAuthenticationTokenFilter;
 
+@SuppressWarnings("SpringJavaAutowiringInspection")
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)

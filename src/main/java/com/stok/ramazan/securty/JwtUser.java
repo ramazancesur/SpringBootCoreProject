@@ -13,11 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public class JwtUser implements UserDetails {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 3097094928060982528L;
-	private final Long id;
+    private final Long id;
     private final String username;
     private final String firstname;
     private final String lastname;
@@ -33,8 +29,7 @@ public class JwtUser implements UserDetails {
           String firstname,
           String lastname,
           String email,
-          String password,
-          Collection<? extends GrantedAuthority> authorities,
+          String password, Collection<? extends GrantedAuthority> authorities,
           boolean enabled,
           Date lastPasswordResetDate
     ) {

@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.stok.ramazan.dao.interfaces.IUserDao;
+import com.stok.ramazan.dao.UserDao;
 import com.stok.ramazan.entity.User;
 import com.stok.ramazan.securty.JwtUserFactory;
 
@@ -17,11 +17,11 @@ import com.stok.ramazan.securty.JwtUserFactory;
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private IUserDao userDao;
+    private UserDao userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findByUsername(username);
+        User user = userRepository.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));

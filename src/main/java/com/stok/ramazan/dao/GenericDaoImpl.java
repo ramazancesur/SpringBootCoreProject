@@ -13,6 +13,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.entity.BaseEntity;
@@ -24,6 +25,7 @@ import com.stok.ramazan.helper.EnumUtil.EntityState;
  */
 @SuppressWarnings("unchecked")
 @Repository
+@Transactional
 public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializable> implements GenericDao<E, K> {
     @Autowired
     private SessionFactory sessionFactory;
