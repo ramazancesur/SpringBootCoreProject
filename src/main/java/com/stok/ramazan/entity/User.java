@@ -18,21 +18,21 @@ public class User extends BaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Column(name="USER_NAME",unique=true)
+	@Column(name = "USER_NAME", unique = true)
 	private String userName;
-	@Column(name="PASSWORD")
+	@Column(name = "PASSWORD")
 	private String password;
-	@Column(name="SOYADI")
+	@Column(name = "SOYADI")
 	private String soyadi;
-	@Column(name="ADI")
+	@Column(name = "ADI")
 	private String adi;
-	@Column(name="USER_TYPE")
+	@Column(name = "USER_TYPE")
 	private UserType userType;
 	@ManyToOne
-	@JoinColumn(name="ROLE")
-	private Role role; 	
+	@JoinColumn(name = "ROLE")
+	private Role role;
 	@OneToMany
-	@JoinColumn(name="USER_CONTACT")
+	@JoinColumn(name = "USER_CONTACT")
 	private List<Conduct> lstConduct;
 
 	public String getUserName() {
@@ -82,7 +82,6 @@ public class User extends BaseEntity {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-
 
 	public List<Conduct> getLstConduct() {
 		return lstConduct;

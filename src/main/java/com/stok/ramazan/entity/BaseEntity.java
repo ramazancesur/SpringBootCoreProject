@@ -12,7 +12,6 @@ import javax.persistence.Version;
 
 import com.stok.ramazan.helper.EnumUtil;
 
-
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 	/**
@@ -27,12 +26,12 @@ public abstract class BaseEntity implements Serializable {
 
 	// Entity kısmı
 	@Version
-	@Column(name="LAST_UPDATED_VERSION")
+	@Column(name = "LAST_UPDATED_VERSION")
 	private Long lastUpdated;
 
 	@Column(name = "CREAYED_DATE")
 	private Date createdDate;
- 
+
 	@Column(name = "UPDATED_DATE")
 	private Date updatedDate;
 

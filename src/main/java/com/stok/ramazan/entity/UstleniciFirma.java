@@ -17,7 +17,7 @@ public class UstleniciFirma extends BaseEntity {
 	private String adi;
 	@OneToOne
 	private Address adress;
-	
+
 	public String getAdi() {
 		return adi;
 	}

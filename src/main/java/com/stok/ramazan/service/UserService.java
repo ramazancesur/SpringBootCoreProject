@@ -11,19 +11,18 @@ import com.stok.ramazan.entity.User;
 import com.stok.ramazan.service.interfaces.IUserService;
 
 @Service
-public class UserService  extends GenericServiceImpl<User, Long> implements IUserService {
+public class UserService extends GenericServiceImpl<User, Long> implements IUserService {
 
 	@SuppressWarnings("unused")
 	private IUserDao userDao;
-  
+
 	public UserService() {
 		// TODO Auto-generated constructor stub
 	}
-	
-    @Autowired
-    public UserService(
-            @Qualifier("userDao") GenericDao<User, Long> genericDao) {
-        super(genericDao);
-        this.userDao = (UserDao) genericDao;
-    }
+
+	@Autowired
+	public UserService(@Qualifier("userDao") GenericDao<User, Long> genericDao) {
+		super(genericDao);
+		this.userDao = (UserDao) genericDao;
+	}
 }

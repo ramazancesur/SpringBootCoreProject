@@ -4,27 +4,26 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="FIRMA")
+@Table(name = "FIRMA")
 public class Firma extends BaseEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Column(name="FIRM_ADI")
+	@Column(name = "FIRM_ADI")
 	private String firmaAdi;
-	
+
 	@OneToOne
-	@JoinColumn(name="FIRM_USER")
+	@JoinColumn(name = "FIRM_USER")
 	private User user;
-	
+
 	@ManyToOne
-	@JoinColumn(name="USER_ADRES")
+	@JoinColumn(name = "USER_ADRES")
 	private Address adress;
 
 	public String getFirmaAdi() {
@@ -34,6 +33,7 @@ public class Firma extends BaseEntity {
 	public void setFirmaAdi(String firmaAdi) {
 		this.firmaAdi = firmaAdi;
 	}
+
 	public User getUser() {
 		return user;
 	}
@@ -49,5 +49,5 @@ public class Firma extends BaseEntity {
 	public void setAdress(Address adress) {
 		this.adress = adress;
 	}
-	
+
 }

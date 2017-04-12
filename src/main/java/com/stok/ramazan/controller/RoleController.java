@@ -20,7 +20,7 @@ import com.stok.ramazan.service.interfaces.IRoleService;
 public class RoleController {
 	@Autowired
 	private IRoleService service;
-	
+
 	@GetMapping("/roleList")
 	public ResponseEntity<List<Role>> getKonusmaciList() {
 		List<Role> lstRole = this.service.getAll();
@@ -30,13 +30,13 @@ public class RoleController {
 	@GetMapping(value = "/roleList/{id}")
 	public ResponseEntity<Role> getKonusmaciById(@PathVariable("id") Long id) {
 		Role role = this.service.get(id);
-		return new ResponseEntity<Role>(role, HttpStatus.OK);		
+		return new ResponseEntity<Role>(role, HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/role")
 	public ResponseEntity<Role> addKonusmaci(@RequestBody Role role) {
 		this.service.add(role);
-		return new ResponseEntity<Role>(role,HttpStatus.CREATED);
+		return new ResponseEntity<Role>(role, HttpStatus.CREATED);
 	}
 
 	@PutMapping(value = "/role/{id}")
@@ -46,7 +46,7 @@ public class RoleController {
 	}
 
 	@DeleteMapping(value = "/role/{id}")
-	public ResponseEntity<Boolean> deleteEtkinlik( Role role) {
+	public ResponseEntity<Boolean> deleteEtkinlik(Role role) {
 		this.service.remove(role);
 		return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
 	}

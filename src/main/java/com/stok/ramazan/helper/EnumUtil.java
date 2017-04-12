@@ -94,20 +94,22 @@ public class EnumUtil {
 	}
 
 	public enum ContactTipi {
-		EV, CEP, IS,GENEL
+		EV, CEP, IS, GENEL
 	}
-	
-	public enum FirmaTipi{
-		KAYITLI_FIRMA,USTLENICI_FIRMA
+
+	public enum FirmaTipi {
+		KAYITLI_FIRMA, USTLENICI_FIRMA
 	}
-	
-	public enum MusteriTipi{
-		MUSTERI,KEFIL
+
+	public enum MusteriTipi {
+		MUSTERI, KEFIL
 	}
-	public enum OdemeTipi{
-		GELIR,GIDER
+
+	public enum OdemeTipi {
+		GELIR, GIDER
 	}
-	public enum UnitType{
-		ADET,KG,ML
+
+	public enum UnitType {
+		ADET, KG, ML
 	}
 }

@@ -1,4 +1,4 @@
-package com.stok.ramazan.pojo;
+package com.stok.ramazan.helper;
 
 public class FtpConfiguration {
 	private String url;

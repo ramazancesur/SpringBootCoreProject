@@ -10,24 +10,24 @@ import javax.persistence.Table;
 import com.stok.ramazan.helper.EnumUtil.FirmaTipi;
 
 @Entity
-@Table(name="SUBE")
-public class Sube extends BaseEntity{
+@Table(name = "SUBE")
+public class Sube extends BaseEntity {
 	private static final long serialVersionUID = 1L;
-	@Column(name="FIRM_ADI")
+	@Column(name = "FIRM_ADI")
 	private String firmaAdi;
-	@Column(name="FIRMA_TIPI")
+	@Column(name = "FIRMA_TIPI")
 	private FirmaTipi firmaTipi;
-	
+
 	@OneToOne
-	@JoinColumn(name="SUBE_ADRES")
+	@JoinColumn(name = "SUBE_ADRES")
 	private Address adress;
 	@ManyToOne
-	@JoinColumn(name="FIRMA",nullable=true)
+	@JoinColumn(name = "FIRMA", nullable = true)
 	private Firma firma;
 	@ManyToOne
-	@JoinColumn(name="USTLENICI_FIRMA",nullable=true)
+	@JoinColumn(name = "USTLENICI_FIRMA", nullable = true)
 	private UstleniciFirma ustleniciFirma;
-	
+
 	public String getFirmaAdi() {
 		return firmaAdi;
 	}

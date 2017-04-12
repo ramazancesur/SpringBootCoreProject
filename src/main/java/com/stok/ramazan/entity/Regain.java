@@ -30,21 +30,27 @@ public class Regain extends BaseEntity {
 	@JoinColumn(name = "regainIl", nullable = true)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Il> lstIl;
+
 	public String getRegainAdi() {
 		return regainAdi;
 	}
+
 	public void setRegainAdi(String regainAdi) {
 		this.regainAdi = regainAdi;
 	}
+
 	public List<Ilce> getLstIlce() {
 		return lstIlce;
 	}
+
 	public void setLstIlce(List<Ilce> lstIlce) {
 		this.lstIlce = lstIlce;
 	}
+
 	public List<Il> getLstIl() {
 		return lstIl;
 	}
+
 	public void setLstIl(List<Il> lstIl) {
 		this.lstIl = lstIl;
 	}
