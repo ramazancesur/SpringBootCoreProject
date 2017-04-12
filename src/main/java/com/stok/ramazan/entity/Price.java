@@ -1,0 +1,36 @@
+package com.stok.ramazan.entity;
+
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "PRICE")
+public class Price extends BaseEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Column(name = "FIYATI")
+	private BigDecimal fiyati;
+	@Column(name = "ACİKLAMA")
+	private String aciklamasi;
+
+	public BigDecimal getFiyati() {
+		return fiyati;
+	}
+
+	public void setFiyati(BigDecimal fiyati) {
+		this.fiyati = fiyati;
+	}
+
+	public String getAciklamasi() {
+		return aciklamasi;
+	}
+
+	public void setAciklamasi(String aciklamasi) {
+		this.aciklamasi = aciklamasi;
+	}
+}

@@ -2,8 +2,7 @@ package com.stok.ramazan.helper;
 
 public class EnumUtil {
 	public enum EntityState {
-		PASSIVE(0, "Pasif"), 
-		ACTIVE(1, "Aktif");
+		PASSIVE(0, "Pasif"), ACTIVE(1, "Aktif");
 		private final Integer id;
 		private final String name;
 
@@ -29,11 +28,9 @@ public class EnumUtil {
 			return name;
 		}
 	}
-	
+
 	public enum UserType {
-		FIRMA(0, "Firma"), 
-		ADMIN(1, "Admin"),
-		CALISAN(2, "Calisan");
+		FIRMA(0, "Firma"), ADMIN(1, "Admin"), CALISAN(2, "Calisan");
 		private final Integer id;
 		private final String name;
 
@@ -59,12 +56,9 @@ public class EnumUtil {
 			return name;
 		}
 	}
-	
+
 	public enum JasperReportType {
-		PDF(0, "Pdf"), 
-		EXCEL(1, "Excel"),
-		WORD(3, "Word"),
-		HTML(4, "Html");
+		PDF(0, "Pdf"), EXCEL(1, "Excel"), WORD(3, "Word"), HTML(4, "Html");
 		private final Integer id;
 		private final String name;
 
@@ -91,4 +85,29 @@ public class EnumUtil {
 		}
 	}
 
+	public enum AdresKullaniciTipi {
+		EMPLOYEE, FIRMA, MUSTERI, STOK
+	}
+
+	public enum AddresTipi {
+		EV, IS, GENEL
+	}
+
+	public enum ContactTipi {
+		EV, CEP, IS,GENEL
+	}
+	
+	public enum FirmaTipi{
+		KAYITLI_FIRMA,USTLENICI_FIRMA
+	}
+	
+	public enum MusteriTipi{
+		MUSTERI,KEFIL
+	}
+	public enum OdemeTipi{
+		GELIR,GIDER
+	}
+	public enum UnitType{
+		ADET,KG,ML
+	}
 }
