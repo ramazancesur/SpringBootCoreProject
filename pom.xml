@@ -41,7 +41,7 @@
 			<artifactId>jersey-core</artifactId>
 			<version>1.19.3</version>
 		</dependency>
-
+	
 		<!-- Jasper Report ile alakalı işlemler için gerekli kütüphaneler -->
 		<!-- https://mvnrepository.com/artifact/ar.com.fdvs/DynamicJasper -->
 		<dependency>

@@ -11,7 +11,6 @@ public interface IGenericService<E extends BaseEntity, K> {
 
 	public E get(K id);
 
-	// Aynı şekilde servisleride generic hale getirdim
 	public void add(E entity);
 
 	public void update(E entity);

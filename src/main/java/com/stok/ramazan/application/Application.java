@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @ComponentScan("com.stok.ramazan.*")
 @EnableWebSecurity
-
 @EnableTransactionManagement
 @EnableAsync
 public class Application {
