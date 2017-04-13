@@ -21,7 +21,7 @@ public class DovizDao extends GenericDaoImpl<Doviz, Long> implements IDovizDao {
 		criteria.add(Restrictions.eq("entityState", EntityState.ACTIVE));
 		List<Doviz> lstDoviz = criteria.list();
 		if (lstDoviz.size() > 0) {
-			return lstDoviz.get(lstDoviz.size()-1);
+			return lstDoviz.get(lstDoviz.size() - 1);
 		} else {
 			return null;
 		}

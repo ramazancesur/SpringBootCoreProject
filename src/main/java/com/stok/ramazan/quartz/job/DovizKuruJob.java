@@ -28,7 +28,7 @@ public class DovizKuruJob {
 	private IDovizService dovizService;
 	private static final Logger LOGGER = LoggerFactory.getLogger(DovizKuruJob.class);
 
-	@Scheduled(cron ="0 0 2,18 * * ?")
+	@Scheduled(cron = "0 0 2,18 * * ?")
 	public void dovizKuruGuncelle() throws Exception {
 		try {
 			Doviz kayitliDoviz = new Doviz();
@@ -52,13 +52,10 @@ public class DovizKuruJob {
 
 	}
 
-	
-
-	
 	public List<Doviz> getGuncelDovizKuru() throws Exception {
 		List<Doviz> lstDoviz = new LinkedList<Doviz>();
 		String url = "http://www.tcmb.gov.tr/kurlar/today.xml";
-		Document doc1 = Jsoup.parse(Helper.readUrlNonCookie(url),"UTF-8", Parser.xmlParser());
+		Document doc1 = Jsoup.parse(Helper.readUrlNonCookie(url), "UTF-8", Parser.xmlParser());
 		int sayac = 0;
 		for (Element e : doc1.select("isim")) {
 			if (sayac < 8) {

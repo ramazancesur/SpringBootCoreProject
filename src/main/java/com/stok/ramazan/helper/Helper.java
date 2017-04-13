@@ -29,10 +29,6 @@ import org.hibernate.internal.CriteriaImpl;
 import org.hibernate.loader.criteria.CriteriaJoinWalker;
 import org.hibernate.loader.criteria.CriteriaQueryTranslator;
 import org.hibernate.persister.entity.OuterJoinLoadable;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.parser.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,13 +50,12 @@ public class Helper {
 		return instance;
 	}
 
-
 	public static String readUrlNonCookie(String urlString) throws Exception {
 		BufferedReader reader = null;
 		try {
 			URL url = new URL(urlString);
 			URLConnection connection = url.openConnection();
-			BufferedReader reader2 = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF8"),8);
+			BufferedReader reader2 = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF8"), 8);
 			StringBuffer buffer = new StringBuffer();
 			int read;
 			char[] chars = new char[1024];
@@ -72,7 +67,7 @@ public class Helper {
 				reader.close();
 		}
 	}
-	
+
 	public boolean isValidEmailAddress(String email) {
 		boolean result = true;
 		if (email != null) {
