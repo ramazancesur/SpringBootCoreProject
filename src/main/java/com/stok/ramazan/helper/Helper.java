@@ -1,11 +1,15 @@
 package com.stok.ramazan.helper;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Calendar;
@@ -25,6 +29,10 @@ import org.hibernate.internal.CriteriaImpl;
 import org.hibernate.loader.criteria.CriteriaJoinWalker;
 import org.hibernate.loader.criteria.CriteriaQueryTranslator;
 import org.hibernate.persister.entity.OuterJoinLoadable;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.parser.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +54,25 @@ public class Helper {
 		return instance;
 	}
 
+
+	public static String readUrlNonCookie(String urlString) throws Exception {
+		BufferedReader reader = null;
+		try {
+			URL url = new URL(urlString);
+			URLConnection connection = url.openConnection();
+			BufferedReader reader2 = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF8"),8);
+			StringBuffer buffer = new StringBuffer();
+			int read;
+			char[] chars = new char[1024];
+			while ((read = reader2.read(chars)) != -1)
+				buffer.append(chars, 0, read);
+			return buffer.toString();
+		} finally {
+			if (reader != null)
+				reader.close();
+		}
+	}
+	
 	public boolean isValidEmailAddress(String email) {
 		boolean result = true;
 		if (email != null) {

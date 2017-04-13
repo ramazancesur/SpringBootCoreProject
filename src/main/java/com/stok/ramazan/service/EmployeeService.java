@@ -18,7 +18,7 @@ public class EmployeeService extends GenericServiceImpl<Employee, Long> implemen
 		super(genericDao);
 		this.employeeDao = (EmployeeDao) genericDao;
 	}
-	
+
 	public EmployeeService() {
 		// TODO Auto-generated constructor stub
 	}
