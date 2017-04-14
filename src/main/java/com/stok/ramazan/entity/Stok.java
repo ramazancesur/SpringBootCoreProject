@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,7 +15,7 @@ public class Stok extends BaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "PRODUCT")
 	private Product product;
 	@Column(name = "GELIS_TARIHI")
@@ -46,4 +46,5 @@ public class Stok extends BaseEntity {
 	public void setAdet(int adet) {
 		this.adet = adet;
 	}
+
 }

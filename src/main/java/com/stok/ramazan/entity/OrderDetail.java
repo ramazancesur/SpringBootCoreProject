@@ -7,19 +7,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ORDER_DETAIL")
+@Table(name = "SATIS_DETAY")
 public class OrderDetail extends BaseEntity {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	@ManyToOne
-	@JoinColumn(name = "PRODUCT")
+	@JoinColumn(name = "SATIS_DETAY_MALZEME")
 	private Product product;
+	@ManyToOne
+	@JoinColumn(name = "STOK")
+	private Stok stok;
+
 	@Column(name = "ADET")
 	private int adet;
 	@ManyToOne
-	@JoinColumn(name = "ORDER")
+	@JoinColumn(name = "SATIS")
 	private Order order;
 
 	public Product getProduct() {
@@ -45,4 +49,13 @@ public class OrderDetail extends BaseEntity {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
+
+	public Stok getStok() {
+		return stok;
+	}
+
+	public void setStok(Stok stok) {
+		this.stok = stok;
+	}
+
 }

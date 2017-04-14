@@ -76,4 +76,5 @@ public class BorcDetay extends BaseEntity {
 	public void setBorc(Borc borc) {
 		this.borc = borc;
 	}
+
 }

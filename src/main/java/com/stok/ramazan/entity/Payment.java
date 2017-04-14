@@ -76,4 +76,19 @@ public class Payment extends BaseEntity {
 		this.musteri = musteri;
 	}
 
+	public Date getBeklenenOdemeTarihi() {
+		return beklenenOdemeTarihi;
+	}
+
+	public void setBeklenenOdemeTarihi(Date beklenenOdemeTarihi) {
+		this.beklenenOdemeTarihi = beklenenOdemeTarihi;
+	}
+
+	public Date getGerceklesenOdemeTarihi() {
+		return gerceklesenOdemeTarihi;
+	}
+
+	public void setGerceklesenOdemeTarihi(Date gerceklesenOdemeTarihi) {
+		this.gerceklesenOdemeTarihi = gerceklesenOdemeTarihi;
+	}
 }

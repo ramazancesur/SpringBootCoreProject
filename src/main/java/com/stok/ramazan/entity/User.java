@@ -12,9 +12,10 @@ import javax.persistence.Table;
 import com.stok.ramazan.helper.EnumUtil.UserType;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "KULLANICI")
 public class User extends BaseEntity {
 	/**
+	 * 
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -29,7 +30,7 @@ public class User extends BaseEntity {
 	@Column(name = "USER_TYPE")
 	private UserType userType;
 	@ManyToOne
-	@JoinColumn(name = "ROLE")
+	@JoinColumn(name = "YETKISI")
 	private Role role;
 	@OneToMany
 	@JoinColumn(name = "USER_CONTACT")
@@ -90,4 +91,5 @@ public class User extends BaseEntity {
 	public void setLstConduct(List<Conduct> lstConduct) {
 		this.lstConduct = lstConduct;
 	}
+
 }

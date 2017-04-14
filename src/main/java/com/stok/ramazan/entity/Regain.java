@@ -54,4 +54,5 @@ public class Regain extends BaseEntity {
 	public void setLstIl(List<Il> lstIl) {
 		this.lstIl = lstIl;
 	}
+
 }

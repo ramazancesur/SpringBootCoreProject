@@ -61,4 +61,5 @@ public class Depo extends BaseEntity {
 	public void setLstContact(List<Conduct> lstContact) {
 		this.lstContact = lstContact;
 	}
+
 }

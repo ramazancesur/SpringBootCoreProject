@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import com.stok.ramazan.helper.EnumUtil.UnitType;
 
 @Entity
-@Table(name = "PRODUCT")
+@Table(name = "MALZEME")
 public class Product extends BaseEntity {
 	/**
 	 * 
@@ -29,14 +29,8 @@ public class Product extends BaseEntity {
 	@Column(name = "UNIT_TYPE")
 	private UnitType unitType;
 	@ManyToOne
-	@JoinColumn(name = "PRODUCT_PRICE")
+	@JoinColumn(name = "MALZEME_FIYATI")
 	private Price price;
-	@ManyToOne
-	@JoinColumn(name = "USTLENICI_SUBE")
-	private Sube ustleniciSube;
-	@ManyToOne
-	@JoinColumn(name = "SATICI_SUBE")
-	private Sube saticiSube;
 
 	public String getProductName() {
 		return productName;
@@ -76,22 +70,6 @@ public class Product extends BaseEntity {
 
 	public void setIbanNo(String ibanNo) {
 		this.ibanNo = ibanNo;
-	}
-
-	public Sube getUstleniciSube() {
-		return ustleniciSube;
-	}
-
-	public void setUstleniciSube(Sube ustleniciSube) {
-		this.ustleniciSube = ustleniciSube;
-	}
-
-	public Sube getSaticiSube() {
-		return saticiSube;
-	}
-
-	public void setSaticiSube(Sube saticiSube) {
-		this.saticiSube = saticiSube;
 	}
 
 	public UnitType getUnitType() {

@@ -11,8 +11,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "EMPLOYEE")
+@Table(name = "CALISAN")
 public class Employee extends BaseEntity {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@OneToOne
 	@JoinColumn(name = "EMP_USER")
 	private User user;
@@ -50,6 +54,22 @@ public class Employee extends BaseEntity {
 
 	public void setIstenCikisTarihi(Date istenCikisTarihi) {
 		this.istenCikisTarihi = istenCikisTarihi;
+	}
+
+	public Sube getFirma() {
+		return firma;
+	}
+
+	public void setFirma(Sube firma) {
+		this.firma = firma;
+	}
+
+	public List<Address> getLstAdres() {
+		return lstAdres;
+	}
+
+	public void setLstAdres(List<Address> lstAdres) {
+		this.lstAdres = lstAdres;
 	}
 
 }

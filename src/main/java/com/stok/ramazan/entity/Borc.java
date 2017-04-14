@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.stok.ramazan.helper.EnumUtil.OdemeTipi;
@@ -23,11 +25,14 @@ public class Borc extends BaseEntity {
 	private BigDecimal kalanBorc;
 	@Column(name = "ODEME_TIPI")
 	private OdemeTipi odemeTipi;
-	@Column(name = "ODEME_SUBE")
+	@ManyToOne
+	@JoinColumn(name = "ODEME_SUBE")
 	private Sube odemeSube;
-	@Column(name = "ODEME_USTLENICI_SUBE")
-	private Sube odemeUstleniciSube;
-	@Column(name = "MUSTERI")
+	@ManyToOne
+	@JoinColumn(name = "ODEME_USTLENICI_SUBE")
+	private Sube ustleniciSube;
+	@ManyToOne
+	@JoinColumn(name = "MUSTERI")
 	private Musteri musteri;
 
 	public BigDecimal getToplamBorc() {
@@ -62,12 +67,12 @@ public class Borc extends BaseEntity {
 		this.odemeSube = odemeSube;
 	}
 
-	public Sube getOdemeUstleniciSube() {
-		return odemeUstleniciSube;
+	public Sube getUstleniciSube() {
+		return ustleniciSube;
 	}
 
-	public void setOdemeUstleniciSube(Sube odemeUstleniciSube) {
-		this.odemeUstleniciSube = odemeUstleniciSube;
+	public void setUstleniciSube(Sube ustleniciSube) {
+		this.ustleniciSube = ustleniciSube;
 	}
 
 	public Musteri getMusteri() {

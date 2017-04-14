@@ -64,4 +64,5 @@ public class Doviz extends BaseEntity {
 	public void setDovizSatis(BigDecimal dovizSatis) {
 		this.dovizSatis = dovizSatis;
 	}
+
 }

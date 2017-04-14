@@ -38,6 +38,22 @@ public abstract class BaseEntity implements Serializable {
 	@Column(name = "DURUM")
 	private EnumUtil.EntityState entityState;
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Long getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(Long lastUpdated) {
+		this.lastUpdated = lastUpdated;
+	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -60,26 +76,6 @@ public abstract class BaseEntity implements Serializable {
 
 	public void setEntityState(EnumUtil.EntityState entityState) {
 		this.entityState = entityState;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public long getLastUpdated() {
-		return lastUpdated;
-	}
-
-	public void setLastUpdated(long lastUpdated) {
-		this.lastUpdated = lastUpdated;
 	}
 
 }

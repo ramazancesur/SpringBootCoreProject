@@ -1,15 +1,15 @@
 package com.stok.ramazan.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.ibm.icu.math.BigDecimal;
-
 @Entity
-@Table(name = "PRICE_DETAY")
+@Table(name = "FIYAT_DETAYI")
 public class PriceDetay extends BaseEntity {
 
 	/**
@@ -47,4 +47,5 @@ public class PriceDetay extends BaseEntity {
 	public void setPrice(Price price) {
 		this.price = price;
 	}
+
 }

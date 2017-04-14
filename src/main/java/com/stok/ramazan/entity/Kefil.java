@@ -9,8 +9,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "MUSTERI")
-public class Musteri extends BaseEntity {
+@Table(name = "KEFIL")
+public class Kefil extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -21,15 +21,11 @@ public class Musteri extends BaseEntity {
 	@Column(name = "ADI")
 	private String adi;
 	@OneToMany
-	@JoinColumn(name = "MUSTERI_CONTACT")
+	@JoinColumn(name = "KEFIL_CONTACT")
 	private List<Conduct> lstConduct;
 	@OneToMany
-	@JoinColumn(name = "MUSTERI_ADRES")
+	@JoinColumn(name = "KEFIL_ADRES")
 	private List<Address> lstAddress;
-
-	@OneToMany
-	@JoinColumn(name = "MUSTERI_KEFIL")
-	private List<Kefil> lstKefil;
 
 	public String getUserName() {
 		return userName;
@@ -69,13 +65,5 @@ public class Musteri extends BaseEntity {
 
 	public void setLstAddress(List<Address> lstAddress) {
 		this.lstAddress = lstAddress;
-	}
-
-	public List<Kefil> getLstKefil() {
-		return lstKefil;
-	}
-
-	public void setLstKefil(List<Kefil> lstKefil) {
-		this.lstKefil = lstKefil;
 	}
 }

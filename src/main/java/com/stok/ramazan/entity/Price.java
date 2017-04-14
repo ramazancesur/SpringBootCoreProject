@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "PRICE")
+@Table(name = "FIYAT")
 public class Price extends BaseEntity {
 	/**
 	 * 
@@ -15,7 +15,7 @@ public class Price extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@Column(name = "FIYATI")
 	private BigDecimal fiyati;
-	@Column(name = "ACİKLAMA")
+	@Column(name = "ACIKLAMA")
 	private String aciklamasi;
 
 	public BigDecimal getFiyati() {
@@ -33,4 +33,5 @@ public class Price extends BaseEntity {
 	public void setAciklamasi(String aciklamasi) {
 		this.aciklamasi = aciklamasi;
 	}
+
 }
