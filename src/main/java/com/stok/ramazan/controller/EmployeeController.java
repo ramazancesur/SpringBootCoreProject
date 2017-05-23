@@ -1,7 +1,9 @@
 package com.stok.ramazan.controller;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import com.stok.ramazan.pojo.Calisan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,11 @@ public class EmployeeController extends BaseController {
 		List<Employee> lstEmployee = this.service.getAll();
 		return new ResponseEntity<List<Employee>>(lstEmployee, HttpStatus.OK);
 	}
-
+	@GetMapping("")
+	public ResponseEntity<List<Calisan>> getCalisanList(){
+		List<Calisan> lstCalisan=service.getAllCalisan();
+		return new ResponseEntity<List<Calisan>>(lstCalisan,HttpStatus.OK);
+	}
 	@GetMapping(value = "/EmployeeList/{id}")
 	public ResponseEntity<Employee> getKonusmaciById(@PathVariable("id") Long id) {
 		Employee Employee = this.service.get(id);
