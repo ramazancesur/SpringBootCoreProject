@@ -11,6 +11,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 import com.stok.ramazan.helper.EnumUtil;
+import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
@@ -18,11 +19,11 @@ public abstract class BaseEntity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
 	@Id
-	@Column(name = "ID", unique = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	@Column(name = "uuid", unique = true)
+	private String oid;
 
 	// Entity kısmı
 	@Version
@@ -38,13 +39,6 @@ public abstract class BaseEntity implements Serializable {
 	@Column(name = "DURUM")
 	private EnumUtil.EntityState entityState;
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public Long getLastUpdated() {
 		return lastUpdated;
@@ -78,4 +72,11 @@ public abstract class BaseEntity implements Serializable {
 		this.entityState = entityState;
 	}
 
+	public String getOid() {
+		return oid;
+	}
+
+	public void setOid(String oid) {
+		this.oid = oid;
+	}
 }

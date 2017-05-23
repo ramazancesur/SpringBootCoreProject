@@ -4,7 +4,6 @@ public class FaturaDTO extends BaseDTO {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	private String customNameSurname;
 	private double totalPayment;
 	private String LogoPath;

@@ -5,14 +5,16 @@ public class MusteriDTO extends BaseDTO {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private String name;
 	private String surname;
 	private String phoneNumber;
 	private String phoneNumber2;
 	private String identityNumber;
 	private String Adress;
-	// Bakiye
+	//Bakiye
 	private Double duesAmmount;
+
 
 	public String getName() {
 		return name;
@@ -38,20 +40,20 @@ public class MusteriDTO extends BaseDTO {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getIdentityNumber() {
-		return identityNumber;
-	}
-
-	public void setIdentityNumber(String identityNumber) {
-		this.identityNumber = identityNumber;
-	}
-
 	public String getPhoneNumber2() {
 		return phoneNumber2;
 	}
 
 	public void setPhoneNumber2(String phoneNumber2) {
 		this.phoneNumber2 = phoneNumber2;
+	}
+
+	public String getIdentityNumber() {
+		return identityNumber;
+	}
+
+	public void setIdentityNumber(String identityNumber) {
+		this.identityNumber = identityNumber;
 	}
 
 	public String getAdress() {

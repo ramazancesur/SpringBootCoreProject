@@ -9,7 +9,6 @@ public class Lisans extends BaseDTO {
 	private static final long serialVersionUID = 1L;
 	// Digest Algoritma Sonucu Nance kullanarak
 	private String licenseKey;
-	private Satici satici;
 	private Date licenseStartTime;
 	private Date licenseFinishTime;
 
@@ -19,14 +18,6 @@ public class Lisans extends BaseDTO {
 
 	public void setLicenseKey(String licenseKey) {
 		this.licenseKey = licenseKey;
-	}
-
-	public Satici getSatici() {
-		return satici;
-	}
-
-	public void setSatici(Satici satici) {
-		this.satici = satici;
 	}
 
 	public Date getLicenseStartTime() {

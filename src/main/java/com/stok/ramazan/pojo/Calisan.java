@@ -1,21 +1,27 @@
 package com.stok.ramazan.pojo;
 
+import com.stok.ramazan.helper.EnumUtil;
+
+import java.time.LocalDate;
+import java.util.Date;
+
 public class Calisan extends BaseDTO {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private EmployeeType employeeType;
+	private EnumUtil.EmployeeType employeeType;
 	private String nameSurname;
 	private String adress;
-	private int age;
+	private Date birthdate;
 	private double payment;
+	private String phoneNumber;
 
-	public EmployeeType getEmployeeType() {
+	public EnumUtil.EmployeeType getEmployeeType() {
 		return employeeType;
 	}
 
-	public void setEmployeeType(EmployeeType employeeType) {
+	public void setEmployeeType(EnumUtil.EmployeeType employeeType) {
 		this.employeeType = employeeType;
 	}
 
@@ -35,12 +41,12 @@ public class Calisan extends BaseDTO {
 		this.adress = adress;
 	}
 
-	public int getAge() {
-		return age;
+	public Date getBirthdate() {
+		return birthdate;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
 	}
 
 	public double getPayment() {
@@ -51,7 +57,11 @@ public class Calisan extends BaseDTO {
 		this.payment = payment;
 	}
 
-	public enum EmployeeType {
-		PATRON, ISCİ, ARAC
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 }

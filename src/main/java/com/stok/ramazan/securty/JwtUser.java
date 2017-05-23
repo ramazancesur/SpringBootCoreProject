@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public class JwtUser implements UserDetails {
 
-	private final Long id;
+	private final String id;
 	private final String username;
 	private final String firstname;
 	private final String lastname;
@@ -23,7 +23,7 @@ public class JwtUser implements UserDetails {
 	private final boolean enabled;
 	private final Date lastPasswordResetDate;
 
-	public JwtUser(Long id, String username, String firstname, String lastname, String email, String password,
+	public JwtUser(String id, String username, String firstname, String lastname, String email, String password,
 			Collection<? extends GrantedAuthority> authorities, boolean enabled, Date lastPasswordResetDate) {
 		this.id = id;
 		this.username = username;
@@ -37,7 +37,7 @@ public class JwtUser implements UserDetails {
 	}
 
 	@JsonIgnore
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 

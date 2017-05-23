@@ -29,6 +29,10 @@ public class EnumUtil {
 		}
 	}
 
+	public enum EmployeeType {
+		PATRON, ISCİ, ARAC
+	}
+
 	public enum UserType {
 		FIRMA(0, "Firma"), ADMIN(1, "Admin"), CALISAN(2, "Calisan");
 		private final Integer id;

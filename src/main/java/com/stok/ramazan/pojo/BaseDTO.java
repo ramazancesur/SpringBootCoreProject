@@ -1,5 +1,7 @@
 package com.stok.ramazan.pojo;
 
+import com.stok.ramazan.helper.EnumUtil;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,27 +10,12 @@ public class BaseDTO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int id;
+
 	private Date createdDate;
 	private Date updatedDate;
-	private boolean isActive;
-	private int version;
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	private EnumUtil.EntityState entityState;
+	private Integer version;
+	private String oid;
 
 	public Date getCreatedDate() {
 		return createdDate;
@@ -46,11 +33,27 @@ public class BaseDTO implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
-	public boolean isActive() {
-		return isActive;
+	public EnumUtil.EntityState getEntityState() {
+		return entityState;
 	}
 
-	public void setActive(boolean active) {
-		isActive = active;
+	public void setEntityState(EnumUtil.EntityState entityState) {
+		this.entityState = entityState;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public String getOid() {
+		return oid;
+	}
+
+	public void setOid(String oid) {
+		this.oid = oid;
 	}
 }

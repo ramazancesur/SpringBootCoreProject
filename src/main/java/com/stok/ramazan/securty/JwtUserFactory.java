@@ -21,7 +21,7 @@ public final class JwtUserFactory {
 		if (user.getEntityState() == EntityState.ACTIVE) {
 			aktifPasif = true;
 		}
-		return new JwtUser(user.getId(), user.getUserName(), user.getAdi(), user.getSoyadi(), user.getUserName(),
+		return new JwtUser(user.getOid(), user.getUserName(), user.getAdi(), user.getSoyadi(), user.getUserName(),
 				user.getPassword(), mapToGrantedAuthorities(Arrays.asList(user.getRole())), aktifPasif,
 				user.getCreatedDate());
 	}
