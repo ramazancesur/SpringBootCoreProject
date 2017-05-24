@@ -3,6 +3,7 @@ package com.stok.ramazan.entity;
 import com.stok.ramazan.helper.EnumUtil;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.Date;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
+    @Id
     @Column(name = "OID", unique = true)
     private String oid;
     @Version

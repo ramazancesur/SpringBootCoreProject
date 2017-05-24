@@ -6,13 +6,9 @@ import com.stok.ramazan.helper.EnumUtil.AdresKullaniciTipi;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ADRESS")
+@Table(name = "ADRESSSS")
 public class Address extends BaseEntity {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
     @Column(name = "ADRES_KULLANICI_TIPI")
     private AdresKullaniciTipi adresKullaniciTipi;
     @Column(name = "ADRES")
