@@ -1,38 +1,36 @@
 package com.stok.ramazan.service;
 
+import com.stok.ramazan.dao.EmployeeDao;
+import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.dao.interfaces.IEmployeeDao;
-import com.stok.ramazan.pojo.Calisan;
+import com.stok.ramazan.dto.CalisanDTO;
+import com.stok.ramazan.entity.Employee;
+import com.stok.ramazan.service.interfaces.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.stok.ramazan.dao.EmployeeDao;
-import com.stok.ramazan.dao.interfaces.GenericDao;
-import com.stok.ramazan.entity.Employee;
-import com.stok.ramazan.service.interfaces.IEmployeeService;
-
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
 public class EmployeeService extends
-		GenericServiceImpl<Employee, Long> implements IEmployeeService {
-	private IEmployeeDao employeeDao;
+        GenericServiceImpl<Employee, Long> implements IEmployeeService {
+    private IEmployeeDao employeeDao;
 
-	@Autowired
-	public EmployeeService(@Qualifier("employeeDao") GenericDao<Employee, Long> genericDao) {
-		super(genericDao);
-		this.employeeDao = (EmployeeDao) genericDao;
-	}
+    @Autowired
+    public EmployeeService(@Qualifier("employeeDao") GenericDao<Employee, Long> genericDao) {
+        super(genericDao);
+        this.employeeDao = (EmployeeDao) genericDao;
+    }
 
 
-	public EmployeeService() {
-		// TODO Auto-generated constructor stub
-	}
+    public EmployeeService() {
+        // TODO Auto-generated constructor stub
+    }
 
-	@Override
-	public List<Calisan> getAllCalisan() {
-		List<Calisan> lstCalisan=employeeDao.getAllCalisan();
-		return lstCalisan;
-	}
+    @Override
+    public List<CalisanDTO> getAllCalisan() {
+        List<CalisanDTO> lstCalisanDTO = employeeDao.getAllCalisan();
+        return lstCalisanDTO;
+    }
 }

@@ -8,5 +8,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NativeQueryResultColumn {
-	int index() default -1;
+    int index() default -1;
 }

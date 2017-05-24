@@ -8,30 +8,30 @@ import javax.persistence.Table;
 @Table(name = "YETKI")
 public class Role extends BaseEntity {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Column(name = "YETKI_ADI", length = 50)
-	private String yetkiAdi;
-	@Column(name = "YETKI_ACIKLAMASI")
-	private String yetkiAciklamasi;
+    @Column(name = "YETKI_ADI", length = 50)
+    private String yetkiAdi;
+    @Column(name = "YETKI_ACIKLAMASI")
+    private String yetkiAciklamasi;
 
-	public String getYetkiAdi() {
-		return yetkiAdi;
-	}
+    public String getYetkiAdi() {
+        return yetkiAdi;
+    }
 
-	public void setYetkiAdi(String yetkiAdi) {
-		this.yetkiAdi = yetkiAdi;
-	}
+    public void setYetkiAdi(String yetkiAdi) {
+        this.yetkiAdi = yetkiAdi;
+    }
 
-	public String getYetkiAciklamasi() {
-		return yetkiAciklamasi;
-	}
+    public String getYetkiAciklamasi() {
+        return yetkiAciklamasi;
+    }
 
-	public void setYetkiAciklamasi(String yetkiAciklamasi) {
-		this.yetkiAciklamasi = yetkiAciklamasi;
-	}
+    public void setYetkiAciklamasi(String yetkiAciklamasi) {
+        this.yetkiAciklamasi = yetkiAciklamasi;
+    }
 
 }
