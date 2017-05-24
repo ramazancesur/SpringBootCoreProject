@@ -2,18 +2,16 @@ package com.stok.ramazan.entity;
 
 import com.stok.ramazan.helper.EnumUtil;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "OID", unique = true)
-    private String oid;
+    private Long oid;
     @Version
     @Column(name = "LAST_UPDATED_VERSION")
     private Long lastUpdated;
@@ -24,11 +22,11 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "DURUM")
     private EnumUtil.EntityState entityState;
 
-    public String getOid() {
+    public Long getOid() {
         return oid;
     }
 
-    public void setOid(String oid) {
+    public void setOid(Long oid) {
         this.oid = oid;
     }
 

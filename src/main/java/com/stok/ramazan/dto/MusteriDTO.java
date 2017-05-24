@@ -5,7 +5,6 @@ public class MusteriDTO extends BaseDTO {
     private String soyad;
     private String telefon1;
     private String telefon2;
-    private String tcKimlikNo;
     private String adress;
     private Double toplamBorc;
     private String lisansKey;
@@ -40,14 +39,6 @@ public class MusteriDTO extends BaseDTO {
 
     public void setTelefon2(String telefon2) {
         this.telefon2 = telefon2;
-    }
-
-    public String getTcKimlikNo() {
-        return tcKimlikNo;
-    }
-
-    public void setTcKimlikNo(String tcKimlikNo) {
-        this.tcKimlikNo = tcKimlikNo;
     }
 
     public String getAdress() {

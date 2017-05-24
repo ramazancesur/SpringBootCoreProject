@@ -6,11 +6,13 @@ import java.util.Date;
 
 public class CalisanDTO extends BaseDTO {
     private EnumUtil.EmployeeType employeeType;
-    private String adSoyad;
+    private String ad;
+    private String soyad;
+    private String kullaniciAdi;
+    private String sifre;
     private String adress;
     private String telefonNumarasi;
     private Date iseGirisTarihi;
-    private String tcKimlikNumarasi;
 
     public EnumUtil.EmployeeType getEmployeeType() {
         return employeeType;
@@ -20,12 +22,20 @@ public class CalisanDTO extends BaseDTO {
         this.employeeType = employeeType;
     }
 
-    public String getAdSoyad() {
-        return adSoyad;
+    public String getAd() {
+        return ad;
     }
 
-    public void setAdSoyad(String adSoyad) {
-        this.adSoyad = adSoyad;
+    public void setAd(String ad) {
+        this.ad = ad;
+    }
+
+    public String getSoyad() {
+        return soyad;
+    }
+
+    public void setSoyad(String soyad) {
+        this.soyad = soyad;
     }
 
     public String getAdress() {
@@ -52,11 +62,19 @@ public class CalisanDTO extends BaseDTO {
         this.iseGirisTarihi = iseGirisTarihi;
     }
 
-    public String getTcKimlikNumarasi() {
-        return tcKimlikNumarasi;
+    public String getKullaniciAdi() {
+        return kullaniciAdi;
     }
 
-    public void setTcKimlikNumarasi(String tcKimlikNumarasi) {
-        this.tcKimlikNumarasi = tcKimlikNumarasi;
+    public void setKullaniciAdi(String kullaniciAdi) {
+        this.kullaniciAdi = kullaniciAdi;
+    }
+
+    public String getSifre() {
+        return sifre;
+    }
+
+    public void setSifre(String sifre) {
+        this.sifre = sifre;
     }
 }

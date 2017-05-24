@@ -8,6 +8,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +28,11 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 @Repository
 @Transactional
-public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializable> implements GenericDao<E, K> {
+public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializable>
+        implements GenericDao<E, K> {
     protected Class<? extends E> daoType;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GenericDaoImpl.class);
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -51,34 +56,39 @@ public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializabl
     }
 
     @Override
-    public void add(E entity) {
-        entity.setOid(Helper.generateUnique());
+    public E add(E entity) {
         entity.setCreatedDate(new Date());
         entity.setEntityState(EntityState.ACTIVE);
         entity.setUpdatedDate(new Date());
         currentSession().save(entity);
+        return entity;
     }
 
     @Override
-    public void saveOrUpdate(E entity) {
-        if (entity.getOid() == null || entity.getOid().equals("")) {
-            entity.setOid(Helper.generateUnique());
+    public E saveOrUpdate(E entity) {
+        entity.setUpdatedDate(new Date());
+        currentSession().saveOrUpdate(entity);
+        return entity;
+    }
+
+    @Override
+    public E update(E entity) {
+        entity.setUpdatedDate(new Date());
+        currentSession().saveOrUpdate(entity);
+        return entity;
+    }
+
+    @Override
+    public boolean remove(E entity) {
+        try {
+            entity.setUpdatedDate(new Date());
+            entity.setEntityState(EntityState.PASSIVE);
+            currentSession().update(entity);
+            return true;
+        }catch (Exception e){
+            LOGGER.error(e.getMessage());
+            return false;
         }
-        entity.setUpdatedDate(new Date());
-        currentSession().saveOrUpdate(entity);
-    }
-
-    @Override
-    public void update(E entity) {
-        entity.setUpdatedDate(new Date());
-        currentSession().saveOrUpdate(entity);
-    }
-
-    @Override
-    public void remove(E entity) {
-        entity.setUpdatedDate(new Date());
-        entity.setEntityState(EntityState.PASSIVE);
-        currentSession().update(entity);
     }
 
     protected Session getSession() {
@@ -102,5 +112,16 @@ public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializabl
         Criteria criteria = this.createEntityCriteria();
         criteria.add(Restrictions.eq("entityState", EntityState.ACTIVE));
         return criteria.list();
+    }
+
+    @Override
+    public boolean remove(K key) {
+        E data = this.find(key);
+        if (data != null) {
+             return remove(data);
+        } else {
+            LOGGER.info("Gecersiz Silme İslemi " + daoType.getSimpleName() + key);
+            return false;
+        }
     }
 }

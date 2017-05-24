@@ -8,11 +8,6 @@ import java.util.List;
 @Entity
 @Table(name = "KULLANICI")
 public class User extends BaseEntity {
-    /**
-     *
-     *
-     */
-    private static final long serialVersionUID = 1L;
     @Column(name = "USER_NAME", unique = true)
     private String userName;
     @Column(name = "PASSWORD")

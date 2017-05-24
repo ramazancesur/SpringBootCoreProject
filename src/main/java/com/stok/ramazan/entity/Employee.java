@@ -7,10 +7,6 @@ import java.util.List;
 @Entity
 @Table(name = "CALISAN")
 public class Employee extends BaseEntity {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
     @OneToOne
     @JoinColumn(name = "EMP_USER")
     private User user;

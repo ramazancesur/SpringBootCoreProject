@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class JwtUser implements UserDetails {
 
-    private final String id;
+    private final Long id;
     private final String username;
     private final String firstname;
     private final String lastname;
@@ -22,7 +22,7 @@ public class JwtUser implements UserDetails {
     private final boolean enabled;
     private final Date lastPasswordResetDate;
 
-    public JwtUser(String oid, String username, String firstname, String lastname, String email, String password,
+    public JwtUser(Long oid, String username, String firstname, String lastname, String email, String password,
                    Collection<? extends GrantedAuthority> authorities, boolean enabled, Date lastPasswordResetDate) {
         this.id = oid;
         this.username = username;
@@ -36,7 +36,7 @@ public class JwtUser implements UserDetails {
     }
 
     @JsonIgnore
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

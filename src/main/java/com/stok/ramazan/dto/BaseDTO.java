@@ -10,7 +10,7 @@ public class BaseDTO implements Serializable {
     private Date updatedDate;
     private EnumUtil.EntityState entityState;
     private Integer version;
-    private String oid;
+    private Long oid;
 
     public Date getCreatedDate() {
         return createdDate;
@@ -44,11 +44,11 @@ public class BaseDTO implements Serializable {
         this.version = version;
     }
 
-    public String getOid() {
+    public Long getOid() {
         return oid;
     }
 
-    public void setOid(String oid) {
+    public void setOid(Long oid) {
         this.oid = oid;
     }
 }

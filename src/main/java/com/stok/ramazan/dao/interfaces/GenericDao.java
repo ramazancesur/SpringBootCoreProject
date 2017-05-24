@@ -6,17 +6,19 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface GenericDao<E extends BaseEntity, K extends Serializable> {
-    public void add(E entity);
+    public E add(E entity);
 
     // Doo kısmı ikiye ayrıldım interface ve entity die ve işlemleri base
     // entityden yapılmasını sağlıyorum
 
     // JPA Repository ye benzer bir şey
-    public void saveOrUpdate(E entity);
+    public E saveOrUpdate(E entity);
 
-    public void update(E entity);
+    public E update(E entity);
 
-    public void remove(E entity);
+    public boolean remove(E entity);
+
+    public boolean remove(K key);
 
     public E find(K key);
 
