@@ -1,7 +1,6 @@
 package com.stok.ramazan.dto;
 
 
-
 import java.util.List;
 
 public class MusteriDTO extends BaseDTO {

@@ -61,6 +61,6 @@ public class MusteriController extends BaseController {
 
     @DeleteMapping(value = "/Musteri/MusteriDTO")
     public ResponseEntity<Boolean> deleteMusteriDto(MusteriDTO musteriDTO) {
-        return new ResponseEntity<Boolean>( this.service.deleteMusteriDto(musteriDTO.getOid()), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Boolean>(this.service.deleteMusteriDto(musteriDTO.getOid()), HttpStatus.NO_CONTENT);
     }
 }

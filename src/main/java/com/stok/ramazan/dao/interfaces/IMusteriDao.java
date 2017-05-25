@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface IMusteriDao extends GenericDao<Musteri, Long> {
     List<MusteriDTO> getAllMusteri();
+
     MusteriDTO getMusteriDTO(Long musteriOid);
 }

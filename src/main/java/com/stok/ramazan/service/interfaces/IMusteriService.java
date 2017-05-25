@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IMusteriService extends IGenericService<Musteri, Long> {
     List<MusteriDTO> getAllMusteriDTO();
+
     boolean deleteMusteriDto(Long oid);
+
     MusteriDTO getMusteriDTO(Long oid);
 }

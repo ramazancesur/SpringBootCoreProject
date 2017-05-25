@@ -1,7 +1,5 @@
 package com.stok.ramazan.dto;
 
-import com.stok.ramazan.helper.EnumUtil;
-
 import java.io.Serializable;
 import java.util.Date;
 

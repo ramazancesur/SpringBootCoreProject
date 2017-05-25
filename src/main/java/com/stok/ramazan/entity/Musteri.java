@@ -21,7 +21,7 @@ public class Musteri extends BaseEntity {
     private List<Address> lstAddress;
 
     @OneToMany
-    @JoinColumn(name = "MUSTERI_KEFIL",nullable = true)
+    @JoinColumn(name = "MUSTERI_KEFIL", nullable = true)
     private List<Kefil> lstKefil;
 
     public String getSoyadi() {

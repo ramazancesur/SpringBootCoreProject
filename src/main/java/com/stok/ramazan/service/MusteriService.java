@@ -38,9 +38,8 @@ public class MusteriService extends GenericServiceImpl<Musteri, Long> implements
         try {
             this.remove(this.get(oid));
             return true;
-        }
-        catch (Exception ex){
-            LOGGER.error("Hata meydana geldi  "+this.getClass().getSimpleName()+ ex.getMessage());
+        } catch (Exception ex) {
+            LOGGER.error("Hata meydana geldi  " + this.getClass().getSimpleName() + ex.getMessage());
             return false;
         }
     }

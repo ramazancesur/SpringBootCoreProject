@@ -2,7 +2,6 @@ package com.stok.ramazan.dao;
 
 import com.stok.ramazan.dao.interfaces.IBorcDao;
 import com.stok.ramazan.entity.Borc;
-import javassist.convert.Transformer;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -23,7 +22,7 @@ public class BorcDao extends GenericDaoImpl<Borc, Long> implements IBorcDao {
                 Projections.sum("borc.kalanBorc"))
         );
         criteria.setResultTransformer(Transformers.aliasToBean(BigDecimal.class));
-        BigDecimal toplamBorc= (BigDecimal) criteria.uniqueResult();
+        BigDecimal toplamBorc = (BigDecimal) criteria.uniqueResult();
         return toplamBorc.doubleValue();
     }
 }
