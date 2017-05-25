@@ -9,8 +9,6 @@ public class Musteri extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "email", unique = true, nullable = true)
-    private String userName;
     @Column(name = "SOYADI")
     private String soyadi;
     @Column(name = "ADI")
@@ -23,16 +21,8 @@ public class Musteri extends BaseEntity {
     private List<Address> lstAddress;
 
     @OneToMany
-    @JoinColumn(name = "MUSTERI_KEFIL")
+    @JoinColumn(name = "MUSTERI_KEFIL",nullable = true)
     private List<Kefil> lstKefil;
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public String getSoyadi() {
         return soyadi;

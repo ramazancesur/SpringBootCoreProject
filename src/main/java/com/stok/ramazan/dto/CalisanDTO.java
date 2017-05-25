@@ -14,6 +14,10 @@ public class CalisanDTO extends BaseDTO {
     private List<AdresTelefon> lstAddresTel;
     private Date iseGirisTarihi;
 
+    // Proje tamamlandığında lisans keye de bakılacaktır
+    // Şu anda yoktur
+    private String lisansKey;
+
     public EnumUtil.EmployeeType getEmployeeType() {
         return employeeType;
     }
@@ -68,5 +72,13 @@ public class CalisanDTO extends BaseDTO {
 
     public void setIseGirisTarihi(Date iseGirisTarihi) {
         this.iseGirisTarihi = iseGirisTarihi;
+    }
+
+    public String getLisansKey() {
+        return lisansKey;
+    }
+
+    public void setLisansKey(String lisansKey) {
+        this.lisansKey = lisansKey;
     }
 }

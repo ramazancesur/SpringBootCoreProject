@@ -1,13 +1,15 @@
 package com.stok.ramazan.dto;
 
+
+
+import java.util.List;
+
 public class MusteriDTO extends BaseDTO {
     private String ad;
     private String soyad;
-    private String telefon1;
-    private String telefon2;
-    private String adress;
+    private List<AdresTelefon> lstAdresTel;
+    // Toplam Harcama - Toplam Ödeme
     private Double toplamBorc;
-    private String lisansKey;
 
     public String getAd() {
         return ad;
@@ -25,28 +27,12 @@ public class MusteriDTO extends BaseDTO {
         this.soyad = soyad;
     }
 
-    public String getTelefon1() {
-        return telefon1;
+    public List<AdresTelefon> getLstAdresTel() {
+        return lstAdresTel;
     }
 
-    public void setTelefon1(String telefon1) {
-        this.telefon1 = telefon1;
-    }
-
-    public String getTelefon2() {
-        return telefon2;
-    }
-
-    public void setTelefon2(String telefon2) {
-        this.telefon2 = telefon2;
-    }
-
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setLstAdresTel(List<AdresTelefon> lstAdresTel) {
+        this.lstAdresTel = lstAdresTel;
     }
 
     public Double getToplamBorc() {
@@ -55,13 +41,5 @@ public class MusteriDTO extends BaseDTO {
 
     public void setToplamBorc(Double toplamBorc) {
         this.toplamBorc = toplamBorc;
-    }
-
-    public String getLisansKey() {
-        return lisansKey;
-    }
-
-    public void setLisansKey(String lisansKey) {
-        this.lisansKey = lisansKey;
     }
 }

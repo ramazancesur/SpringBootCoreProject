@@ -8,8 +8,6 @@ import java.util.Date;
 public class BaseDTO implements Serializable {
     private Date createdDate;
     private Date updatedDate;
-    private EnumUtil.EntityState entityState;
-    private Integer version;
     private Long oid;
 
     public Date getCreatedDate() {
@@ -26,22 +24,6 @@ public class BaseDTO implements Serializable {
 
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
-    }
-
-    public EnumUtil.EntityState getEntityState() {
-        return entityState;
-    }
-
-    public void setEntityState(EnumUtil.EntityState entityState) {
-        this.entityState = entityState;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     public Long getOid() {
