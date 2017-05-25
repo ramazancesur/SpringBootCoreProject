@@ -33,7 +33,12 @@ public class EnumUtil {
         PATRON, ISCİ, ARAC
     }
 
-    public static enum UserType {
+    public enum TelOrAddres {
+        TELEFON, ADDRES
+    }
+
+
+    public enum UserType {
         FIRMA(0, "Firma"), ADMIN(1, "Admin"), CALISAN(2, "CalisanDTO");
         private final Integer id;
         private final String name;

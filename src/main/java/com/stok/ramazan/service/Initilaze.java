@@ -1,8 +1,11 @@
 package com.stok.ramazan.service;
 
+import com.stok.ramazan.entity.Conduct;
 import com.stok.ramazan.entity.Role;
 import com.stok.ramazan.entity.User;
+import com.stok.ramazan.helper.EnumUtil;
 import com.stok.ramazan.helper.EnumUtil.UserType;
+import com.stok.ramazan.service.interfaces.IConductService;
 import com.stok.ramazan.service.interfaces.IRoleService;
 import com.stok.ramazan.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +14,16 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @Component
 public class Initilaze implements ApplicationRunner {
-    private IRoleService roleService;
-    private IUserService userService;
-
     @Autowired
-    public Initilaze(IRoleService roleService, IUserService userService) {
-        this.userService = userService;
-        this.roleService = roleService;
-    }
+    private IRoleService roleService;
+    @Autowired
+    private IUserService userService;
+    @Autowired
+    private IConductService conductService;
 
     @Override
     public void run(ApplicationArguments arg0) throws Exception {
@@ -50,14 +52,21 @@ public class Initilaze implements ApplicationRunner {
         return exist;
     }
 
-    public void create() throws IOException {
-
-        Role role = new Role();
-
-        try {
-            role.setYetkiAdi("ROLE_ADMIN");
-            role.setYetkiAciklamasi("Admin Rölü...");
+    private void createDefaultRoles() {
+        UserType[] userTypes = EnumUtil.UserType.values();
+        for (UserType userType : userTypes) {
+            Role role = new Role();
+            role.setYetkiAdi(userType.name());
+            role.setYetkiAciklamasi("Role Degeri: " + userType.ordinal() + "Role Value: " + userType.name());
             roleService.add(role);
+        }
+    }
+
+    public void create() throws IOException {
+        createDefaultRoles();
+        Role role = roleService.getRoleByName("Admin");
+        try {
+
             /*
              * // Ileride kullanılmak amacıyla yazılmıştır ClassLoader
 			 * classLoader = Initialize.class.getClassLoader(); File imageFile =
@@ -74,6 +83,14 @@ public class Initilaze implements ApplicationRunner {
 			 * (IOException e) { e.printStackTrace(); }
 			 */
             User user = new User();
+
+            Conduct conduct = new Conduct();
+            conduct.setTelNo("12345");
+            conduct.setContactType(EnumUtil.ContactTipi.GENEL);
+            conductService.add(conduct);
+
+            user.setLstConduct(Arrays.asList(conduct));
+
             user.setAdi("ramazan");
             user.setSoyadi("cesur");
             user.setUserType(UserType.ADMIN);

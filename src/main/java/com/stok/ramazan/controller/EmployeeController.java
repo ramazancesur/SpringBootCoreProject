@@ -21,14 +21,20 @@ public class EmployeeController extends BaseController {
         return new ResponseEntity<List<Employee>>(lstEmployee, HttpStatus.OK);
     }
 
-    @GetMapping("")
+    @GetMapping("/CalisanList")
     public ResponseEntity<List<CalisanDTO>> getCalisanList() {
         List<CalisanDTO> lstCalisanDTO = service.getAllCalisan();
         return new ResponseEntity<List<CalisanDTO>>(lstCalisanDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/CalisanList/{oıd}")
+    public ResponseEntity<CalisanDTO> getCalisan(@PathVariable("oid") Long oid) {
+        CalisanDTO calisanDTO = this.service.getCalisan(oid);
+        return new ResponseEntity<CalisanDTO>(calisanDTO, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/EmployeeList/{id}")
-    public ResponseEntity<Employee> getKonusmaciById(@PathVariable("id") Long id) {
+    public ResponseEntity<Employee> getCalismaciById(@PathVariable("id") Long id) {
         Employee Employee = this.service.get(id);
         return new ResponseEntity<Employee>(Employee, HttpStatus.OK);
     }
@@ -39,15 +45,35 @@ public class EmployeeController extends BaseController {
         return new ResponseEntity<Employee>(Employee, HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/Employee/Calisan")
+    public ResponseEntity<Void> addCalisan(@RequestBody CalisanDTO calisanDTO) {
+        this.service.addCalsan(calisanDTO);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
+
+
     @PutMapping(value = "/Employee")
     public ResponseEntity<Employee> updateKonusmaci(@PathVariable Long id, @RequestBody Employee Employee) {
         this.service.update(Employee);
         return new ResponseEntity<Employee>(Employee, HttpStatus.OK);
     }
 
+    @PutMapping(value = "/Employee/Calisan")
+    public ResponseEntity<CalisanDTO> updateCalisan(@RequestBody CalisanDTO calisanDTO) {
+        this.service.updateCalisan(calisanDTO);
+        return new ResponseEntity<CalisanDTO>(calisanDTO, HttpStatus.OK);
+    }
+
     @DeleteMapping(value = "/Employee")
     public ResponseEntity<Boolean> deleteEtkinlik(Employee Employee) {
         this.service.remove(Employee);
+        return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
+    }
+
+
+    @DeleteMapping(value = "/Employee/Calisan")
+    public ResponseEntity<Boolean> deleteCalisan(CalisanDTO calisanDTO) {
+        this.service.deleteCalisan(calisanDTO.getOid());
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }
 }

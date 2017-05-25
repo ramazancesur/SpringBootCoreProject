@@ -3,7 +3,6 @@ package com.stok.ramazan.dao;
 import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.entity.BaseEntity;
 import com.stok.ramazan.helper.EnumUtil.EntityState;
-import com.stok.ramazan.helper.Helper;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,9 +29,8 @@ import java.util.List;
 @Transactional
 public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializable>
         implements GenericDao<E, K> {
-    protected Class<? extends E> daoType;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(GenericDaoImpl.class);
+    protected Class<? extends E> daoType;
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -85,7 +83,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializabl
             entity.setEntityState(EntityState.PASSIVE);
             currentSession().update(entity);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             LOGGER.error(e.getMessage());
             return false;
         }
@@ -118,7 +116,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializabl
     public boolean remove(K key) {
         E data = this.find(key);
         if (data != null) {
-             return remove(data);
+            return remove(data);
         } else {
             LOGGER.info("Gecersiz Silme İslemi " + daoType.getSimpleName() + key);
             return false;

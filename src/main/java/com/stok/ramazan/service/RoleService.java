@@ -25,4 +25,8 @@ public class RoleService extends GenericServiceImpl<Role, Long> implements IRole
         this.roleDao = (RoleDao) genericDao;
     }
 
+    @Override
+    public Role getRoleByName(String name) {
+        return roleDao.getRoleforName(name);
+    }
 }

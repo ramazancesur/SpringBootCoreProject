@@ -1,5 +1,7 @@
 package com.stok.ramazan.entity;
 
+import com.stok.ramazan.helper.EnumUtil;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -14,10 +16,11 @@ public class Employee extends BaseEntity {
     private Date iseGirisTarihi;
     @Column(name = "ISTEN_CIKIS_TARIHI")
     private Date istenCikisTarihi;
+    @Column(name = "EMPLOYEE_TYPE")
+    private EnumUtil.EmployeeType employeeType;
     @OneToOne
     @JoinColumn(name = "EMP_SUBE")
     private Sube firma;
-
     @OneToMany
     @JoinColumn(name = "USER_ADRES")
     private List<Address> lstAdres;
@@ -62,4 +65,11 @@ public class Employee extends BaseEntity {
         this.lstAdres = lstAdres;
     }
 
+    public EnumUtil.EmployeeType getEmployeeType() {
+        return employeeType;
+    }
+
+    public void setEmployeeType(EnumUtil.EmployeeType employeeType) {
+        this.employeeType = employeeType;
+    }
 }

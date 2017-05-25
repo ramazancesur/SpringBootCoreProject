@@ -3,6 +3,7 @@ package com.stok.ramazan.dto;
 import com.stok.ramazan.helper.EnumUtil;
 
 import java.util.Date;
+import java.util.List;
 
 public class CalisanDTO extends BaseDTO {
     private EnumUtil.EmployeeType employeeType;
@@ -10,8 +11,7 @@ public class CalisanDTO extends BaseDTO {
     private String soyad;
     private String kullaniciAdi;
     private String sifre;
-    private String adress;
-    private String telefonNumarasi;
+    private List<AdresTelefon> lstAddresTel;
     private Date iseGirisTarihi;
 
     public EnumUtil.EmployeeType getEmployeeType() {
@@ -38,30 +38,6 @@ public class CalisanDTO extends BaseDTO {
         this.soyad = soyad;
     }
 
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-
-    public String getTelefonNumarasi() {
-        return telefonNumarasi;
-    }
-
-    public void setTelefonNumarasi(String telefonNumarasi) {
-        this.telefonNumarasi = telefonNumarasi;
-    }
-
-    public Date getIseGirisTarihi() {
-        return iseGirisTarihi;
-    }
-
-    public void setIseGirisTarihi(Date iseGirisTarihi) {
-        this.iseGirisTarihi = iseGirisTarihi;
-    }
-
     public String getKullaniciAdi() {
         return kullaniciAdi;
     }
@@ -76,5 +52,21 @@ public class CalisanDTO extends BaseDTO {
 
     public void setSifre(String sifre) {
         this.sifre = sifre;
+    }
+
+    public List<AdresTelefon> getLstAddresTel() {
+        return lstAddresTel;
+    }
+
+    public void setLstAddresTel(List<AdresTelefon> lstAddresTel) {
+        this.lstAddresTel = lstAddresTel;
+    }
+
+    public Date getIseGirisTarihi() {
+        return iseGirisTarihi;
+    }
+
+    public void setIseGirisTarihi(Date iseGirisTarihi) {
+        this.iseGirisTarihi = iseGirisTarihi;
     }
 }

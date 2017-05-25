@@ -16,8 +16,8 @@ public class Conduct extends BaseEntity {
     @Column(name = "CONDUCT_TIPI")
     private ContactTipi contactType;
 
-    @Column(name = "DEGER")
-    private String value;
+    @Column(name = "TEL_NO")
+    private String telNo;
 
     public ContactTipi getContactType() {
         return contactType;
@@ -27,12 +27,11 @@ public class Conduct extends BaseEntity {
         this.contactType = contactType;
     }
 
-    public String getValue() {
-        return value;
+    public String getTelNo() {
+        return telNo;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setTelNo(String telNo) {
+        this.telNo = telNo;
     }
-
 }

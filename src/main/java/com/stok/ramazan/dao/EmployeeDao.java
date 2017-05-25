@@ -1,6 +1,7 @@
 package com.stok.ramazan.dao;
 
 import com.stok.ramazan.dao.interfaces.IEmployeeDao;
+import com.stok.ramazan.dto.AdresTelefon;
 import com.stok.ramazan.dto.CalisanDTO;
 import com.stok.ramazan.entity.Employee;
 import com.stok.ramazan.helper.EnumUtil;
@@ -31,42 +32,35 @@ public class EmployeeDao extends GenericDaoImpl<Employee, Long>
             calisanDTO.setSoyad(x.getUser().getSoyadi());
             calisanDTO.setKullaniciAdi(x.getUser().getUserName());
             calisanDTO.setSifre(x.getUser().getPassword());
-            StringBuilder stringBuilder = new StringBuilder();
+            List<AdresTelefon> lstAddresTelefon = new LinkedList<>();
             x.getLstAdres().stream()
                     .filter(y -> y.getAdres() != null)
                     .forEach(y -> {
-                        stringBuilder.append(" " + y.getAdres());
+                        AdresTelefon adresTelefon = new AdresTelefon();
+                        adresTelefon.setAddresTipi(y.getAdresTipi());
+                        adresTelefon.setOid(y.getOid());
+                        adresTelefon.setTelOrAddres(EnumUtil.TelOrAddres.ADDRES);
+                        adresTelefon.setDeger(y.getAdres());
+                        lstAddresTelefon.add(adresTelefon);
                     });
-            calisanDTO.setAdress(stringBuilder.toString());
-            stringBuilder.delete(0, stringBuilder.length());
+
 
             x.getUser().getLstConduct().stream()
-                    .filter(y -> y.getValue() != null)
+                    .filter(y -> y.getTelNo() != null)
                     .forEach(y -> {
-                        stringBuilder.append(" " + y.getValue());
+                        AdresTelefon adresTelefon = new AdresTelefon();
+                        adresTelefon.setTelTipi(y.getContactType());
+                        adresTelefon.setOid(y.getOid());
+                        adresTelefon.setTelOrAddres(EnumUtil.TelOrAddres.TELEFON);
+                        adresTelefon.setDeger(y.getTelNo());
+                        lstAddresTelefon.add(adresTelefon);
                     });
-            calisanDTO.setTelefonNumarasi(stringBuilder.toString());
+            calisanDTO.setLstAddresTel(lstAddresTelefon);
             lstCalisanDTO.add(calisanDTO);
         });
 
         return lstCalisanDTO;
     }
-
-    @Override
-    public void addCalisan(CalisanDTO calisanDTO) {
-
-    }
-
-    @Override
-    public void updateCalisan(CalisanDTO calisanDTO) {
-
-    }
-
-    @Override
-    public boolean deleteCalisan(Long calisanOid) {
-        return this.remove(calisanOid);
-    }
-
 
     @Override
     public CalisanDTO getCalisan(Long calisanOid) {
@@ -79,24 +73,31 @@ public class EmployeeDao extends GenericDaoImpl<Employee, Long>
         CalisanDTO calisanDTO = new CalisanDTO();
         calisanDTO.setOid(calisanOid);
 
-        StringBuilder sb = new StringBuilder();
+        List<AdresTelefon> lstAddresTel = new LinkedList<>();
+
         employee.getLstAdres().stream()
                 .filter(x -> x.getAdres() != null)
                 .forEach(x -> {
-                    sb.append(x.getAdresKullaniciTipi().name() + " " + x.getAdres() + " ");
+                    AdresTelefon adresTelefon = new AdresTelefon();
+                    adresTelefon.setOid(x.getOid());
+                    adresTelefon.setDeger(x.getAdres());
+                    adresTelefon.setAddresTipi(x.getAdresTipi());
+                    adresTelefon.setTelOrAddres(EnumUtil.TelOrAddres.ADDRES);
                 });
 
 
-        calisanDTO.setAdress(sb.toString());
-        sb.delete(0, sb.length());
-
         employee.getUser().getLstConduct().stream()
-                .filter(x -> x.getValue() != null)
-                .forEach(x -> {
-                            sb.append(x.getContactType().name() + " " + x.getValue());
+                .filter(x -> x.getTelNo() != null)
+                .forEach(y -> {
+                            AdresTelefon adresTelefon = new AdresTelefon();
+                            adresTelefon.setTelTipi(y.getContactType());
+                            adresTelefon.setOid(y.getOid());
+                            adresTelefon.setTelOrAddres(EnumUtil.TelOrAddres.TELEFON);
+                            adresTelefon.setDeger(y.getTelNo());
+                            lstAddresTel.add(adresTelefon);
                         }
                 );
-        calisanDTO.setAdress(sb.toString());
+        calisanDTO.setLstAddresTel(lstAddresTel);
         return calisanDTO;
     }
 }
