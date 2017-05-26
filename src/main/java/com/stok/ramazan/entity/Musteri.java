@@ -13,10 +13,10 @@ public class Musteri extends BaseEntity {
     private String soyadi;
     @Column(name = "ADI")
     private String adi;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "MUSTERI_CONTACT")
     private List<Conduct> lstConduct;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "MUSTERI_ADRES")
     private List<Address> lstAddress;
 

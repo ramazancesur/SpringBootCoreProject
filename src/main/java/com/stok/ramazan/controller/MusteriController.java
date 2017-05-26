@@ -46,6 +46,19 @@ public class MusteriController extends BaseController {
         return new ResponseEntity<Musteri>(Musteri, HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/Musteri/MusteriDTO")
+    public ResponseEntity<MusteriDTO> addMusteriDTO(@RequestBody MusteriDTO musteriDTO) {
+        this.service.addMusteriDTO(musteriDTO);
+        return new ResponseEntity(musteriDTO, HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/Musteri/MusteriDTO")
+    public ResponseEntity<MusteriDTO> updateMusteriDTO(@RequestBody MusteriDTO musteriDTO) {
+        this.service.updateMusteriDTO(musteriDTO);
+        return new ResponseEntity(musteriDTO, HttpStatus.CREATED);
+    }
+
+
     @PutMapping(value = "/Musteri")
     public ResponseEntity<Musteri> updateKonusmaci(@PathVariable Long id, @RequestBody Musteri Musteri) {
         this.service.update(Musteri);
