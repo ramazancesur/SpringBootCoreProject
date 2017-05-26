@@ -4,6 +4,7 @@ import com.stok.ramazan.helper.EnumUtil.OdemeTipi;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "BORC")
@@ -18,8 +19,7 @@ public class Borc extends BaseEntity {
     private BigDecimal toplamBorc;
     @Column(name = "KALAN_BORC")
     private BigDecimal kalanBorc;
-    @Column(name = "ODEME_TIPI")
-    private OdemeTipi odemeTipi;
+
     @ManyToOne
     @JoinColumn(name = "ODEME_SUBE")
     private Sube odemeSube;
@@ -29,6 +29,7 @@ public class Borc extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "MUSTERI")
     private Musteri musteri;
+
 
     public BigDecimal getToplamBorc() {
         return toplamBorc;
@@ -44,14 +45,6 @@ public class Borc extends BaseEntity {
 
     public void setKalanBorc(BigDecimal kalanBorc) {
         this.kalanBorc = kalanBorc;
-    }
-
-    public OdemeTipi getOdemeTipi() {
-        return odemeTipi;
-    }
-
-    public void setOdemeTipi(OdemeTipi odemeTipi) {
-        this.odemeTipi = odemeTipi;
     }
 
     public Sube getOdemeSube() {

@@ -9,10 +9,6 @@ import java.util.Date;
 @Entity
 @Table(name = "PAYMENT")
 public class Payment extends BaseEntity {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
     @Column
     private BigDecimal OdemeTutari;
     @Column(name = "ODEME_TIPI")
@@ -27,9 +23,10 @@ public class Payment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "USTLENICI_SUBE")
     private Sube ustleniciSube;
+
     @ManyToOne
-    @JoinColumn(name = "MUSTERI")
-    private Musteri musteri;
+    @JoinColumn(name = "BORC_OID")
+    private Borc borc;
 
     public BigDecimal getOdemeTutari() {
         return OdemeTutari;
@@ -63,13 +60,6 @@ public class Payment extends BaseEntity {
         this.ustleniciSube = ustleniciSube;
     }
 
-    public Musteri getMusteri() {
-        return musteri;
-    }
-
-    public void setMusteri(Musteri musteri) {
-        this.musteri = musteri;
-    }
 
     public Date getBeklenenOdemeTarihi() {
         return beklenenOdemeTarihi;
@@ -85,5 +75,13 @@ public class Payment extends BaseEntity {
 
     public void setGerceklesenOdemeTarihi(Date gerceklesenOdemeTarihi) {
         this.gerceklesenOdemeTarihi = gerceklesenOdemeTarihi;
+    }
+
+    public Borc getBorc() {
+        return borc;
+    }
+
+    public void setBorc(Borc borc) {
+        this.borc = borc;
     }
 }
