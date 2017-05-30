@@ -2,6 +2,7 @@ package com.stok.ramazan.dao;
 
 import com.stok.ramazan.dao.interfaces.IBorcDao;
 import com.stok.ramazan.dao.interfaces.IMusteriDao;
+import com.stok.ramazan.dao.interfaces.IPaymentDao;
 import com.stok.ramazan.dto.AdresTelefon;
 import com.stok.ramazan.dto.MusteriDTO;
 import com.stok.ramazan.entity.Musteri;
@@ -16,9 +17,11 @@ import java.util.List;
 public class MusteriDao extends GenericDaoImpl<Musteri, Long> implements IMusteriDao {
     @Autowired
     private IBorcDao borcDao;
+    @Autowired
+    private IPaymentDao paymentDao;
 
     private Double getToplamBorcByMusteriOid(Long musteriOid) {
-        return borcDao.getToplamBorcByMusteriOid(musteriOid);
+        return borcDao.getToplamBorcByMusteriOid(musteriOid) - paymentDao.getToplamOdemeByMusteriOid(musteriOid);
     }
 
     @Override

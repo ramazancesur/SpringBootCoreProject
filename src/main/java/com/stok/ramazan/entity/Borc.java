@@ -1,10 +1,7 @@
 package com.stok.ramazan.entity;
 
-import com.stok.ramazan.helper.EnumUtil.OdemeTipi;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @Table(name = "BORC")

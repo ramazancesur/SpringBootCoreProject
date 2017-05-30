@@ -23,6 +23,8 @@ public class BorcDao extends GenericDaoImpl<Borc, Long> implements IBorcDao {
         );
         criteria.setResultTransformer(Transformers.aliasToBean(BigDecimal.class));
         BigDecimal toplamBorc = (BigDecimal) criteria.uniqueResult();
+
+
         return toplamBorc.doubleValue();
     }
 }

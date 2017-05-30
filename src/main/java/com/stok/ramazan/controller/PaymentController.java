@@ -1,5 +1,6 @@
 package com.stok.ramazan.controller;
 
+import com.stok.ramazan.dto.OdemeDTO;
 import com.stok.ramazan.entity.Payment;
 import com.stok.ramazan.service.interfaces.IPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,20 @@ public class PaymentController extends BaseController {
         return new ResponseEntity<List<Payment>>(lstPayment, HttpStatus.OK);
     }
 
+
+    @GetMapping("/PaymentList/OdemeList")
+    public ResponseEntity<List<OdemeDTO>> getOdemeList() {
+        List<OdemeDTO> lstPayment = this.service.getAllOdemeDTO();
+        return new ResponseEntity<List<OdemeDTO>>(lstPayment, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/PaymentList/Odeme/{id}")
+    public ResponseEntity<OdemeDTO> getOdemeById(@PathVariable("id") Long id) {
+        OdemeDTO odemeDTO = this.service.getOdemeDTO(id);
+        return new ResponseEntity(odemeDTO, HttpStatus.OK);
+    }
+
+
     @GetMapping(value = "/PaymentList/{id}")
     public ResponseEntity<Payment> getKonusmaciById(@PathVariable("id") Long id) {
         Payment Payment = this.service.get(id);
@@ -32,15 +47,34 @@ public class PaymentController extends BaseController {
         return new ResponseEntity<Payment>(Payment, HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/Payment/OdemeDTO")
+    public ResponseEntity<OdemeDTO> addOdemeDto(@RequestBody OdemeDTO odemeDTO) {
+        this.service.addOdeme(odemeDTO);
+        return new ResponseEntity(odemeDTO, HttpStatus.CREATED);
+    }
+
     @PutMapping(value = "/Payment")
-    public ResponseEntity<Payment> updateKonusmaci(@PathVariable Long id, @RequestBody Payment Payment) {
+    public ResponseEntity<Payment> updateKonusmaci(@RequestBody Payment Payment) {
         this.service.update(Payment);
         return new ResponseEntity<Payment>(Payment, HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/Payment/Odeme")
+    public ResponseEntity<OdemeDTO> updateKonusmaci(@RequestBody OdemeDTO odemeDTO) {
+        this.service.updateOdeme(odemeDTO);
+        return new ResponseEntity(odemeDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/Payment")
     public ResponseEntity<Boolean> deleteEtkinlik(Payment Payment) {
         this.service.remove(Payment);
+        return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
+    }
+
+
+    @DeleteMapping(value = "/Payment/Odeme")
+    public ResponseEntity<Boolean> deleteOdeme(OdemeDTO odemeDTO) {
+        this.service.deleteOdeme(odemeDTO);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }
 }
