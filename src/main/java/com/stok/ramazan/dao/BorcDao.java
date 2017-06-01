@@ -11,7 +11,8 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 
 @Repository("borcDao")
-public class BorcDao extends GenericDaoImpl<Borc, Long> implements IBorcDao {
+public class BorcDao extends GenericDaoImpl<Borc, Long>
+        implements IBorcDao {
 
     @Override
     public Double getToplamBorcByMusteriOid(Long musteriOid) {
@@ -23,8 +24,8 @@ public class BorcDao extends GenericDaoImpl<Borc, Long> implements IBorcDao {
         );
         criteria.setResultTransformer(Transformers.aliasToBean(BigDecimal.class));
         BigDecimal toplamBorc = (BigDecimal) criteria.uniqueResult();
-
-
         return toplamBorc.doubleValue();
     }
+
+
 }

@@ -8,7 +8,7 @@ public class SiparisDTO extends BaseDTO {
     private int metre;
     private int adet;
     private Double ucreti;
-    private SiparisListesiDTO siparisListesi;
+    private Long borcOid;
 
     public UrunDTO getUrun() {
         return urun;
@@ -42,11 +42,11 @@ public class SiparisDTO extends BaseDTO {
         this.ucreti = ucreti;
     }
 
-    public SiparisListesiDTO getSiparisListesi() {
-        return siparisListesi;
+    public Long getBorcOid() {
+        return borcOid;
     }
 
-    public void setSiparisListesi(SiparisListesiDTO siparisListesi) {
-        this.siparisListesi = siparisListesi;
+    public void setBorcOid(Long borcOid) {
+        this.borcOid = borcOid;
     }
 }

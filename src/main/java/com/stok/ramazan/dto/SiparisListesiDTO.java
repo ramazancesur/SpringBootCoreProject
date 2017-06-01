@@ -6,8 +6,8 @@ import java.util.List;
 public class SiparisListesiDTO extends BaseDTO {
     private MusteriDTO musteri;
     private double toplamSiparisBorcu;
-    private String musteriSiparisNotuy;
-    private String satisSiparisNotu;
+    private String musteriNotu;
+    private String saticiNotu;
     private Date beklenenTeslimatTarihi;
     private List<SiparisDTO> lstSiparisDTOS;
 
@@ -27,20 +27,20 @@ public class SiparisListesiDTO extends BaseDTO {
         this.toplamSiparisBorcu = toplamSiparisBorcu;
     }
 
-    public String getMusteriSiparisNotuy() {
-        return musteriSiparisNotuy;
+    public String getMusteriNotu() {
+        return musteriNotu;
     }
 
-    public void setMusteriSiparisNotuy(String musteriSiparisNotuy) {
-        this.musteriSiparisNotuy = musteriSiparisNotuy;
+    public void setMusteriNotu(String musteriNotu) {
+        this.musteriNotu = musteriNotu;
     }
 
-    public String getSatisSiparisNotu() {
-        return satisSiparisNotu;
+    public String getSaticiNotu() {
+        return saticiNotu;
     }
 
-    public void setSatisSiparisNotu(String satisSiparisNotu) {
-        this.satisSiparisNotu = satisSiparisNotu;
+    public void setSaticiNotu(String saticiNotu) {
+        this.saticiNotu = saticiNotu;
     }
 
     public Date getBeklenenTeslimatTarihi() {

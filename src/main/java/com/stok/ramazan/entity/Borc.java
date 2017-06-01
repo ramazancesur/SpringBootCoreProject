@@ -2,20 +2,24 @@ package com.stok.ramazan.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "BORC")
 public class Borc extends BaseEntity {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-
     @Column(name = "TOPLAM_BORC")
     private BigDecimal toplamBorc;
     @Column(name = "KALAN_BORC")
     private BigDecimal kalanBorc;
+
+    @Column(name = "MUSTERI_NOTU")
+    private String musteriNotu;
+    @Column(name = "SATICI_NOTU")
+    private String saticiNotu;
+
+    @Column
+    private Date beklenenOdemeTarihi;
 
     @ManyToOne
     @JoinColumn(name = "ODEME_SUBE")
@@ -26,7 +30,9 @@ public class Borc extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "MUSTERI")
     private Musteri musteri;
-
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "BORC_DETAY_OID")
+    private List<BorcDetay> lstBorceDetay;
 
     public BigDecimal getToplamBorc() {
         return toplamBorc;
@@ -68,4 +74,35 @@ public class Borc extends BaseEntity {
         this.musteri = musteri;
     }
 
+    public List<BorcDetay> getLstBorceDetay() {
+        return lstBorceDetay;
+    }
+
+    public void setLstBorceDetay(List<BorcDetay> lstBorceDetay) {
+        this.lstBorceDetay = lstBorceDetay;
+    }
+
+    public Date getBeklenenOdemeTarihi() {
+        return beklenenOdemeTarihi;
+    }
+
+    public void setBeklenenOdemeTarihi(Date beklenenOdemeTarihi) {
+        this.beklenenOdemeTarihi = beklenenOdemeTarihi;
+    }
+
+    public String getMusteriNotu() {
+        return musteriNotu;
+    }
+
+    public void setMusteriNotu(String musteriNotu) {
+        this.musteriNotu = musteriNotu;
+    }
+
+    public String getSaticiNotu() {
+        return saticiNotu;
+    }
+
+    public void setSaticiNotu(String saticiNotu) {
+        this.saticiNotu = saticiNotu;
+    }
 }

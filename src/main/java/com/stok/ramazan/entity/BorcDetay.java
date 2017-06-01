@@ -1,75 +1,39 @@
 package com.stok.ramazan.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "BORC_DETAY")
 public class BorcDetay extends BaseEntity {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-    @Column(name = "KALAN_BORC")
-    private BigDecimal kalanBorc;
-    @Column(name = "ONCEKI_BORC")
-    private BigDecimal oncekiBorc;
-    @Column(name = "TOPLAM_AKSATMA_SAYISI")
-    private int toplamAksatmaSayisi;
-    @Column(name = "TOPLAM_GECIKILEN_GUN_SAYISI")
-    private int toplamGecikilenGunSayisi;
-    @Column(name = "ORTALAMA_GECIKILEN_GUN_SAYISI")
-    private double ortalamaGecikilenGunSayisi;
     @ManyToOne
-    @JoinColumn(name = "BORC")
-    private Borc borc;
+    @JoinColumn(name = "PRODUCT")
+    private Product product;
+    @Column(name = "METRE")
+    private int metre;
+    @Column(name = "ADET")
+    private int adet;
 
-    public BigDecimal getKalanBorc() {
-        return kalanBorc;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setKalanBorc(BigDecimal kalanBorc) {
-        this.kalanBorc = kalanBorc;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public BigDecimal getOncekiBorc() {
-        return oncekiBorc;
+    public int getMetre() {
+        return metre;
     }
 
-    public void setOncekiBorc(BigDecimal oncekiBorc) {
-        this.oncekiBorc = oncekiBorc;
+    public void setMetre(int metre) {
+        this.metre = metre;
     }
 
-    public int getToplamAksatmaSayisi() {
-        return toplamAksatmaSayisi;
+    public int getAdet() {
+        return adet;
     }
 
-    public void setToplamAksatmaSayisi(int toplamAksatmaSayisi) {
-        this.toplamAksatmaSayisi = toplamAksatmaSayisi;
+    public void setAdet(int adet) {
+        this.adet = adet;
     }
-
-    public int getToplamGecikilenGunSayisi() {
-        return toplamGecikilenGunSayisi;
-    }
-
-    public void setToplamGecikilenGunSayisi(int toplamGecikilenGunSayisi) {
-        this.toplamGecikilenGunSayisi = toplamGecikilenGunSayisi;
-    }
-
-    public double getOrtalamaGecikilenGunSayisi() {
-        return ortalamaGecikilenGunSayisi;
-    }
-
-    public void setOrtalamaGecikilenGunSayisi(double ortalamaGecikilenGunSayisi) {
-        this.ortalamaGecikilenGunSayisi = ortalamaGecikilenGunSayisi;
-    }
-
-    public Borc getBorc() {
-        return borc;
-    }
-
-    public void setBorc(Borc borc) {
-        this.borc = borc;
-    }
-
 }

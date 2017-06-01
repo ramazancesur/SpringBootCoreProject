@@ -1,5 +1,6 @@
 package com.stok.ramazan.controller;
 
+import com.stok.ramazan.dto.SiparisListesiDTO;
 import com.stok.ramazan.entity.Borc;
 import com.stok.ramazan.service.interfaces.IBorcService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,19 @@ public class BorcController extends BaseController {
         return new ResponseEntity<List<Borc>>(lstBorc, HttpStatus.OK);
     }
 
+    @GetMapping("/BorcList/SiparisListesi")
+    public ResponseEntity<List<SiparisListesiDTO>> getSiparisListesi() {
+        List<SiparisListesiDTO> lstSiparisListesi = this.service.getAllSiparis();
+        return new ResponseEntity(lstSiparisListesi, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/BorcList/SiparisListesi/{id}")
+    public ResponseEntity<SiparisListesiDTO> getSiparisListesiiById(@PathVariable("id") Long id) {
+        SiparisListesiDTO siparisListesiDTO = this.service.getSiparis(id);
+        return new ResponseEntity(siparisListesiDTO, HttpStatus.OK);
+    }
+
+
     @GetMapping(value = "/BorcList/{id}")
     public ResponseEntity<Borc> getKonusmaciById(@PathVariable("id") Long id) {
         Borc Borc = this.service.get(id);
@@ -32,10 +46,29 @@ public class BorcController extends BaseController {
         return new ResponseEntity<Borc>(Borc, HttpStatus.CREATED);
     }
 
+
+    @PostMapping(value = "/Borc/SiparisListesiDTO")
+    public ResponseEntity<SiparisListesiDTO> addSiparisListesi(@RequestBody SiparisListesiDTO siparisListesiDTO) {
+        this.service.addSiparis(siparisListesiDTO);
+        return new ResponseEntity(siparisListesiDTO, HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/Borc/SiparisListesiDTO")
+    public ResponseEntity<SiparisListesiDTO> updateSiparisListesi(@RequestBody SiparisListesiDTO siparisListesiDTO) {
+        this.service.updateSiparis(siparisListesiDTO);
+        return new ResponseEntity(siparisListesiDTO, HttpStatus.CREATED);
+    }
+
     @PutMapping(value = "/Borc")
     public ResponseEntity<Borc> updateKonusmaci(@PathVariable Long id, @RequestBody Borc Borc) {
         this.service.update(Borc);
         return new ResponseEntity<Borc>(Borc, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/Borc/SiparisListesi")
+    public ResponseEntity<Boolean> deleteSiparisListesi(SiparisListesiDTO siparisListesiDTO) {
+        this.service.deleteSiparis(siparisListesiDTO.getOid());
+        return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(value = "/Borc")

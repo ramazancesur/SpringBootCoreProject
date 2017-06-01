@@ -1,5 +1,7 @@
 package com.stok.ramazan.dto;
 
+import java.util.Date;
+
 public class UrunDTO extends BaseDTO {
     /**
      *
@@ -8,9 +10,8 @@ public class UrunDTO extends BaseDTO {
 
     private String productName;
     private double price;
-    //Geliş Tarihi
-    private String commingDate;
-
+    private Date sonKullanmaTarihi;
+    private Date gelisTarihi;
 
     public String getProductName() {
         return productName;
@@ -28,11 +29,19 @@ public class UrunDTO extends BaseDTO {
         this.price = price;
     }
 
-    public String getCommingDate() {
-        return commingDate;
+    public Date getSonKullanmaTarihi() {
+        return sonKullanmaTarihi;
     }
 
-    public void setCommingDate(String commingDate) {
-        this.commingDate = commingDate;
+    public void setSonKullanmaTarihi(Date sonKullanmaTarihi) {
+        this.sonKullanmaTarihi = sonKullanmaTarihi;
+    }
+
+    public Date getGelisTarihi() {
+        return gelisTarihi;
+    }
+
+    public void setGelisTarihi(Date gelisTarihi) {
+        this.gelisTarihi = gelisTarihi;
     }
 }

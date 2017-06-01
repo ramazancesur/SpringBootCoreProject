@@ -35,28 +35,20 @@ public class Product extends BaseEntity {
         this.productName = productName;
     }
 
-    public Date getSonKullanmaTarihi() {
-        return sonKullanmaTarihi;
-    }
-
-    public void setSonKullanmaTarihi(Date sonKullanmaTarihi) {
-        this.sonKullanmaTarihi = sonKullanmaTarihi;
-    }
-
-    public Price getPrice() {
-        return price;
-    }
-
-    public void setPrice(Price price) {
-        this.price = price;
-    }
-
     public String getAciklama() {
         return aciklama;
     }
 
     public void setAciklama(String aciklama) {
         this.aciklama = aciklama;
+    }
+
+    public Date getSonKullanmaTarihi() {
+        return sonKullanmaTarihi;
+    }
+
+    public void setSonKullanmaTarihi(Date sonKullanmaTarihi) {
+        this.sonKullanmaTarihi = sonKullanmaTarihi;
     }
 
     public String getIbanNo() {
@@ -75,4 +67,11 @@ public class Product extends BaseEntity {
         this.unitType = unitType;
     }
 
+    public Price getPrice() {
+        return price;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
+    }
 }
