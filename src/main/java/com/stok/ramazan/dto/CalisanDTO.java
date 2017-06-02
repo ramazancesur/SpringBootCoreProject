@@ -14,6 +14,9 @@ public class CalisanDTO extends BaseDTO {
     private List<AdresTelefon> lstAddresTel;
     private Date iseGirisTarihi;
 
+    // Firma Eklenilecektir ama şimdilik sabit bir şey eklenecektir.
+    private Long firmaOid;
+
     // Proje tamamlandığında lisans keye de bakılacaktır
     // Şu anda yoktur
     private String lisansKey;
