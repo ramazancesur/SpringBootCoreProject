@@ -59,13 +59,14 @@ public class BorcService extends GenericServiceImpl<Borc, Long>
         siparisListesiDTO.setOid(borc.getOid());
         if (borc.getLstBorceDetay() != null) {
             borc.getLstBorceDetay().stream()
-                    .filter(x -> x.getProduct() != null && x.getProduct().getPrice() != null)
+                    .filter(x -> x.getProduct() != null && x.getProduct().getLstPrice() != null)
                     .forEach(borcDetay -> {
                         siparisDTO.setAdet(borcDetay.getAdet());
                         siparisDTO.setMetre(borcDetay.getMetre());
                         siparisDTO.setOid(borcDetay.getOid());
                         siparisDTO.setBorcOid(borc.getOid());
-                        siparisDTO.setUcreti(borcDetay.getProduct().getPrice().getFiyati().doubleValue());
+                        siparisDTO.setUcreti(borcDetay.getProduct().getLstPrice().
+                                get(borcDetay.getProduct().getLstPrice().size() - 1).getFiyati().doubleValue());
                         siparisDTO.setCreatedDate(borcDetay.getCreatedDate());
                         siparisDTO.setUpdatedDate(borcDetay.getUpdatedDate());
 
@@ -73,7 +74,7 @@ public class BorcService extends GenericServiceImpl<Borc, Long>
                         Product product = borcDetay.getProduct();
                         urunDTO.setGelisTarihi(new Date());
                         urunDTO.setSonKullanmaTarihi(product.getSonKullanmaTarihi());
-                        urunDTO.setPrice(product.getPrice().getFiyati().doubleValue());
+                        urunDTO.setPrice(product.getLstPrice().get(product.getLstPrice().size() - 1).getFiyati().doubleValue());
                         urunDTO.setProductName(product.getProductName());
                         urunDTO.setCreatedDate(product.getCreatedDate());
                         urunDTO.setUpdatedDate(product.getUpdatedDate());

@@ -4,15 +4,11 @@ import com.stok.ramazan.helper.EnumUtil.UnitType;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "MALZEME")
 public class Product extends BaseEntity {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-
     @Column(name = "ADI")
     private String productName;
     @Column(name = "ACIKLAMA")
@@ -23,9 +19,11 @@ public class Product extends BaseEntity {
     private String ibanNo;
     @Column(name = "UNIT_TYPE")
     private UnitType unitType;
-    @ManyToOne
-    @JoinColumn(name = "MALZEME_FIYATI")
-    private Price price;
+    @Column(name = "GELIS_TARIHI")
+    private Date commingDate;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "MALZEME_FIYAT_LISTESI")
+    private List<Price> lstPrice;
 
     public String getProductName() {
         return productName;
@@ -67,11 +65,19 @@ public class Product extends BaseEntity {
         this.unitType = unitType;
     }
 
-    public Price getPrice() {
-        return price;
+    public Date getCommingDate() {
+        return commingDate;
     }
 
-    public void setPrice(Price price) {
-        this.price = price;
+    public void setCommingDate(Date commingDate) {
+        this.commingDate = commingDate;
+    }
+
+    public List<Price> getLstPrice() {
+        return lstPrice;
+    }
+
+    public void setLstPrice(List<Price> lstPrice) {
+        this.lstPrice = lstPrice;
     }
 }

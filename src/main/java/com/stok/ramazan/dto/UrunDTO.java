@@ -1,17 +1,16 @@
 package com.stok.ramazan.dto;
 
+import com.stok.ramazan.helper.EnumUtil;
+
 import java.util.Date;
 
 public class UrunDTO extends BaseDTO {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-
     private String productName;
     private double price;
     private Date sonKullanmaTarihi;
     private Date gelisTarihi;
+    private String urunAciklamasi;
+    private EnumUtil.UnitType unitType;
 
     public String getProductName() {
         return productName;
@@ -43,5 +42,21 @@ public class UrunDTO extends BaseDTO {
 
     public void setGelisTarihi(Date gelisTarihi) {
         this.gelisTarihi = gelisTarihi;
+    }
+
+    public String getUrunAciklamasi() {
+        return urunAciklamasi;
+    }
+
+    public void setUrunAciklamasi(String urunAciklamasi) {
+        this.urunAciklamasi = urunAciklamasi;
+    }
+
+    public EnumUtil.UnitType getUnitType() {
+        return unitType;
+    }
+
+    public void setUnitType(EnumUtil.UnitType unitType) {
+        this.unitType = unitType;
     }
 }
