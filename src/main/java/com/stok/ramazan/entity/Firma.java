@@ -6,12 +6,10 @@ import javax.persistence.*;
 @Table(name = "FIRMA")
 public class Firma extends BaseEntity {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
     @Column(name = "FIRM_ADI")
     private String firmaAdi;
+    @Column(name = "FIRMA_LOGO_YOLU")
+    private String firmaLogoYolu;
 
     @OneToOne
     @JoinColumn(name = "FIRM_USER")

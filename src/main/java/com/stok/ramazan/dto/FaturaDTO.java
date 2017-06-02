@@ -2,9 +2,8 @@ package com.stok.ramazan.dto;
 
 public class FaturaDTO extends BaseDTO {
     private String sirketAdi;
-    private double toplamTutar;
     private String sirketLogoYolu;
-    private String musteriAdresi;
+    private MusteriDTO musteri;
     private SiparisListesiDTO siparisListesi;
 
     public String getSirketAdi() {
@@ -15,14 +14,6 @@ public class FaturaDTO extends BaseDTO {
         this.sirketAdi = sirketAdi;
     }
 
-    public double getToplamTutar() {
-        return toplamTutar;
-    }
-
-    public void setToplamTutar(double toplamTutar) {
-        this.toplamTutar = toplamTutar;
-    }
-
     public String getSirketLogoYolu() {
         return sirketLogoYolu;
     }
@@ -31,12 +22,12 @@ public class FaturaDTO extends BaseDTO {
         this.sirketLogoYolu = sirketLogoYolu;
     }
 
-    public String getMusteriAdresi() {
-        return musteriAdresi;
+    public MusteriDTO getMusteri() {
+        return musteri;
     }
 
-    public void setMusteriAdresi(String musteriAdresi) {
-        this.musteriAdresi = musteriAdresi;
+    public void setMusteri(MusteriDTO musteri) {
+        this.musteri = musteri;
     }
 
     public SiparisListesiDTO getSiparisListesi() {
