@@ -1,9 +1,9 @@
 package com.stok.ramazan.service;
 
+import com.stok.ramazan.android.dto.AdresTelefon;
+import com.stok.ramazan.android.dto.CalisanDTO;
 import com.stok.ramazan.dao.EmployeeDao;
 import com.stok.ramazan.dao.interfaces.*;
-import com.stok.ramazan.dto.AdresTelefon;
-import com.stok.ramazan.dto.CalisanDTO;
 import com.stok.ramazan.entity.*;
 import com.stok.ramazan.helper.EnumUtil;
 import com.stok.ramazan.service.interfaces.IEmployeeService;

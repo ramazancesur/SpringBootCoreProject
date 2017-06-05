@@ -1,7 +1,5 @@
 package com.stok.ramazan.entity;
 
-import com.stok.ramazan.annotations.Control;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -23,6 +21,7 @@ public class Fatura extends BaseEntity {
     private String sirketAdi;
     @Column(name = "SIRKET_LOGO_PATH")
     private String sirketLogoPath;
+
     public Employee getEmployee() {
         return employee;
     }

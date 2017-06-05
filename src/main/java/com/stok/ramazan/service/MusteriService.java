@@ -1,11 +1,11 @@
 package com.stok.ramazan.service;
 
+import com.stok.ramazan.android.dto.AdresTelefon;
+import com.stok.ramazan.android.dto.MusteriDTO;
 import com.stok.ramazan.dao.MusteriDao;
 import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.dao.interfaces.IAdressDao;
 import com.stok.ramazan.dao.interfaces.IConductDao;
-import com.stok.ramazan.dto.AdresTelefon;
-import com.stok.ramazan.dto.MusteriDTO;
 import com.stok.ramazan.entity.Address;
 import com.stok.ramazan.entity.Conduct;
 import com.stok.ramazan.entity.Musteri;

@@ -1,6 +1,6 @@
 package com.stok.ramazan.controller;
 
-import com.stok.ramazan.dto.MusteriDTO;
+import com.stok.ramazan.android.dto.MusteriDTO;
 import com.stok.ramazan.entity.Musteri;
 import com.stok.ramazan.service.interfaces.IMusteriService;
 import org.springframework.beans.factory.annotation.Autowired;

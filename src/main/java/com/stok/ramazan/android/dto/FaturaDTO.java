@@ -1,4 +1,4 @@
-package com.stok.ramazan.dto;
+package com.stok.ramazan.android.dto;
 
 public class FaturaDTO extends BaseDTO {
     private String sirketAdi;

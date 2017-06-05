@@ -1,6 +1,6 @@
 package com.stok.ramazan.service.interfaces;
 
-import com.stok.ramazan.dto.SiparisListesiDTO;
+import com.stok.ramazan.android.dto.SiparisListesiDTO;
 import com.stok.ramazan.entity.Borc;
 
 import java.util.List;

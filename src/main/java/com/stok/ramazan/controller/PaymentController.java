@@ -1,6 +1,6 @@
 package com.stok.ramazan.controller;
 
-import com.stok.ramazan.dto.OdemeDTO;
+import com.stok.ramazan.android.dto.OdemeDTO;
 import com.stok.ramazan.entity.Payment;
 import com.stok.ramazan.service.interfaces.IPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;

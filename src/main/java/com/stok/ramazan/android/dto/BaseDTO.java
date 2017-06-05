@@ -1,4 +1,4 @@
-package com.stok.ramazan.dto;
+package com.stok.ramazan.android.dto;
 
 import java.io.Serializable;
 import java.util.Date;

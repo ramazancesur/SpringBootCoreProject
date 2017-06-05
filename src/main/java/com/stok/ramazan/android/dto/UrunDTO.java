@@ -1,4 +1,4 @@
-package com.stok.ramazan.dto;
+package com.stok.ramazan.android.dto;
 
 import com.stok.ramazan.helper.EnumUtil;
 

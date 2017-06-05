@@ -1,10 +1,10 @@
 package com.stok.ramazan.service;
 
+import com.stok.ramazan.android.dto.SiparisDTO;
+import com.stok.ramazan.android.dto.SiparisListesiDTO;
+import com.stok.ramazan.android.dto.UrunDTO;
 import com.stok.ramazan.dao.BorcDao;
 import com.stok.ramazan.dao.interfaces.*;
-import com.stok.ramazan.dto.SiparisDTO;
-import com.stok.ramazan.dto.SiparisListesiDTO;
-import com.stok.ramazan.dto.UrunDTO;
 import com.stok.ramazan.entity.Borc;
 import com.stok.ramazan.entity.BorcDetay;
 import com.stok.ramazan.entity.Product;

@@ -1,8 +1,8 @@
 package com.stok.ramazan.dao;
 
+import com.stok.ramazan.android.dto.AdresTelefon;
+import com.stok.ramazan.android.dto.CalisanDTO;
 import com.stok.ramazan.dao.interfaces.IEmployeeDao;
-import com.stok.ramazan.dto.AdresTelefon;
-import com.stok.ramazan.dto.CalisanDTO;
 import com.stok.ramazan.entity.Employee;
 import com.stok.ramazan.helper.EnumUtil;
 import org.hibernate.Criteria;

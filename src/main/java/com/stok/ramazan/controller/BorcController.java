@@ -1,6 +1,6 @@
 package com.stok.ramazan.controller;
 
-import com.stok.ramazan.dto.SiparisListesiDTO;
+import com.stok.ramazan.android.dto.SiparisListesiDTO;
 import com.stok.ramazan.entity.Borc;
 import com.stok.ramazan.service.interfaces.IBorcService;
 import org.springframework.beans.factory.annotation.Autowired;

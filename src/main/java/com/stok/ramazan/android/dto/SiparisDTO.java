@@ -1,4 +1,4 @@
-package com.stok.ramazan.dto;
+package com.stok.ramazan.android.dto;
 
 /**
  * Created by LocalAdmin on 23.05.2017.

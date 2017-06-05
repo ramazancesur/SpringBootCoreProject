@@ -3,10 +3,14 @@ package com.stok.ramazan.dao;
 import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.entity.BaseEntity;
 import com.stok.ramazan.helper.EnumUtil.EntityState;
+import com.stok.ramazan.pojo.DataProperty;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +64,29 @@ public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializabl
         entity.setUpdatedDate(new Date());
         currentSession().save(entity);
         return entity;
+    }
+
+
+    public Criteria getData(List<DataProperty> lstRelationClass, List<DataProperty> lstProperty) {
+        // hashmap e ilgili classın ismini ekleyeceksın  ve
+        ProjectionList projectionList =
+                Projections.projectionList();
+        Criteria criteria = createEntityCriteria();
+        for (DataProperty dataProperty : lstRelationClass) {
+            criteria.createAlias(dataProperty.getColumnValue(), dataProperty.getAlias());
+        }
+
+        for (DataProperty dataProperty : lstProperty) {
+            projectionList.add(Projections.property(dataProperty.getColumnValue()), dataProperty.getAlias());
+        }
+        criteria.setProjection(projectionList);
+        return criteria;
+    }
+
+    public List<Object> getAllPojo(List<DataProperty> lstRelationClass, List<DataProperty> lstProperty, Class clazz) {
+        Criteria criteria = getData(lstRelationClass, lstProperty);
+        criteria.setResultTransformer(Transformers.aliasToBean(clazz));
+        return criteria.list();
     }
 
     @Override

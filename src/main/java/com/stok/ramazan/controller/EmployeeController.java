@@ -1,6 +1,6 @@
 package com.stok.ramazan.controller;
 
-import com.stok.ramazan.dto.CalisanDTO;
+import com.stok.ramazan.android.dto.CalisanDTO;
 import com.stok.ramazan.entity.Employee;
 import com.stok.ramazan.service.interfaces.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;

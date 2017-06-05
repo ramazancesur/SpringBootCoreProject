@@ -1,10 +1,10 @@
 package com.stok.ramazan.service;
 
+import com.stok.ramazan.android.dto.UrunDTO;
 import com.stok.ramazan.dao.ProductDao;
 import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.dao.interfaces.IPriceDao;
 import com.stok.ramazan.dao.interfaces.IProductDao;
-import com.stok.ramazan.dto.UrunDTO;
 import com.stok.ramazan.entity.Price;
 import com.stok.ramazan.entity.Product;
 import com.stok.ramazan.service.interfaces.IProductService;

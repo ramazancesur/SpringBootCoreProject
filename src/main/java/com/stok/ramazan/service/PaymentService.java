@@ -1,11 +1,11 @@
 package com.stok.ramazan.service;
 
+import com.stok.ramazan.android.dto.OdemeDTO;
 import com.stok.ramazan.dao.PaymentDao;
 import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.dao.interfaces.IBorcDao;
 import com.stok.ramazan.dao.interfaces.IMusteriDao;
 import com.stok.ramazan.dao.interfaces.IPaymentDao;
-import com.stok.ramazan.dto.OdemeDTO;
 import com.stok.ramazan.entity.Borc;
 import com.stok.ramazan.entity.Musteri;
 import com.stok.ramazan.entity.Payment;
