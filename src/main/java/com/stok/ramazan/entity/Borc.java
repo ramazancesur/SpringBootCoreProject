@@ -1,5 +1,8 @@
 package com.stok.ramazan.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -30,7 +33,11 @@ public class Borc extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "MUSTERI")
     private Musteri musteri;
+
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+
     @JoinColumn(name = "BORC_DETAY_OID")
     private List<BorcDetay> lstBorceDetay;
 

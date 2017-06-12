@@ -27,10 +27,16 @@ public class EmployeeService extends
     private IRoleDao roleDao;
 
     @Autowired
+    private IFirmaDao firmaDao;
+
+    @Autowired
     private IUserDao userDao;
 
     @Autowired
     private IAdressDao adressDao;
+
+    @Autowired
+    private ISubeDao subeDao;
 
     @Autowired
     public EmployeeService(@Qualifier("employeeDao") GenericDao<Employee, Long> genericDao) {
@@ -86,6 +92,24 @@ public class EmployeeService extends
         user.setRole(role);
         userDao.add(user);
         employee.setUser(user);
+        Firma firma = firmaDao.find(calisanDTO.getSirketDTO().getOid());
+        List<Sube> lstSube = subeDao.getAllSube(calisanDTO.getSirketDTO().getOid());
+        if (lstSube.size() != 0) {
+            employee.setFirma(lstSube.get(0));
+        } else {
+            Sube sube = new Sube();
+            Address address = firma.getAdress();
+            sube.setAdress(address);
+            sube.setFirma(firma);
+            sube.setFirmaAdi(firma.getFirmaAdi());
+            sube.setLstConduct(firma.getLstConduct());
+            sube.setFirmaTipi(EnumUtil.FirmaTipi.KAYITLI_FIRMA);
+            subeDao.add(sube);
+            employee.setFirma(sube);
+        }
+        employee.setIseGirisTarihi(calisanDTO.getIseGirisTarihi());
+
+        employeeDao.add(employee);
 
     }
 

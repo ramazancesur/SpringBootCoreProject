@@ -1,13 +1,14 @@
 package com.stok.ramazan.entity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.math.BigDecimal;
 
 /**
  * Created by Ramazan CESUR on 02.06.2017.
  */
+
+@Entity
+@Table(name = "FATURA")
 public class Fatura extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "EMPLOYEE_OID")
@@ -17,10 +18,12 @@ public class Fatura extends BaseEntity {
     private Borc borc;
     @Column(name = "FATURA_NOTU")
     private String faturaNotu;
-    @Column(name = "SIRKET_ADI")
-    private String sirketAdi;
-    @Column(name = "SIRKET_LOGO_PATH")
-    private String sirketLogoPath;
+    @OneToOne
+    @JoinColumn(name = "FIRMA_OID")
+    private Firma firma;
+
+    @Column(name = "FATURA_TUTARI")
+    private BigDecimal faturaTutari;
 
     public Employee getEmployee() {
         return employee;
@@ -46,19 +49,19 @@ public class Fatura extends BaseEntity {
         this.faturaNotu = faturaNotu;
     }
 
-    public String getSirketAdi() {
-        return sirketAdi;
+    public Firma getFirma() {
+        return firma;
     }
 
-    public void setSirketAdi(String sirketAdi) {
-        this.sirketAdi = sirketAdi;
+    public void setFirma(Firma firma) {
+        this.firma = firma;
     }
 
-    public String getSirketLogoPath() {
-        return sirketLogoPath;
+    public BigDecimal getFaturaTutari() {
+        return faturaTutari;
     }
 
-    public void setSirketLogoPath(String sirketLogoPath) {
-        this.sirketLogoPath = sirketLogoPath;
+    public void setFaturaTutari(BigDecimal faturaTutari) {
+        this.faturaTutari = faturaTutari;
     }
 }

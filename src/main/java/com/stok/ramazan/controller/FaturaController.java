@@ -1,5 +1,6 @@
 package com.stok.ramazan.controller;
 
+import com.stok.ramazan.android.dto.FaturaDTO;
 import com.stok.ramazan.entity.Fatura;
 import com.stok.ramazan.service.interfaces.IFaturaService;
 import org.slf4j.Logger;
@@ -28,6 +29,20 @@ public class FaturaController implements BController<Fatura> {
         return new ResponseEntity<List<Fatura>>(lstFatura, HttpStatus.OK);
     }
 
+    @GetMapping("/fatura/faturaDTOList")
+    public ResponseEntity<List<FaturaDTO>> getAllFaturaDTO() {
+        List<FaturaDTO> lstFatura = faturaService.getAllFatura();
+        return new ResponseEntity<List<FaturaDTO>>(lstFatura, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/fatura/faturaDTO/{id}")
+    public ResponseEntity<FaturaDTO> getFaturaDTOById(@PathVariable("id") Long id) {
+        FaturaDTO fatura = faturaService.getFatura(id);
+        return new ResponseEntity<FaturaDTO>(fatura, HttpStatus.OK);
+    }
+
+
     @Override
     @GetMapping("/fatura/{id}")
     public ResponseEntity<Fatura> getDataById(@PathVariable("id") Long id) {
@@ -47,11 +62,33 @@ public class FaturaController implements BController<Fatura> {
         }
     }
 
+    @PostMapping("/fatura/faturaDTO")
+    public ResponseEntity<Boolean> addFaturaDTO(@RequestBody FaturaDTO data) {
+        try {
+            faturaService.addFatura(data);
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        } catch (Exception ex) {
+            LOGGER.error("hata meydana geldi" + ex.getMessage());
+            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @Override
     @PutMapping("/fatura")
     public ResponseEntity<Boolean> updateData(@RequestBody Fatura data) {
         try {
             faturaService.update(data);
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        } catch (Exception ex) {
+            LOGGER.error("hata meydana geldi" + ex.getMessage());
+            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/fatura/faturaDTO")
+    public ResponseEntity<Boolean> updateFaturaDTO(@RequestBody FaturaDTO data) {
+        try {
+            faturaService.updateFatura(data);
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         } catch (Exception ex) {
             LOGGER.error("hata meydana geldi" + ex.getMessage());
@@ -71,4 +108,14 @@ public class FaturaController implements BController<Fatura> {
         }
     }
 
+    @DeleteMapping("/fatura/faturaDTO")
+    public ResponseEntity<Boolean> deleteFaturaDTO(FaturaDTO data) {
+        try {
+            faturaService.removeFatura(data.getOid());
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        } catch (Exception ex) {
+            LOGGER.error("hata meydana geldi" + ex.getMessage());
+            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

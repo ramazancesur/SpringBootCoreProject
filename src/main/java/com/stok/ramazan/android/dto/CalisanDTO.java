@@ -14,12 +14,8 @@ public class CalisanDTO extends BaseDTO {
     private List<AdresTelefon> lstAddresTel;
     private Date iseGirisTarihi;
 
-    // Firma Eklenilecektir ama şimdilik sabit bir şey eklenecektir.
-    private Long firmaOid;
-
-    // Proje tamamlandığında lisans keye de bakılacaktır
-    // Şu anda yoktur
-    private String lisansKey;
+    // Tamamlandığında yazılacaktır
+    private SirketDTO sirketDTO;
 
     public EnumUtil.EmployeeType getEmployeeType() {
         return employeeType;
@@ -77,11 +73,11 @@ public class CalisanDTO extends BaseDTO {
         this.iseGirisTarihi = iseGirisTarihi;
     }
 
-    public String getLisansKey() {
-        return lisansKey;
+    public SirketDTO getSirketDTO() {
+        return sirketDTO;
     }
 
-    public void setLisansKey(String lisansKey) {
-        this.lisansKey = lisansKey;
+    public void setSirketDTO(SirketDTO sirketDTO) {
+        this.sirketDTO = sirketDTO;
     }
 }

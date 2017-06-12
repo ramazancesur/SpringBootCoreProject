@@ -13,8 +13,8 @@ public class Lisans extends BaseEntity {
     @Column(name = "LICENSE_FINISH_DATE")
     private Date licenseFinishDate;
     @ManyToOne
-    @JoinColumn(name = "MUSTERI_OID")
-    private Musteri musteri;
+    @JoinColumn(name = "FIRMA")
+    private Firma firma;
 
     public String getLicenseKey() {
         return licenseKey;
@@ -40,11 +40,11 @@ public class Lisans extends BaseEntity {
         this.licenseFinishDate = licenseFinishDate;
     }
 
-    public Musteri getMusteri() {
-        return musteri;
+    public Firma getFirma() {
+        return firma;
     }
 
-    public void setMusteri(Musteri musteri) {
-        this.musteri = musteri;
+    public void setFirma(Firma firma) {
+        this.firma = firma;
     }
 }

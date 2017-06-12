@@ -20,4 +20,5 @@ public class SubeService extends GenericServiceImpl<Sube, Long> implements ISube
         super(genericDao);
         this.subeDao = (SubeDao) genericDao;
     }
+
 }
