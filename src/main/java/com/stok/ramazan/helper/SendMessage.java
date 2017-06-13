@@ -1,6 +1,5 @@
-package com.stok.ramazan.application;
+package com.stok.ramazan.helper;
 
-import com.stok.ramazan.helper.Helper;
 import com.stok.ramazan.jaxb.sms.Body;
 import com.stok.ramazan.jaxb.sms.Header;
 import com.stok.ramazan.jaxb.sms.MainBody;
@@ -17,7 +16,7 @@ import java.net.URLConnection;
 /**
  * Created by Ramazan on 3.10.2016.
  */
-public class MessageTest {
+public class SendMessage {
     private static final String USER_AGENT = "Mozilla/5.0";
     Helper helper = Helper.getInstance();
 

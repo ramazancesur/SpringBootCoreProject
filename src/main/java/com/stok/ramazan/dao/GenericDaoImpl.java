@@ -38,14 +38,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializabl
     @Autowired
     private SessionFactory sessionFactory;
 
-    // Burda da implemantasyonu var
-
-    /**
-     * evet ates edio :D By defining this class as abstract, we prevent Spring
-     * from creating instance of this class If not defined abstract
-     * getClass().getGenericSuperClass() would return Object. There would be
-     * exception because Object class does not hava constructor with parameters.
-     */
     @SuppressWarnings("rawtypes")
     public GenericDaoImpl() {
         Type t = getClass().getGenericSuperclass();
