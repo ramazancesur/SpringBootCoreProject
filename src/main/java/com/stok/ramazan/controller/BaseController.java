@@ -1,5 +1,6 @@
 package com.stok.ramazan.controller;
 
+import com.stok.ramazan.entity.BaseEntity;
 import com.stok.ramazan.settings.DefaultExceptionAttributes;
 import com.stok.ramazan.settings.ExceptionAttributes;
 import org.slf4j.Logger;
@@ -15,7 +16,7 @@ import java.util.Map;
 /**
  * Base of all controllers
  */
-public class BaseController {
+public abstract class BaseController<T extends BaseEntity> implements BController<T> {
 
     /**
      * The Logger for this class.

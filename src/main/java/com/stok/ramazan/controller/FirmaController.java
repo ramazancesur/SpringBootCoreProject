@@ -11,30 +11,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class FirmaController {
+public class FirmaController extends BaseController<Firma> {
     @Autowired
     private IFirmaService service;
 
-    @GetMapping("/FirmaList")
-    public ResponseEntity<List<Firma>> getKonusmaciList() {
+    @GetMapping("/Firma/all")
+    public ResponseEntity<List<Firma>> getAll() {
         List<Firma> lstFirma = this.service.getAll();
         return new ResponseEntity<List<Firma>>(lstFirma, HttpStatus.OK);
     }
 
-    @GetMapping("/FirmaList/Sirket")
+    @GetMapping("/Firma/Sirket")
     public ResponseEntity<List<SirketDTO>> getSirketDTOlist() {
         List<SirketDTO> lstSirketDTO = this.service.getAllSirket();
         return new ResponseEntity<List<SirketDTO>>(lstSirketDTO, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/FirmaList/{id}")
-    public ResponseEntity<Firma> getKonusmaciById(@PathVariable("id") Long id) {
+    @GetMapping(value = "/Firma/{id}")
+    public ResponseEntity<Firma> getDataById(@PathVariable("id") Long id) {
         Firma Firma = this.service.get(id);
         return new ResponseEntity<Firma>(Firma, HttpStatus.OK);
     }
 
 
-    @GetMapping(value = "/FirmaList/Sirket/{id}")
+    @GetMapping(value = "/Firma/Sirket/{id}")
     public ResponseEntity<SirketDTO> getSirketById(@PathVariable("id") Long id) {
         SirketDTO sirketDTO = this.service.getSirket(id);
         return new ResponseEntity<SirketDTO>(sirketDTO, HttpStatus.OK);
@@ -42,9 +42,9 @@ public class FirmaController {
 
 
     @PostMapping(value = "/Firma")
-    public ResponseEntity<Firma> addKonusmaci(@RequestBody Firma Firma) {
+    public ResponseEntity<Boolean> addData(@RequestBody Firma Firma) {
         this.service.add(Firma);
-        return new ResponseEntity<Firma>(Firma, HttpStatus.CREATED);
+        return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/Firma/Sirket")
@@ -55,9 +55,9 @@ public class FirmaController {
 
 
     @PutMapping(value = "/Firma")
-    public ResponseEntity<Firma> updateKonusmaci(@PathVariable Long id, @RequestBody Firma Firma) {
+    public ResponseEntity<Boolean> updateData(@RequestBody Firma Firma) {
         this.service.update(Firma);
-        return new ResponseEntity<Firma>(Firma, HttpStatus.OK);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
     @PutMapping(value = "/Firma/Sirket")
@@ -67,7 +67,7 @@ public class FirmaController {
     }
 
     @DeleteMapping(value = "/Firma")
-    public ResponseEntity<Boolean> deleteEtkinlik(Firma Firma) {
+    public ResponseEntity<Boolean> deleteData(Firma Firma) {
         this.service.remove(Firma);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }

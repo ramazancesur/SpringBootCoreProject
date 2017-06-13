@@ -10,36 +10,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class IlController extends BaseController {
+public class IlController extends BaseController<Il> {
     @Autowired
     private IIlService service;
 
-    @GetMapping("/IlList")
-    public ResponseEntity<List<Il>> getKonusmaciList() {
+    @GetMapping("/Il/all")
+    public ResponseEntity<List<Il>> getAll() {
         List<Il> lstIl = this.service.getAll();
         return new ResponseEntity<List<Il>>(lstIl, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/IlList/{id}")
-    public ResponseEntity<Il> getKonusmaciById(@PathVariable("id") Long id) {
+    @GetMapping(value = "/Il/{id}")
+    public ResponseEntity<Il> getDataById(@PathVariable("id") Long id) {
         Il Il = this.service.get(id);
         return new ResponseEntity<Il>(Il, HttpStatus.OK);
     }
 
     @PostMapping(value = "/Il")
-    public ResponseEntity<Il> addKonusmaci(@RequestBody Il Il) {
+    public ResponseEntity<Boolean> addData(@RequestBody Il Il) {
         this.service.add(Il);
-        return new ResponseEntity<Il>(Il, HttpStatus.CREATED);
+        return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/Il")
-    public ResponseEntity<Il> updateKonusmaci(@PathVariable Long id, @RequestBody Il Il) {
+    public ResponseEntity<Boolean> updateData(@RequestBody Il Il) {
         this.service.update(Il);
-        return new ResponseEntity<Il>(Il, HttpStatus.OK);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/Il")
-    public ResponseEntity<Boolean> deleteEtkinlik(Il Il) {
+    public ResponseEntity<Boolean> deleteData(Il Il) {
         this.service.remove(Il);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }

@@ -9,37 +9,37 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/role")
-public class RoleController {
+@RestController
+public class RoleController extends BaseController<Role> {
     @Autowired
     private IRoleService service;
 
-    @GetMapping("/roleList")
-    public ResponseEntity<List<Role>> getKonusmaciList() {
+    @GetMapping("/Role")
+    public ResponseEntity<List<Role>> getAll() {
         List<Role> lstRole = this.service.getAll();
         return new ResponseEntity<List<Role>>(lstRole, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/roleList/{id}")
-    public ResponseEntity<Role> getKonusmaciById(@PathVariable("id") Long id) {
+    @GetMapping(value = "/Role/{id}")
+    public ResponseEntity<Role> getDataById(@PathVariable("id") Long id) {
         Role role = this.service.get(id);
         return new ResponseEntity<Role>(role, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/role")
-    public ResponseEntity<Role> addKonusmaci(@RequestBody Role role) {
+    @PostMapping(value = "/Role")
+    public ResponseEntity<Boolean> addData(@RequestBody Role role) {
         this.service.add(role);
-        return new ResponseEntity<Role>(role, HttpStatus.CREATED);
+        return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/role/{id}")
-    public ResponseEntity<Role> updateKonusmaci(@PathVariable Long id, @RequestBody Role role) {
+    @PutMapping(value = "/Role")
+    public ResponseEntity<Boolean> updateData(@RequestBody Role role) {
         this.service.update(role);
-        return new ResponseEntity<Role>(role, HttpStatus.OK);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/role/{id}")
-    public ResponseEntity<Boolean> deleteEtkinlik(Role role) {
+    @DeleteMapping(value = "/Role")
+    public ResponseEntity<Boolean> deleteData(Role role) {
         this.service.remove(role);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }

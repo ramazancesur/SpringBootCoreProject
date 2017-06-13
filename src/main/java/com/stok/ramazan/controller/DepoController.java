@@ -10,36 +10,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class DepoController extends BaseController {
+public class DepoController extends BaseController<Depo> {
     @Autowired
     private IDepoService service;
 
-    @GetMapping("/DepoList")
-    public ResponseEntity<List<Depo>> getKonusmaciList() {
+    @GetMapping("/Depo/all")
+    public ResponseEntity<List<Depo>> getAll() {
         List<Depo> lstDepo = this.service.getAll();
         return new ResponseEntity<List<Depo>>(lstDepo, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/DepoList/{id}")
-    public ResponseEntity<Depo> getKonusmaciById(@PathVariable("id") Long id) {
+    @GetMapping(value = "/Depo/{id}")
+    public ResponseEntity<Depo> getDataById(@PathVariable("id") Long id) {
         Depo Depo = this.service.get(id);
         return new ResponseEntity<Depo>(Depo, HttpStatus.OK);
     }
 
     @PostMapping(value = "/Depo")
-    public ResponseEntity<Depo> addKonusmaci(@RequestBody Depo Depo) {
+    public ResponseEntity<Boolean> addData(@RequestBody Depo Depo) {
         this.service.add(Depo);
-        return new ResponseEntity<Depo>(Depo, HttpStatus.CREATED);
+        return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/Depo")
-    public ResponseEntity<Depo> updateKonusmaci(@PathVariable Long id, @RequestBody Depo Depo) {
+    public ResponseEntity<Boolean> updateData(@RequestBody Depo Depo) {
         this.service.update(Depo);
-        return new ResponseEntity<Depo>(Depo, HttpStatus.OK);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/Depo")
-    public ResponseEntity<Boolean> deleteEtkinlik(Depo Depo) {
+    public ResponseEntity<Boolean> deleteData(Depo Depo) {
         this.service.remove(Depo);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }

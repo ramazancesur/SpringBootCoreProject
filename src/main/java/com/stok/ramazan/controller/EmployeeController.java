@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class EmployeeController extends BaseController {
+public class EmployeeController extends BaseController<Employee> {
     @Autowired
     private IEmployeeService service;
 
-    @GetMapping("/EmployeeList")
-    public ResponseEntity<List<Employee>> getKonusmaciList() {
+    @GetMapping("/Employee/all")
+    public ResponseEntity<List<Employee>> getAll() {
         List<Employee> lstEmployee = this.service.getAll();
         return new ResponseEntity<List<Employee>>(lstEmployee, HttpStatus.OK);
     }
@@ -34,15 +34,15 @@ public class EmployeeController extends BaseController {
     }
 
     @GetMapping(value = "/EmployeeList/{id}")
-    public ResponseEntity<Employee> getCalismaciById(@PathVariable("id") Long id) {
+    public ResponseEntity<Employee> getDataById(@PathVariable("id") Long id) {
         Employee Employee = this.service.get(id);
         return new ResponseEntity<Employee>(Employee, HttpStatus.OK);
     }
 
     @PostMapping(value = "/Employee")
-    public ResponseEntity<Employee> addKonusmaci(@RequestBody Employee Employee) {
+    public ResponseEntity<Boolean> addData(@RequestBody Employee Employee) {
         this.service.add(Employee);
-        return new ResponseEntity<Employee>(Employee, HttpStatus.CREATED);
+        return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/Employee/Calisan")
@@ -53,9 +53,9 @@ public class EmployeeController extends BaseController {
 
 
     @PutMapping(value = "/Employee")
-    public ResponseEntity<Employee> updateKonusmaci(@PathVariable Long id, @RequestBody Employee Employee) {
+    public ResponseEntity<Boolean> updateData(@RequestBody Employee Employee) {
         this.service.update(Employee);
-        return new ResponseEntity<Employee>(Employee, HttpStatus.OK);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
     @PutMapping(value = "/Employee/Calisan")
@@ -65,7 +65,7 @@ public class EmployeeController extends BaseController {
     }
 
     @DeleteMapping(value = "/Employee")
-    public ResponseEntity<Boolean> deleteEtkinlik(Employee Employee) {
+    public ResponseEntity<Boolean> deleteData(Employee Employee) {
         this.service.remove(Employee);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }

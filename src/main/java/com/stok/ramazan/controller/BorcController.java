@@ -11,41 +11,40 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class BorcController extends BaseController {
+public class BorcController extends BaseController<Borc> {
     @Autowired
     private IBorcService service;
 
-    @GetMapping("/BorcList")
-    public ResponseEntity<List<Borc>> getKonusmaciList() {
+    @GetMapping("/Borc")
+    public ResponseEntity<List<Borc>> getAll() {
         List<Borc> lstBorc = this.service.getAll();
         return new ResponseEntity<List<Borc>>(lstBorc, HttpStatus.OK);
     }
 
-    @GetMapping("/BorcList/SiparisListesi")
+    @GetMapping("/Borc/SiparisListesi")
     public ResponseEntity<List<SiparisListesiDTO>> getSiparisListesi() {
         List<SiparisListesiDTO> lstSiparisListesi = this.service.getAllSiparis();
         return new ResponseEntity(lstSiparisListesi, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/BorcList/SiparisListesi/{id}")
+    @GetMapping(value = "/Borc/SiparisListesi/{id}")
     public ResponseEntity<SiparisListesiDTO> getSiparisListesiiById(@PathVariable("id") Long id) {
         SiparisListesiDTO siparisListesiDTO = this.service.getSiparis(id);
         return new ResponseEntity(siparisListesiDTO, HttpStatus.OK);
     }
 
 
-    @GetMapping(value = "/BorcList/{id}")
-    public ResponseEntity<Borc> getKonusmaciById(@PathVariable("id") Long id) {
+    @GetMapping(value = "/Borc/{id}")
+    public ResponseEntity<Borc> getDataById(@PathVariable("id") Long id) {
         Borc Borc = this.service.get(id);
         return new ResponseEntity<Borc>(Borc, HttpStatus.OK);
     }
 
     @PostMapping(value = "/Borc")
-    public ResponseEntity<Borc> addKonusmaci(@RequestBody Borc Borc) {
+    public ResponseEntity<Boolean> addData(@RequestBody Borc Borc) {
         this.service.add(Borc);
-        return new ResponseEntity<Borc>(Borc, HttpStatus.CREATED);
+        return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
-
 
     @PostMapping(value = "/Borc/SiparisListesiDTO")
     public ResponseEntity<SiparisListesiDTO> addSiparisListesi(@RequestBody SiparisListesiDTO siparisListesiDTO) {
@@ -60,10 +59,11 @@ public class BorcController extends BaseController {
     }
 
     @PutMapping(value = "/Borc")
-    public ResponseEntity<Borc> updateKonusmaci(@PathVariable Long id, @RequestBody Borc Borc) {
+    public ResponseEntity<Boolean> updateData(@RequestBody Borc Borc) {
         this.service.update(Borc);
-        return new ResponseEntity<Borc>(Borc, HttpStatus.OK);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
+
 
     @DeleteMapping(value = "/Borc/SiparisListesi")
     public ResponseEntity<Boolean> deleteSiparisListesi(SiparisListesiDTO siparisListesiDTO) {
@@ -72,7 +72,7 @@ public class BorcController extends BaseController {
     }
 
     @DeleteMapping(value = "/Borc")
-    public ResponseEntity<Boolean> deleteEtkinlik(Borc Borc) {
+    public ResponseEntity<Boolean> deleteData(Borc Borc) {
         this.service.remove(Borc);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }

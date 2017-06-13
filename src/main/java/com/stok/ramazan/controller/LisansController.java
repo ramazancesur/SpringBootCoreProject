@@ -7,19 +7,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * Created by LocalAdmin on 12.06.2017.
  */
-@Controller
-public class LisansController implements BController<Lisans> {
+@RestController
+public class LisansController extends BaseController<Lisans> {
     private static final Logger LOGGER = LoggerFactory.getLogger(LisansController.class);
 
 
@@ -28,21 +24,21 @@ public class LisansController implements BController<Lisans> {
 
 
     @Override
-    @GetMapping("/lisans")
+    @GetMapping("/Lisans")
     public ResponseEntity<List<Lisans>> getAll() {
         List<Lisans> lstLisans = lisansService.getAll();
         return new ResponseEntity<List<Lisans>>(lstLisans, HttpStatus.OK);
     }
 
     @Override
-    @GetMapping(value = "/lisans/{id}")
+    @GetMapping(value = "/Lisans/{id}")
     public ResponseEntity<Lisans> getDataById(Long id) {
         Lisans lisans = lisansService.get(id);
         return new ResponseEntity<Lisans>(lisans, HttpStatus.OK);
     }
 
     @Override
-    @PostMapping(value = "/lisans")
+    @PostMapping(value = "/Lisans")
     public ResponseEntity<Boolean> addData(Lisans data) {
         boolean flag = false;
         try {
@@ -56,7 +52,7 @@ public class LisansController implements BController<Lisans> {
     }
 
     @Override
-    @PutMapping("/lisans")
+    @PutMapping("/Lisans")
     public ResponseEntity<Boolean> updateData(Lisans data) {
         boolean flag = false;
         try {
@@ -70,7 +66,7 @@ public class LisansController implements BController<Lisans> {
     }
 
     @Override
-    @DeleteMapping("lisans")
+    @DeleteMapping("Lisans")
     public ResponseEntity<Boolean> deleteData(Lisans data) {
         boolean flag = false;
         try {

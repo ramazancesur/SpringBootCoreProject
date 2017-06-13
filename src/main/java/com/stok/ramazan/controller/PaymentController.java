@@ -11,40 +11,40 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class PaymentController extends BaseController {
+public class PaymentController extends BaseController<Payment> {
     @Autowired
     private IPaymentService service;
 
-    @GetMapping("/PaymentList")
-    public ResponseEntity<List<Payment>> getKonusmaciList() {
+    @GetMapping("/Payment/all")
+    public ResponseEntity<List<Payment>> getAll() {
         List<Payment> lstPayment = this.service.getAll();
         return new ResponseEntity<List<Payment>>(lstPayment, HttpStatus.OK);
     }
 
 
-    @GetMapping("/PaymentList/OdemeList")
+    @GetMapping("/Payment/OdemeList")
     public ResponseEntity<List<OdemeDTO>> getOdemeList() {
         List<OdemeDTO> lstPayment = this.service.getAllOdemeDTO();
         return new ResponseEntity<List<OdemeDTO>>(lstPayment, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/PaymentList/Odeme/{id}")
+    @GetMapping(value = "/Payment/Odeme/{id}")
     public ResponseEntity<OdemeDTO> getOdemeById(@PathVariable("id") Long id) {
         OdemeDTO odemeDTO = this.service.getOdemeDTO(id);
         return new ResponseEntity(odemeDTO, HttpStatus.OK);
     }
 
 
-    @GetMapping(value = "/PaymentList/{id}")
-    public ResponseEntity<Payment> getKonusmaciById(@PathVariable("id") Long id) {
+    @GetMapping(value = "/Payment/{id}")
+    public ResponseEntity<Payment> getDataById(@PathVariable("id") Long id) {
         Payment Payment = this.service.get(id);
         return new ResponseEntity<Payment>(Payment, HttpStatus.OK);
     }
 
     @PostMapping(value = "/Payment")
-    public ResponseEntity<Payment> addKonusmaci(@RequestBody Payment Payment) {
+    public ResponseEntity<Boolean> addData(@RequestBody Payment Payment) {
         this.service.add(Payment);
-        return new ResponseEntity<Payment>(Payment, HttpStatus.CREATED);
+        return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/Payment/OdemeDTO")
@@ -54,9 +54,9 @@ public class PaymentController extends BaseController {
     }
 
     @PutMapping(value = "/Payment")
-    public ResponseEntity<Payment> updateKonusmaci(@RequestBody Payment Payment) {
+    public ResponseEntity<Boolean> updateData(@RequestBody Payment Payment) {
         this.service.update(Payment);
-        return new ResponseEntity<Payment>(Payment, HttpStatus.OK);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
     @PutMapping(value = "/Payment/Odeme")
@@ -66,7 +66,7 @@ public class PaymentController extends BaseController {
     }
 
     @DeleteMapping(value = "/Payment")
-    public ResponseEntity<Boolean> deleteEtkinlik(Payment Payment) {
+    public ResponseEntity<Boolean> deleteData(Payment Payment) {
         this.service.remove(Payment);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }

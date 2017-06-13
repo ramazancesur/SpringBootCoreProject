@@ -10,36 +10,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class IlceController extends BaseController {
+public class IlceController extends BaseController<Ilce> {
     @Autowired
     private IIlceService service;
 
-    @GetMapping("/IlceList")
-    public ResponseEntity<List<Ilce>> getKonusmaciList() {
+    @GetMapping("/Ilce/all")
+    public ResponseEntity<List<Ilce>> getAll() {
         List<Ilce> lstIlce = this.service.getAll();
         return new ResponseEntity<List<Ilce>>(lstIlce, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/IlceList/{id}")
-    public ResponseEntity<Ilce> getKonusmaciById(@PathVariable("id") Long id) {
+    @GetMapping(value = "/Ilce/{id}")
+    public ResponseEntity<Ilce> getDataById(@PathVariable("id") Long id) {
         Ilce Ilce = this.service.get(id);
         return new ResponseEntity<Ilce>(Ilce, HttpStatus.OK);
     }
 
     @PostMapping(value = "/Ilce")
-    public ResponseEntity<Ilce> addKonusmaci(@RequestBody Ilce Ilce) {
+    public ResponseEntity<Boolean> addData(@RequestBody Ilce Ilce) {
         this.service.add(Ilce);
-        return new ResponseEntity<Ilce>(Ilce, HttpStatus.CREATED);
+        return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/Ilce")
-    public ResponseEntity<Ilce> updateKonusmaci(@PathVariable Long id, @RequestBody Ilce Ilce) {
+    public ResponseEntity<Boolean> updateData(@RequestBody Ilce Ilce) {
         this.service.update(Ilce);
-        return new ResponseEntity<Ilce>(Ilce, HttpStatus.OK);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/Ilce")
-    public ResponseEntity<Boolean> deleteEtkinlik(Ilce Ilce) {
+    public ResponseEntity<Boolean> deleteData(Ilce Ilce) {
         this.service.remove(Ilce);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }

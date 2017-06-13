@@ -10,36 +10,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class RegainController extends BaseController {
+public class RegainController extends BaseController<Regain> {
     @Autowired
     private IRegainService service;
 
-    @GetMapping("/RegainList")
-    public ResponseEntity<List<Regain>> getKonusmaciList() {
+    @GetMapping("/Regain/all")
+    public ResponseEntity<List<Regain>> getAll() {
         List<Regain> lstRegain = this.service.getAll();
         return new ResponseEntity<List<Regain>>(lstRegain, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/RegainList/{id}")
-    public ResponseEntity<Regain> getKonusmaciById(@PathVariable("id") Long id) {
+    @GetMapping(value = "/Regain/{id}")
+    public ResponseEntity<Regain> getDataById(@PathVariable("id") Long id) {
         Regain Regain = this.service.get(id);
         return new ResponseEntity<Regain>(Regain, HttpStatus.OK);
     }
 
     @PostMapping(value = "/Regain")
-    public ResponseEntity<Regain> addKonusmaci(@RequestBody Regain Regain) {
+    public ResponseEntity<Boolean> addData(@RequestBody Regain Regain) {
         this.service.add(Regain);
-        return new ResponseEntity<Regain>(Regain, HttpStatus.CREATED);
+        return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/Regain")
-    public ResponseEntity<Regain> updateKonusmaci(@PathVariable Long id, @RequestBody Regain Regain) {
+    public ResponseEntity<Boolean> updateData(@RequestBody Regain Regain) {
         this.service.update(Regain);
-        return new ResponseEntity<Regain>(Regain, HttpStatus.OK);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/Regain")
-    public ResponseEntity<Boolean> deleteEtkinlik(Regain Regain) {
+    public ResponseEntity<Boolean> deleteData(Regain Regain) {
         this.service.remove(Regain);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }

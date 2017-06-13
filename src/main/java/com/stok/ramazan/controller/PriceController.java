@@ -10,36 +10,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class PriceController extends BaseController {
+public class PriceController extends BaseController<Price> {
     @Autowired
     private IPriceService service;
 
-    @GetMapping("/PriceList")
-    public ResponseEntity<List<Price>> getKonusmaciList() {
+    @GetMapping("/Price")
+    public ResponseEntity<List<Price>> getAll() {
         List<Price> lstPrice = this.service.getAll();
         return new ResponseEntity<List<Price>>(lstPrice, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/PriceList/{id}")
-    public ResponseEntity<Price> getKonusmaciById(@PathVariable("id") Long id) {
+    @GetMapping(value = "/Price/{id}")
+    public ResponseEntity<Price> getDataById(@PathVariable("id") Long id) {
         Price Price = this.service.get(id);
         return new ResponseEntity<Price>(Price, HttpStatus.OK);
     }
 
     @PostMapping(value = "/Price")
-    public ResponseEntity<Price> addKonusmaci(@RequestBody Price Price) {
+    public ResponseEntity<Boolean> addData(@RequestBody Price Price) {
         this.service.add(Price);
-        return new ResponseEntity<Price>(Price, HttpStatus.CREATED);
+        return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/Price")
-    public ResponseEntity<Price> updateKonusmaci(@PathVariable Long id, @RequestBody Price Price) {
+    public ResponseEntity<Boolean> updateData(@RequestBody Price Price) {
         this.service.update(Price);
-        return new ResponseEntity<Price>(Price, HttpStatus.OK);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/Price")
-    public ResponseEntity<Boolean> deleteEtkinlik(Price Price) {
+    public ResponseEntity<Boolean> deleteData(Price Price) {
         this.service.remove(Price);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }
