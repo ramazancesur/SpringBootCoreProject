@@ -21,7 +21,7 @@ public class FirmaController extends BaseController<Firma> {
         return new ResponseEntity<List<Firma>>(lstFirma, HttpStatus.OK);
     }
 
-    @GetMapping("/Firma/Sirket")
+    @GetMapping("/Firma/SirketDTO/all")
     public ResponseEntity<List<SirketDTO>> getSirketDTOlist() {
         List<SirketDTO> lstSirketDTO = this.service.getAllSirket();
         return new ResponseEntity<List<SirketDTO>>(lstSirketDTO, HttpStatus.OK);
@@ -34,7 +34,7 @@ public class FirmaController extends BaseController<Firma> {
     }
 
 
-    @GetMapping(value = "/Firma/Sirket/{id}")
+    @GetMapping(value = "/Firma/SirketDTO/{id}")
     public ResponseEntity<SirketDTO> getSirketById(@PathVariable("id") Long id) {
         SirketDTO sirketDTO = this.service.getSirket(id);
         return new ResponseEntity<SirketDTO>(sirketDTO, HttpStatus.OK);
@@ -47,7 +47,7 @@ public class FirmaController extends BaseController<Firma> {
         return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/Firma/Sirket")
+    @PostMapping(value = "/Firma/SirketDTO")
     public ResponseEntity<SirketDTO> addSirket(@RequestBody SirketDTO sirketDTO) {
         this.service.addSirket(sirketDTO);
         return new ResponseEntity<SirketDTO>(sirketDTO, HttpStatus.CREATED);
@@ -60,7 +60,7 @@ public class FirmaController extends BaseController<Firma> {
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/Firma/Sirket")
+    @PutMapping(value = "/Firma/SirketDTO")
     public ResponseEntity<SirketDTO> updateSirket(@PathVariable Long id, @RequestBody SirketDTO sirketDTO) {
         this.service.updateSirket(sirketDTO);
         return new ResponseEntity<SirketDTO>(sirketDTO, HttpStatus.OK);
@@ -72,7 +72,7 @@ public class FirmaController extends BaseController<Firma> {
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping(value = "/Firma/Sirket")
+    @DeleteMapping(value = "/Firma/SirketDTO")
     public ResponseEntity<Boolean> deleteSirket(SirketDTO sirketDTO) {
         return new ResponseEntity<Boolean>(this.service.deleteSirket(sirketDTO.getOid()), HttpStatus.NO_CONTENT);
     }

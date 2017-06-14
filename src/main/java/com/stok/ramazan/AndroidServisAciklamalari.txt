@@ -1,0 +1,21 @@
+SiparisListesi Servisleri
+@GetMapping("/Borc/SiparisListesi/all")
+
+CalisanDTO Servisleri
+@GetMapping("/Employee/CalisanDTO/all")
+
+FaturaDTO Servisleri
+@GetMapping("/Fatura/FaturaDTO/all")
+
+SirketDTO Servisleri
+@GetMapping("/Firma/SirketDTO/all")
+
+MusteriDTO Servisleri
+@GetMapping("/Musteri/MusteriDTO/all")
+
+OdemeDTO Servisleri
+@GetMapping("/Payment/OdemeDTO/all")
+
+UrunDTO Servisleri
+@GetMapping("/Product/UrunDTO/all")
+

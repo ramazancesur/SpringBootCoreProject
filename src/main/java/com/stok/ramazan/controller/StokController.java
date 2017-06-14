@@ -14,7 +14,7 @@ public class StokController extends BaseController<Stok> {
     @Autowired
     private IStokService service;
 
-    @GetMapping("/Stok")
+    @GetMapping("/Stok/all")
     public ResponseEntity<List<Stok>> getAll() {
         List<Stok> lstStok = this.service.getAll();
         return new ResponseEntity<List<Stok>>(lstStok, HttpStatus.OK);

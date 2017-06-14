@@ -22,13 +22,13 @@ public class PaymentController extends BaseController<Payment> {
     }
 
 
-    @GetMapping("/Payment/OdemeList")
+    @GetMapping("/Payment/OdemeDTO/all")
     public ResponseEntity<List<OdemeDTO>> getOdemeList() {
         List<OdemeDTO> lstPayment = this.service.getAllOdemeDTO();
         return new ResponseEntity<List<OdemeDTO>>(lstPayment, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/Payment/Odeme/{id}")
+    @GetMapping(value = "/Payment/OdemeDTO/{id}")
     public ResponseEntity<OdemeDTO> getOdemeById(@PathVariable("id") Long id) {
         OdemeDTO odemeDTO = this.service.getOdemeDTO(id);
         return new ResponseEntity(odemeDTO, HttpStatus.OK);
@@ -59,7 +59,7 @@ public class PaymentController extends BaseController<Payment> {
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/Payment/Odeme")
+    @PutMapping(value = "/Payment/OdemeDTO")
     public ResponseEntity<OdemeDTO> updateKonusmaci(@RequestBody OdemeDTO odemeDTO) {
         this.service.updateOdeme(odemeDTO);
         return new ResponseEntity(odemeDTO, HttpStatus.OK);
@@ -72,7 +72,7 @@ public class PaymentController extends BaseController<Payment> {
     }
 
 
-    @DeleteMapping(value = "/Payment/Odeme")
+    @DeleteMapping(value = "/Payment/OdemeDTO")
     public ResponseEntity<Boolean> deleteOdeme(OdemeDTO odemeDTO) {
         this.service.deleteOdeme(odemeDTO);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);

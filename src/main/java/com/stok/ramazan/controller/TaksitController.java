@@ -14,7 +14,7 @@ public class TaksitController extends BaseController<Taksit> {
     @Autowired
     private ITaksitService service;
 
-    @GetMapping("/Taksit")
+    @GetMapping("/Taksit/all")
     public ResponseEntity<List<Taksit>> getAll() {
         List<Taksit> lstTaksit = this.service.getAll();
         return new ResponseEntity<List<Taksit>>(lstTaksit, HttpStatus.OK);

@@ -15,19 +15,19 @@ public class ProductController extends BaseController<Product> {
     @Autowired
     private IProductService service;
 
-    @GetMapping("/Product")
+    @GetMapping("/Product/all")
     public ResponseEntity<List<Product>> getAll() {
         List<Product> lstProduct = this.service.getAll();
         return new ResponseEntity<List<Product>>(lstProduct, HttpStatus.OK);
     }
 
-    @GetMapping("/Product/Urun")
+    @GetMapping("/Product/UrunDTO/all")
     public ResponseEntity<List<UrunDTO>> getUrunList() {
         List<UrunDTO> lstUrundto = this.service.getAllUrun();
         return new ResponseEntity(lstUrundto, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/Product/Urun/{id}")
+    @GetMapping(value = "/Product/UrunDTO/{id}")
     public ResponseEntity<UrunDTO> getUrunById(@PathVariable("id") Long id) {
         UrunDTO urunDTO = this.service.getUrunDTO(id);
         return new ResponseEntity<UrunDTO>(urunDTO, HttpStatus.OK);
@@ -46,13 +46,13 @@ public class ProductController extends BaseController<Product> {
         return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/Product/Urun")
+    @PostMapping(value = "/Product/UrunDTO")
     public ResponseEntity<UrunDTO> addUrunDTO(@RequestBody UrunDTO urunDTO) {
         this.service.addUrunDTO(urunDTO);
         return new ResponseEntity<UrunDTO>(urunDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/Product/Urun")
+    @PutMapping(value = "/Product/UrunDTO")
     public ResponseEntity<UrunDTO> updateUrunDTO(@RequestBody UrunDTO urunDTO) {
         this.service.updateUrunDTO(urunDTO);
         return new ResponseEntity<UrunDTO>(urunDTO, HttpStatus.CREATED);
@@ -64,7 +64,7 @@ public class ProductController extends BaseController<Product> {
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/Product/Urun")
+    @DeleteMapping(value = "/Product/UrunDTO")
     public ResponseEntity<Boolean> deleteUrun(UrunDTO urunDTO) {
         return new ResponseEntity<Boolean>(this.service.deleteUrunDTO(urunDTO.getOid()), HttpStatus.NO_CONTENT);
     }

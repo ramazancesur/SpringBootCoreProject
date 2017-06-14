@@ -21,7 +21,7 @@ public class MusteriController extends BaseController<Musteri> {
         return new ResponseEntity<List<Musteri>>(lstMusteri, HttpStatus.OK);
     }
 
-    @GetMapping("/Musteri/MusteriDTOList")
+    @GetMapping("/Musteri/MusteriDTO/all")
     public ResponseEntity<List<MusteriDTO>> getAllMusteri() {
         List<MusteriDTO> lstMusteri = this.service.getAllMusteriDTO();
         return new ResponseEntity(lstMusteri, HttpStatus.OK);
@@ -33,7 +33,7 @@ public class MusteriController extends BaseController<Musteri> {
         return new ResponseEntity<Musteri>(Musteri, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/Musteri/musteriDTO/{id}")
+    @GetMapping(value = "/Musteri/MusteriDTO/{id}")
     public ResponseEntity<MusteriDTO> getMusteriDTOById(@PathVariable("id") Long id) {
         MusteriDTO musteriDTO = this.service.getMusteriDTO(id);
         return new ResponseEntity(musteriDTO, HttpStatus.OK);

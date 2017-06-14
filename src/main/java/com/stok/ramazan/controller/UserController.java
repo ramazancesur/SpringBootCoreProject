@@ -14,7 +14,7 @@ public class UserController extends BaseController<User> {
     @Autowired
     private IUserService service;
 
-    @GetMapping("/User")
+    @GetMapping("/User/all")
     public ResponseEntity<List<User>> getAll() {
         List<User> lstUser = this.service.getAll();
         return new ResponseEntity<List<User>>(lstUser, HttpStatus.OK);

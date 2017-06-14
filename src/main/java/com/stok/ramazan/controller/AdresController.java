@@ -14,7 +14,7 @@ public class AdresController extends BaseController<Address> {
     @Autowired
     private IAddresService service;
 
-    @GetMapping("/AddressList")
+    @GetMapping("/Address/all")
     @Override
     public ResponseEntity<List<Address>> getAll() {
         List<Address> lstAddress = this.service.getAll();

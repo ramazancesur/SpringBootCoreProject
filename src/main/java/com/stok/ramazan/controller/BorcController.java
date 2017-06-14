@@ -15,19 +15,19 @@ public class BorcController extends BaseController<Borc> {
     @Autowired
     private IBorcService service;
 
-    @GetMapping("/Borc")
+    @GetMapping("/Borc/all")
     public ResponseEntity<List<Borc>> getAll() {
         List<Borc> lstBorc = this.service.getAll();
         return new ResponseEntity<List<Borc>>(lstBorc, HttpStatus.OK);
     }
 
-    @GetMapping("/Borc/SiparisListesi")
+    @GetMapping("/Borc/SiparisListesiDTO/all")
     public ResponseEntity<List<SiparisListesiDTO>> getSiparisListesi() {
         List<SiparisListesiDTO> lstSiparisListesi = this.service.getAllSiparis();
         return new ResponseEntity(lstSiparisListesi, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/Borc/SiparisListesi/{id}")
+    @GetMapping(value = "/Borc/SiparisListesiDTO/{id}")
     public ResponseEntity<SiparisListesiDTO> getSiparisListesiiById(@PathVariable("id") Long id) {
         SiparisListesiDTO siparisListesiDTO = this.service.getSiparis(id);
         return new ResponseEntity(siparisListesiDTO, HttpStatus.OK);
@@ -65,7 +65,7 @@ public class BorcController extends BaseController<Borc> {
     }
 
 
-    @DeleteMapping(value = "/Borc/SiparisListesi")
+    @DeleteMapping(value = "/Borc/SiparisListesiDTO")
     public ResponseEntity<Boolean> deleteSiparisListesi(SiparisListesiDTO siparisListesiDTO) {
         this.service.deleteSiparis(siparisListesiDTO.getOid());
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);

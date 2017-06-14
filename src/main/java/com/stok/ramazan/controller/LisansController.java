@@ -24,7 +24,7 @@ public class LisansController extends BaseController<Lisans> {
 
 
     @Override
-    @GetMapping("/Lisans")
+    @GetMapping("/Lisans/all")
     public ResponseEntity<List<Lisans>> getAll() {
         List<Lisans> lstLisans = lisansService.getAll();
         return new ResponseEntity<List<Lisans>>(lstLisans, HttpStatus.OK);

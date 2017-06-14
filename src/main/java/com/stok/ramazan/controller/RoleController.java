@@ -14,7 +14,7 @@ public class RoleController extends BaseController<Role> {
     @Autowired
     private IRoleService service;
 
-    @GetMapping("/Role")
+    @GetMapping("/Role/all")
     public ResponseEntity<List<Role>> getAll() {
         List<Role> lstRole = this.service.getAll();
         return new ResponseEntity<List<Role>>(lstRole, HttpStatus.OK);

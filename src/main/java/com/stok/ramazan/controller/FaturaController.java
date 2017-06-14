@@ -29,14 +29,14 @@ public class FaturaController extends BaseController<Fatura> {
         return new ResponseEntity<List<Fatura>>(lstFatura, HttpStatus.OK);
     }
 
-    @GetMapping("/Fatura/faturaDTOList")
+    @GetMapping("/Fatura/FaturaDTO/all")
     public ResponseEntity<List<FaturaDTO>> getAllFaturaDTO() {
         List<FaturaDTO> lstFatura = faturaService.getAllFatura();
         return new ResponseEntity<List<FaturaDTO>>(lstFatura, HttpStatus.OK);
     }
 
 
-    @GetMapping("/Fatura/faturaDTO/{id}")
+    @GetMapping("/Fatura/FaturaDTO/{id}")
     public ResponseEntity<FaturaDTO> getFaturaDTOById(@PathVariable("id") Long id) {
         FaturaDTO fatura = faturaService.getFatura(id);
         return new ResponseEntity<FaturaDTO>(fatura, HttpStatus.OK);
@@ -62,7 +62,7 @@ public class FaturaController extends BaseController<Fatura> {
         }
     }
 
-    @PostMapping("/Fatura/faturaDTO")
+    @PostMapping("/Fatura/FaturaDTO")
     public ResponseEntity<Boolean> addFaturaDTO(@RequestBody FaturaDTO data) {
         try {
             faturaService.addFatura(data);
@@ -85,7 +85,7 @@ public class FaturaController extends BaseController<Fatura> {
         }
     }
 
-    @PutMapping("/Fatura/faturaDTO")
+    @PutMapping("/Fatura/FaturaDTO")
     public ResponseEntity<Boolean> updateFaturaDTO(@RequestBody FaturaDTO data) {
         try {
             faturaService.updateFatura(data);
@@ -108,7 +108,7 @@ public class FaturaController extends BaseController<Fatura> {
         }
     }
 
-    @DeleteMapping("/Fatura/faturaDTO")
+    @DeleteMapping("/Fatura/FaturaDTO")
     public ResponseEntity<Boolean> deleteFaturaDTO(FaturaDTO data) {
         try {
             faturaService.removeFatura(data.getOid());

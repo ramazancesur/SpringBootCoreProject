@@ -21,13 +21,13 @@ public class EmployeeController extends BaseController<Employee> {
         return new ResponseEntity<List<Employee>>(lstEmployee, HttpStatus.OK);
     }
 
-    @GetMapping("/CalisanList")
+    @GetMapping("/Employee/CalisanDTO/all")
     public ResponseEntity<List<CalisanDTO>> getCalisanList() {
         List<CalisanDTO> lstCalisanDTO = service.getAllCalisan();
         return new ResponseEntity<List<CalisanDTO>>(lstCalisanDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/CalisanList/{oıd}")
+    @GetMapping("/Employee/CalisanDTO/{oıd}")
     public ResponseEntity<CalisanDTO> getCalisan(@PathVariable("oid") Long oid) {
         CalisanDTO calisanDTO = this.service.getCalisan(oid);
         return new ResponseEntity<CalisanDTO>(calisanDTO, HttpStatus.OK);
@@ -45,7 +45,7 @@ public class EmployeeController extends BaseController<Employee> {
         return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/Employee/Calisan")
+    @PostMapping(value = "/Employee/CalisanDTO")
     public ResponseEntity<Void> addCalisan(@RequestBody CalisanDTO calisanDTO) {
         this.service.addCalsan(calisanDTO);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -58,7 +58,7 @@ public class EmployeeController extends BaseController<Employee> {
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/Employee/Calisan")
+    @PutMapping(value = "/Employee/CalisanDTO")
     public ResponseEntity<CalisanDTO> updateCalisan(@RequestBody CalisanDTO calisanDTO) {
         this.service.updateCalisan(calisanDTO);
         return new ResponseEntity<CalisanDTO>(calisanDTO, HttpStatus.OK);
@@ -71,7 +71,7 @@ public class EmployeeController extends BaseController<Employee> {
     }
 
 
-    @DeleteMapping(value = "/Employee/Calisan")
+    @DeleteMapping(value = "/Employee/CalisanDTO")
     public ResponseEntity<Boolean> deleteCalisan(CalisanDTO calisanDTO) {
         this.service.deleteCalisan(calisanDTO.getOid());
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);

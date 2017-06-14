@@ -14,7 +14,7 @@ public class UstleniciFirmaController extends BaseController<UstleniciFirma> {
     @Autowired
     private IUstleniciFirmaService service;
 
-    @GetMapping("/UstleniciFirma")
+    @GetMapping("/UstleniciFirma/all")
     public ResponseEntity<List<UstleniciFirma>> getAll() {
         List<UstleniciFirma> lstUstleniciFirma = this.service.getAll();
         return new ResponseEntity<List<UstleniciFirma>>(lstUstleniciFirma, HttpStatus.OK);
