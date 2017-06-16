@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ConductService extends GenericServiceImpl<Conduct, Long> implements IConductService {
-    private IConductDao conductDao;
+  private IConductDao conductDao;
 
-    @Autowired
-    public ConductService(@Qualifier("conductDao") GenericDao<Conduct, Long> genericDao) {
-        super(genericDao);
-        this.conductDao = (ConductDao) genericDao;
-    }
+  @Autowired
+  public ConductService(@Qualifier("conductDao") GenericDao<Conduct, Long> genericDao) {
+    super(genericDao);
+    this.conductDao = (ConductDao) genericDao;
+  }
 
-    public ConductService() {
-        // TODO Auto-generated constructor stub
-    }
+  public ConductService() {
+    // TODO Auto-generated constructor stub
+  }
 
 }

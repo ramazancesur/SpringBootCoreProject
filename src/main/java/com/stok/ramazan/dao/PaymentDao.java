@@ -14,22 +14,22 @@ import java.math.BigDecimal;
 @Repository("paymentDao")
 public class PaymentDao extends GenericDaoImpl<Payment, Long> implements IPaymentDao {
 
-    @Override
-    public Double getToplamOdemeByMusteriOid(Long musteriOid) {
-        Criteria criteria = getSession().createCriteria(Payment.class, "payment");
-        criteria.createAlias("payment.borc", "borc");
-        criteria.createAlias("borc.musteri", "musteri");
+  @Override
+  public Double getToplamOdemeByMusteriOid(Long musteriOid) {
+    Criteria criteria = getSession().createCriteria(Payment.class, "payment");
+    criteria.createAlias("payment.borc", "borc");
+    criteria.createAlias("borc.musteri", "musteri");
 
-        criteria.add(Restrictions.eq("payment.entityState", EnumUtil.EntityState.ACTIVE));
-        criteria.add(Restrictions.eq("borc.entityState", EnumUtil.EntityState.ACTIVE));
-        criteria.add(Restrictions.eq("musteri.entityState", EnumUtil.EntityState.ACTIVE));
+    criteria.add(Restrictions.eq("payment.entityState", EnumUtil.EntityState.ACTIVE));
+    criteria.add(Restrictions.eq("borc.entityState", EnumUtil.EntityState.ACTIVE));
+    criteria.add(Restrictions.eq("musteri.entityState", EnumUtil.EntityState.ACTIVE));
 
-        criteria.add(Restrictions.eq("musteri.oid", musteriOid));
-        criteria.setProjection(Projections.projectionList().add(
-                Projections.sum("payment.OdemeTutari")
-        ));
-        criteria.setResultTransformer(Transformers.aliasToBean(BigDecimal.class));
-        BigDecimal totalOdeme = (BigDecimal) criteria.uniqueResult();
-        return totalOdeme.doubleValue();
-    }
+    criteria.add(Restrictions.eq("musteri.oid", musteriOid));
+    criteria.setProjection(Projections.projectionList().add(
+        Projections.sum("payment.OdemeTutari")
+    ));
+    criteria.setResultTransformer(Transformers.aliasToBean(BigDecimal.class));
+    BigDecimal totalOdeme = (BigDecimal) criteria.uniqueResult();
+    return totalOdeme.doubleValue();
+  }
 }

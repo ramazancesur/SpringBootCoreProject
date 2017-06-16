@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StokService extends GenericServiceImpl<Stok, Long> implements IStokService {
-    private IStokDao stokDao;
+  private IStokDao stokDao;
 
-    public StokService() {
-        // TODO Auto-generated constructor stub
-    }
+  public StokService() {
+    // TODO Auto-generated constructor stub
+  }
 
-    @Autowired
-    public StokService(@Qualifier("stokDao") GenericDao<Stok, Long> genericDao) {
-        super(genericDao);
-        this.stokDao = (StokDao) genericDao;
-    }
+  @Autowired
+  public StokService(@Qualifier("stokDao") GenericDao<Stok, Long> genericDao) {
+    super(genericDao);
+    this.stokDao = (StokDao) genericDao;
+  }
 }

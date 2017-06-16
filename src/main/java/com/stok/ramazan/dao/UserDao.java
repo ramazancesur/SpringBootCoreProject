@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository;
 @Repository("userDao")
 public class UserDao extends GenericDaoImpl<User, Long> implements IUserDao {
 
-    @Override
-    public User findByUsername(String username) {
-        // TODO Auto-generated method stub
-        Criteria criteria = this.createEntityCriteria();
-        criteria.add(Restrictions.eq("userName", username));
-        criteria.add(Restrictions.eq("entityState", EntityState.ACTIVE));
-        return (User) criteria.uniqueResult();
-    }
+  @Override
+  public User findByUsername(String username) {
+    // TODO Auto-generated method stub
+    Criteria criteria = this.createEntityCriteria();
+    criteria.add(Restrictions.eq("userName", username));
+    criteria.add(Restrictions.eq("entityState", EntityState.ACTIVE));
+    return (User) criteria.uniqueResult();
+  }
 
 }

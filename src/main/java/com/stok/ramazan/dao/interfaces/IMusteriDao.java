@@ -6,7 +6,7 @@ import com.stok.ramazan.entity.Musteri;
 import java.util.List;
 
 public interface IMusteriDao extends GenericDao<Musteri, Long> {
-    List<MusteriDTO> getAllMusteri();
+  List<MusteriDTO> getAllMusteri();
 
-    MusteriDTO getMusteriDTO(Long musteriOid);
+  MusteriDTO getMusteriDTO(Long musteriOid);
 }

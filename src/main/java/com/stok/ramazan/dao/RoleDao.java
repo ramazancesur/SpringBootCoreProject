@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository("roleDao")
 public class RoleDao extends GenericDaoImpl<Role, Long> implements IRoleDao {
-    @Override
-    public Role getRoleforName(String roleName) {
-        Criteria criteria = this.getSession().createCriteria(Role.class, "role");
-        criteria.add(Restrictions.eq("role.entityState", EnumUtil.EntityState.ACTIVE));
-        criteria.add(Restrictions.ilike("role.yetkiAdi", roleName, MatchMode.ANYWHERE));
-        return (Role) criteria.uniqueResult();
-    }
+  @Override
+  public Role getRoleforName(String roleName) {
+    Criteria criteria = this.getSession().createCriteria(Role.class, "role");
+    criteria.add(Restrictions.eq("role.entityState", EnumUtil.EntityState.ACTIVE));
+    criteria.add(Restrictions.ilike("role.yetkiAdi", roleName, MatchMode.ANYWHERE));
+    return (Role) criteria.uniqueResult();
+  }
 }

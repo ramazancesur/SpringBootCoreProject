@@ -11,22 +11,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DovizService extends GenericServiceImpl<Doviz, Long> implements IDovizService {
-    private IDovizDao dovizDao;
+  private IDovizDao dovizDao;
 
-    public DovizService() {
-        // TODO Auto-generated constructor stub
-    }
+  public DovizService() {
+    // TODO Auto-generated constructor stub
+  }
 
-    @Autowired
-    public DovizService(@Qualifier("dovizDao") GenericDao<Doviz, Long> genericDao) {
-        super(genericDao);
-        this.dovizDao = (DovizDao) genericDao;
-    }
+  @Autowired
+  public DovizService(@Qualifier("dovizDao") GenericDao<Doviz, Long> genericDao) {
+    super(genericDao);
+    this.dovizDao = (DovizDao) genericDao;
+  }
 
-    @Override
-    public Doviz getDovizKodunaGore(String dovizKodu) {
-        // TODO Auto-generated method stub
-        return dovizDao.getDovizKodunaGore(dovizKodu);
-    }
+  @Override
+  public Doviz getDovizKodunaGore(String dovizKodu) {
+    // TODO Auto-generated method stub
+    return dovizDao.getDovizKodunaGore(dovizKodu);
+  }
 
 }

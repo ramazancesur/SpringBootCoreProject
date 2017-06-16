@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class IlceService extends GenericServiceImpl<Ilce, Long> implements IIlceService {
-    private IIlceDao ilceDao;
+  private IIlceDao ilceDao;
 
-    @Autowired
-    public IlceService(@Qualifier("ilceDao") GenericDao<Ilce, Long> genericDao) {
-        super(genericDao);
-        this.ilceDao = (IlceDao) genericDao;
-    }
+  @Autowired
+  public IlceService(@Qualifier("ilceDao") GenericDao<Ilce, Long> genericDao) {
+    super(genericDao);
+    this.ilceDao = (IlceDao) genericDao;
+  }
 
-    public IlceService() {
-        // TODO Auto-generated constructor stub
-    }
+  public IlceService() {
+    // TODO Auto-generated constructor stub
+  }
 }

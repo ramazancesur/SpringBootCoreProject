@@ -22,107 +22,107 @@ import java.util.List;
 
 @Service
 public class MusteriService extends GenericServiceImpl<Musteri, Long> implements IMusteriService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MusteriService.class);
-    private MusteriDao musteriDao;
+  private static final Logger LOGGER = LoggerFactory.getLogger(MusteriService.class);
+  private MusteriDao musteriDao;
 
-    @Autowired
-    private IAdressDao adresDao;
-    @Autowired
-    private IConductDao conductDao;
+  @Autowired
+  private IAdressDao adresDao;
+  @Autowired
+  private IConductDao conductDao;
 
-    public MusteriService() {
-        // TODO Auto-generated constructor stub
+  public MusteriService() {
+    // TODO Auto-generated constructor stub
+  }
+
+  @Autowired
+  public MusteriService(@Qualifier("musteriDao") GenericDao<Musteri, Long> genericDao) {
+    super(genericDao);
+    this.musteriDao = (MusteriDao) genericDao;
+  }
+
+  @Override
+  public List<MusteriDTO> getAllMusteriDTO() {
+    return musteriDao.getAllMusteri();
+  }
+
+  @Override
+  public boolean deleteMusteriDto(Long oid) {
+    try {
+      this.remove(this.get(oid));
+      return true;
+    } catch (Exception ex) {
+      LOGGER.error("Hata meydana geldi  " + this.getClass().getSimpleName() + ex.getMessage());
+      return false;
     }
+  }
 
-    @Autowired
-    public MusteriService(@Qualifier("musteriDao") GenericDao<Musteri, Long> genericDao) {
-        super(genericDao);
-        this.musteriDao = (MusteriDao) genericDao;
-    }
+  @Override
+  public MusteriDTO getMusteriDTO(Long musteriOid) {
+    return musteriDao.getMusteriDTO(musteriOid);
+  }
 
-    @Override
-    public List<MusteriDTO> getAllMusteriDTO() {
-        return musteriDao.getAllMusteri();
-    }
+  @Override
+  public MusteriDTO addMusteriDTO(MusteriDTO musteriDTO) {
+    Musteri musteri = new Musteri();
+    musteri.setAdi(musteriDTO.getAd());
+    musteri.setSoyadi(musteriDTO.getSoyad());
+    List<Address> lstAddres = new LinkedList<>();
+    List<Conduct> lstConduct = new LinkedList<>();
+    List<AdresTelefon> lstAdresTel = musteriDTO.getLstAdresTel();
+    lstAdresTel.stream()
+        .filter(x -> x != null)
+        .forEach(x -> {
+          if (x.getTelOrAddres() == EnumUtil.TelOrAddres.ADDRES) {
+            Address address = new Address();
+            address.setAdresTipi(x.getAddresTipi());
+            address.setAdresKullaniciTipi(EnumUtil.AdresKullaniciTipi.MUSTERI);
+            address.setAdres(x.getDeger());
+            adresDao.add(address);
+            lstAddres.add(address);
+          } else if (x.getTelOrAddres() == EnumUtil.TelOrAddres.TELEFON) {
+            Conduct conduct = new Conduct();
+            conduct.setTelNo(x.getDeger());
+            conduct.setContactType(x.getTelTipi());
+            conductDao.add(conduct);
+            lstConduct.add(conduct);
+          }
+        });
+    musteri.setLstAddress(lstAddres);
+    musteri.setLstConduct(lstConduct);
+    musteriDao.add(musteri);
+    return musteriDTO;
+  }
 
-    @Override
-    public boolean deleteMusteriDto(Long oid) {
-        try {
-            this.remove(this.get(oid));
-            return true;
-        } catch (Exception ex) {
-            LOGGER.error("Hata meydana geldi  " + this.getClass().getSimpleName() + ex.getMessage());
-            return false;
-        }
+  @Override
+  public MusteriDTO updateMusteriDTO(MusteriDTO musteriDTO) {
+    Musteri musteri = musteriDao.find(musteriDTO.getOid());
+    if (musteri == null) {
+      LOGGER.error("musteri bulunamadı " + this.getClass().getSimpleName() + " " + musteriDTO.getOid());
+      return null;
+    } else {
+      musteri.setAdi(musteriDTO.getAd());
+      musteri.setSoyadi(musteriDTO.getSoyad());
+      List<Conduct> lstConduct = new LinkedList<>();
+      List<Address> lstAdres = new LinkedList<>();
+      musteriDTO.getLstAdresTel().stream()
+          .filter(c -> c.getDeger() != null)
+          .forEach(x -> {
+            if (x.getTelOrAddres() == EnumUtil.TelOrAddres.TELEFON) {
+              Conduct conduct = conductDao.find(x.getOid());
+              conduct.setContactType(x.getTelTipi());
+              conduct.setTelNo(x.getDeger());
+              lstConduct.add(conduct);
+            } else if (x.getTelOrAddres() == EnumUtil.TelOrAddres.ADDRES) {
+              Address address = adresDao.find(x.getOid());
+              address.setAdres(x.getDeger());
+              address.setAdresKullaniciTipi(EnumUtil.AdresKullaniciTipi.MUSTERI);
+              address.setAdresTipi(x.getAddresTipi());
+              lstAdres.add(address);
+            }
+          });
+      musteri.setLstConduct(lstConduct);
+      musteri.setLstAddress(lstAdres);
+      return musteriDTO;
     }
-
-    @Override
-    public MusteriDTO getMusteriDTO(Long musteriOid) {
-        return musteriDao.getMusteriDTO(musteriOid);
-    }
-
-    @Override
-    public MusteriDTO addMusteriDTO(MusteriDTO musteriDTO) {
-        Musteri musteri = new Musteri();
-        musteri.setAdi(musteriDTO.getAd());
-        musteri.setSoyadi(musteriDTO.getSoyad());
-        List<Address> lstAddres = new LinkedList<>();
-        List<Conduct> lstConduct = new LinkedList<>();
-        List<AdresTelefon> lstAdresTel = musteriDTO.getLstAdresTel();
-        lstAdresTel.stream()
-                .filter(x -> x != null)
-                .forEach(x -> {
-                    if (x.getTelOrAddres() == EnumUtil.TelOrAddres.ADDRES) {
-                        Address address = new Address();
-                        address.setAdresTipi(x.getAddresTipi());
-                        address.setAdresKullaniciTipi(EnumUtil.AdresKullaniciTipi.MUSTERI);
-                        address.setAdres(x.getDeger());
-                        adresDao.add(address);
-                        lstAddres.add(address);
-                    } else if (x.getTelOrAddres() == EnumUtil.TelOrAddres.TELEFON) {
-                        Conduct conduct = new Conduct();
-                        conduct.setTelNo(x.getDeger());
-                        conduct.setContactType(x.getTelTipi());
-                        conductDao.add(conduct);
-                        lstConduct.add(conduct);
-                    }
-                });
-        musteri.setLstAddress(lstAddres);
-        musteri.setLstConduct(lstConduct);
-        musteriDao.add(musteri);
-        return musteriDTO;
-    }
-
-    @Override
-    public MusteriDTO updateMusteriDTO(MusteriDTO musteriDTO) {
-        Musteri musteri = musteriDao.find(musteriDTO.getOid());
-        if (musteri == null) {
-            LOGGER.error("musteri bulunamadı " + this.getClass().getSimpleName() + " " + musteriDTO.getOid());
-            return null;
-        } else {
-            musteri.setAdi(musteriDTO.getAd());
-            musteri.setSoyadi(musteriDTO.getSoyad());
-            List<Conduct> lstConduct = new LinkedList<>();
-            List<Address> lstAdres = new LinkedList<>();
-            musteriDTO.getLstAdresTel().stream()
-                    .filter(c -> c.getDeger() != null)
-                    .forEach(x -> {
-                        if (x.getTelOrAddres() == EnumUtil.TelOrAddres.TELEFON) {
-                            Conduct conduct = conductDao.find(x.getOid());
-                            conduct.setContactType(x.getTelTipi());
-                            conduct.setTelNo(x.getDeger());
-                            lstConduct.add(conduct);
-                        } else if (x.getTelOrAddres() == EnumUtil.TelOrAddres.ADDRES) {
-                            Address address = adresDao.find(x.getOid());
-                            address.setAdres(x.getDeger());
-                            address.setAdresKullaniciTipi(EnumUtil.AdresKullaniciTipi.MUSTERI);
-                            address.setAdresTipi(x.getAddresTipi());
-                            lstAdres.add(address);
-                        }
-                    });
-            musteri.setLstConduct(lstConduct);
-            musteri.setLstAddress(lstAdres);
-            return musteriDTO;
-        }
-    }
+  }
 }

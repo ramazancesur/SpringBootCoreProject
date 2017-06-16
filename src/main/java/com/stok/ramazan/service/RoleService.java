@@ -12,21 +12,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleService extends GenericServiceImpl<Role, Long> implements IRoleService {
 
-    @SuppressWarnings("unused")
-    private IRoleDao roleDao;
+  @SuppressWarnings("unused")
+  private IRoleDao roleDao;
 
-    public RoleService() {
-        // TODO Auto-generated constructor stub
-    }
+  public RoleService() {
+    // TODO Auto-generated constructor stub
+  }
 
-    @Autowired
-    public RoleService(@Qualifier("roleDao") GenericDao<Role, Long> genericDao) {
-        super(genericDao);
-        this.roleDao = (RoleDao) genericDao;
-    }
+  @Autowired
+  public RoleService(@Qualifier("roleDao") GenericDao<Role, Long> genericDao) {
+    super(genericDao);
+    this.roleDao = (RoleDao) genericDao;
+  }
 
-    @Override
-    public Role getRoleByName(String name) {
-        return roleDao.getRoleforName(name);
-    }
+  @Override
+  public Role getRoleByName(String name) {
+    return roleDao.getRoleforName(name);
+  }
 }

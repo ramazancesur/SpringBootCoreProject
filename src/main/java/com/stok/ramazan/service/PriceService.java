@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PriceService extends GenericServiceImpl<Price, Long> implements IPriceService {
-    private IPriceDao priceDao;
+  private IPriceDao priceDao;
 
-    public PriceService() {
-        // TODO Auto-generated constructor stub
-    }
+  public PriceService() {
+    // TODO Auto-generated constructor stub
+  }
 
-    @Autowired
-    public PriceService(@Qualifier("priceDao") GenericDao<Price, Long> genericDao) {
-        super(genericDao);
-        this.priceDao = (PriceDao) genericDao;
-    }
+  @Autowired
+  public PriceService(@Qualifier("priceDao") GenericDao<Price, Long> genericDao) {
+    super(genericDao);
+    this.priceDao = (PriceDao) genericDao;
+  }
 
 }

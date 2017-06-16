@@ -15,62 +15,62 @@ import java.util.List;
 
 @Repository("musteriDao")
 public class MusteriDao extends GenericDaoImpl<Musteri, Long> implements IMusteriDao {
-    @Autowired
-    private IBorcDao borcDao;
-    @Autowired
-    private IPaymentDao paymentDao;
+  @Autowired
+  private IBorcDao borcDao;
+  @Autowired
+  private IPaymentDao paymentDao;
 
-    private Double getToplamBorcByMusteriOid(Long musteriOid) {
-        return borcDao.getToplamBorcByMusteriOid(musteriOid) - paymentDao.getToplamOdemeByMusteriOid(musteriOid);
-    }
+  private Double getToplamBorcByMusteriOid(Long musteriOid) {
+    return borcDao.getToplamBorcByMusteriOid(musteriOid) - paymentDao.getToplamOdemeByMusteriOid(musteriOid);
+  }
 
-    @Override
-    public List<MusteriDTO> getAllMusteri() {
-        List<MusteriDTO> lstMusteriDto = new LinkedList<>();
-        List<Musteri> lstMusteri = this.getAll();
-        lstMusteri.stream()
-                .forEach(x -> {
-                    lstMusteriDto.add(getMusteriDTO(x));
-                });
-        return lstMusteriDto;
-    }
+  @Override
+  public List<MusteriDTO> getAllMusteri() {
+    List<MusteriDTO> lstMusteriDto = new LinkedList<>();
+    List<Musteri> lstMusteri = this.getAll();
+    lstMusteri.stream()
+        .forEach(x -> {
+          lstMusteriDto.add(getMusteriDTO(x));
+        });
+    return lstMusteriDto;
+  }
 
-    private MusteriDTO getMusteriDTO(Musteri musteri) {
-        MusteriDTO musteriDTO = new MusteriDTO();
-        List<AdresTelefon> lstAdresTel = new LinkedList<>();
+  private MusteriDTO getMusteriDTO(Musteri musteri) {
+    MusteriDTO musteriDTO = new MusteriDTO();
+    List<AdresTelefon> lstAdresTel = new LinkedList<>();
 
-        musteri.getLstConduct().stream()
-                .filter(y -> y != null)
-                .forEach(y -> {
-                    AdresTelefon adresTelefon = new AdresTelefon();
-                    adresTelefon.setTelOrAddres(EnumUtil.TelOrAddres.TELEFON);
-                    adresTelefon.setDeger(y.getTelNo());
-                    adresTelefon.setOid(y.getOid());
-                    lstAdresTel.add(adresTelefon);
-                });
-        musteri.getLstAddress().stream()
-                .filter(y -> y.getAdresKullaniciTipi() != null)
-                .forEach(y -> {
-                    AdresTelefon adresTelefon = new AdresTelefon();
-                    adresTelefon.setTelOrAddres(EnumUtil.TelOrAddres.ADDRES);
-                    adresTelefon.setAddresTipi(EnumUtil.AddresTipi.GENEL);
-                    adresTelefon.setDeger(y.getAdres());
-                    adresTelefon.setOid(y.getOid());
-                    lstAdresTel.add(adresTelefon);
-                });
-        musteriDTO.setLstAdresTel(lstAdresTel);
-        musteriDTO.setAd(musteri.getAdi());
-        musteriDTO.setSoyad(musteri.getSoyadi());
-        musteriDTO.setOid(musteri.getOid());
-        musteriDTO.setCreatedDate(musteri.getCreatedDate());
-        musteriDTO.setUpdatedDate(musteri.getUpdatedDate());
-        musteriDTO.setToplamBorc(getToplamBorcByMusteriOid(musteriDTO.getOid()));
+    musteri.getLstConduct().stream()
+        .filter(y -> y != null)
+        .forEach(y -> {
+          AdresTelefon adresTelefon = new AdresTelefon();
+          adresTelefon.setTelOrAddres(EnumUtil.TelOrAddres.TELEFON);
+          adresTelefon.setDeger(y.getTelNo());
+          adresTelefon.setOid(y.getOid());
+          lstAdresTel.add(adresTelefon);
+        });
+    musteri.getLstAddress().stream()
+        .filter(y -> y.getAdresKullaniciTipi() != null)
+        .forEach(y -> {
+          AdresTelefon adresTelefon = new AdresTelefon();
+          adresTelefon.setTelOrAddres(EnumUtil.TelOrAddres.ADDRES);
+          adresTelefon.setAddresTipi(EnumUtil.AddresTipi.GENEL);
+          adresTelefon.setDeger(y.getAdres());
+          adresTelefon.setOid(y.getOid());
+          lstAdresTel.add(adresTelefon);
+        });
+    musteriDTO.setLstAdresTel(lstAdresTel);
+    musteriDTO.setAd(musteri.getAdi());
+    musteriDTO.setSoyad(musteri.getSoyadi());
+    musteriDTO.setOid(musteri.getOid());
+    musteriDTO.setCreatedDate(musteri.getCreatedDate());
+    musteriDTO.setUpdatedDate(musteri.getUpdatedDate());
+    musteriDTO.setToplamBorc(getToplamBorcByMusteriOid(musteriDTO.getOid()));
 
-        return musteriDTO;
-    }
+    return musteriDTO;
+  }
 
-    @Override
-    public MusteriDTO getMusteriDTO(Long musteriOid) {
-        return getMusteriDTO(this.find(musteriOid));
-    }
+  @Override
+  public MusteriDTO getMusteriDTO(Long musteriOid) {
+    return getMusteriDTO(this.find(musteriOid));
+  }
 }

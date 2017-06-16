@@ -6,13 +6,13 @@ import com.stok.ramazan.entity.Employee;
 import java.util.List;
 
 public interface IEmployeeService extends IGenericService<Employee, Long> {
-    List<CalisanDTO> getAllCalisan();
+  List<CalisanDTO> getAllCalisan();
 
-    void addCalsan(CalisanDTO calisanDTO);
+  void addCalsan(CalisanDTO calisanDTO);
 
-    void updateCalisan(CalisanDTO calisanDTO);
+  void updateCalisan(CalisanDTO calisanDTO);
 
-    boolean deleteCalisan(Long calisanOid);
+  boolean deleteCalisan(Long calisanOid);
 
-    CalisanDTO getCalisan(Long oid);
+  CalisanDTO getCalisan(Long oid);
 }

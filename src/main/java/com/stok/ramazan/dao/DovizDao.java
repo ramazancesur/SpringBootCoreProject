@@ -12,17 +12,17 @@ import java.util.List;
 @Repository("dovizDao")
 public class DovizDao extends GenericDaoImpl<Doviz, Long> implements IDovizDao {
 
-    @Override
-    public Doviz getDovizKodunaGore(String dovizKodu) {
-        // TODO Auto-generated method stub
-        Criteria criteria = this.createEntityCriteria();
-        criteria.add(Restrictions.eq("dovizKodu", dovizKodu));
-        criteria.add(Restrictions.eq("entityState", EntityState.ACTIVE));
-        List<Doviz> lstDoviz = criteria.list();
-        if (lstDoviz.size() > 0) {
-            return lstDoviz.get(lstDoviz.size() - 1);
-        } else {
-            return null;
-        }
+  @Override
+  public Doviz getDovizKodunaGore(String dovizKodu) {
+    // TODO Auto-generated method stub
+    Criteria criteria = this.createEntityCriteria();
+    criteria.add(Restrictions.eq("dovizKodu", dovizKodu));
+    criteria.add(Restrictions.eq("entityState", EntityState.ACTIVE));
+    List<Doviz> lstDoviz = criteria.list();
+    if (lstDoviz.size() > 0) {
+      return lstDoviz.get(lstDoviz.size() - 1);
+    } else {
+      return null;
     }
+  }
 }

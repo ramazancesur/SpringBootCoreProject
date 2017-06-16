@@ -7,12 +7,12 @@ import java.util.Date;
  */
 public class LicansGenerator {
 
-    public String generatePassword(String username) {
-        String password = Helper.generateUnique();
-        Date date = new Date(System.currentTimeMillis());
-        System.out.println("PaswordString :" + password);
-        String nonce = NonceAndDiggestPassword.buildNonce(date);
-        String passDiggest = NonceAndDiggestPassword.buildDiggest(password, nonce, date.toString());
-        return passDiggest;
-    }
+  public String generatePassword(String username) {
+    String password = Helper.generateUnique();
+    Date date = new Date(System.currentTimeMillis());
+    System.out.println("PaswordString :" + password);
+    String nonce = NonceAndDiggestPassword.buildNonce(date);
+    String passDiggest = NonceAndDiggestPassword.buildDiggest(password, nonce, date.toString());
+    return passDiggest;
+  }
 }

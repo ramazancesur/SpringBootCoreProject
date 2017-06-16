@@ -7,13 +7,13 @@ import java.util.List;
 
 
 public interface IFirmaService extends IGenericService<Firma, Long> {
-    List<SirketDTO> getAllSirket();
+  List<SirketDTO> getAllSirket();
 
-    SirketDTO getSirket(Long sirketOid);
+  SirketDTO getSirket(Long sirketOid);
 
-    boolean addSirket(SirketDTO sirketDTO);
+  boolean addSirket(SirketDTO sirketDTO);
 
-    boolean updateSirket(SirketDTO sirketDTO);
+  boolean updateSirket(SirketDTO sirketDTO);
 
-    boolean deleteSirket(Long sirketOid);
+  boolean deleteSirket(Long sirketOid);
 }

@@ -12,16 +12,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService extends GenericServiceImpl<User, Long> implements IUserService {
 
-    @SuppressWarnings("unused")
-    private IUserDao userDao;
+  @SuppressWarnings("unused")
+  private IUserDao userDao;
 
-    public UserService() {
-        // TODO Auto-generated constructor stub
-    }
+  public UserService() {
+    // TODO Auto-generated constructor stub
+  }
 
-    @Autowired
-    public UserService(@Qualifier("userDao") GenericDao<User, Long> genericDao) {
-        super(genericDao);
-        this.userDao = (UserDao) genericDao;
-    }
+  @Autowired
+  public UserService(@Qualifier("userDao") GenericDao<User, Long> genericDao) {
+    super(genericDao);
+    this.userDao = (UserDao) genericDao;
+  }
 }
