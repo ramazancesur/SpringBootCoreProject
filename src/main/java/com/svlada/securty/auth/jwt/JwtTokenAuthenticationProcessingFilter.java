@@ -2,7 +2,7 @@ package com.svlada.securty.auth.jwt;
 
 import com.svlada.securty.auth.JwtAuthenticationToken;
 import com.svlada.securty.auth.jwt.extractor.TokenExtractor;
-import com.svlada.securty.config.WebSecurtyConf;
+import com.svlada.securty.config.WebSecurtyConfig;
 import com.svlada.securty.model.token.RawAccessJwtToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -41,7 +41,7 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException, ServletException {
-        String tokenPayload = request.getHeader(WebSecurtyConf.JWT_TOKEN_HEADER_PARAM);
+        String tokenPayload = request.getHeader(WebSecurtyConfig.JWT_TOKEN_HEADER_PARAM);
         RawAccessJwtToken token = new RawAccessJwtToken(tokenExtractor.extract(tokenPayload));
         return getAuthenticationManager().authenticate(new JwtAuthenticationToken(token));
     }

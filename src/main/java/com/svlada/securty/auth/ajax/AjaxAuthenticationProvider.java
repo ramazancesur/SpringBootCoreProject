@@ -1,8 +1,8 @@
 package com.svlada.securty.auth.ajax;
 
-import com.svlada.entity.User;
+import com.stok.ramazan.entity.User;
+import com.stok.ramazan.service.interfaces.IUserService;
 import com.svlada.securty.model.UserContext;
-import com.svlada.user.service.DatabaseUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,10 +27,10 @@ import java.util.stream.Collectors;
 @Component
 public class AjaxAuthenticationProvider implements AuthenticationProvider {
     private final BCryptPasswordEncoder encoder;
-    private final DatabaseUserService userService;
+    private final IUserService userService;
 
     @Autowired
-    public AjaxAuthenticationProvider(final DatabaseUserService userService, final BCryptPasswordEncoder encoder) {
+    public AjaxAuthenticationProvider(final IUserService userService, final BCryptPasswordEncoder encoder) {
         this.userService = userService;
         this.encoder = encoder;
     }
@@ -40,21 +41,26 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 
         String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
-
-        User user = userService.getByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+        User user;
+        try{
+            user= userService.getByUsername(username);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            throw new UsernameNotFoundException("User not found: " + username);
+        }
 
         if (!encoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Authentication Failed. Username or Password not valid.");
         }
 
-        if (user.getRoles() == null)
+        if (user.getRole() == null)
             throw new InsufficientAuthenticationException("User has no roles assigned");
 
-        List<GrantedAuthority> authorities = user.getRoles().stream()
-                .map(authority -> new SimpleGrantedAuthority(authority.getRole().authority()))
+        List<GrantedAuthority> authorities = Arrays.asList(user.getRole()).stream()
+                .map(authority -> new SimpleGrantedAuthority(authority.getYetkiAdi()))
                 .collect(Collectors.toList());
 
-        UserContext userContext = UserContext.create(user.getUsername(), authorities);
+        UserContext userContext = UserContext.create(user.getUserName(), authorities);
 
         return new UsernamePasswordAuthenticationToken(userContext, null, userContext.getAuthorities());
     }

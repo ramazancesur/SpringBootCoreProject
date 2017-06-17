@@ -1,11 +1,11 @@
 package com.svlada.securty.endpoint;
 
-import com.svlada.entity.User;
-import com.svlada.securty.UserService;
+import com.stok.ramazan.entity.User;
+import com.stok.ramazan.service.interfaces.IUserService;
 import com.svlada.securty.auth.jwt.extractor.TokenExtractor;
 import com.svlada.securty.auth.jwt.verifier.TokenVerifier;
 import com.svlada.securty.config.JwtSettings;
-import com.svlada.securty.config.WebSecurtyConf;
+import com.svlada.securty.config.WebSecurtyConfig;
 import com.svlada.securty.exceptions.InvalidJwtToken;
 import com.svlada.securty.model.UserContext;
 import com.svlada.securty.model.token.JwtToken;
@@ -28,6 +28,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +42,7 @@ public class RefreshTokenEndpoint {
     @Autowired
     private JwtSettings jwtSettings;
     @Autowired
-    private UserService userService;
+    private IUserService userService;
     @Autowired
     private TokenVerifier tokenVerifier;
     @Autowired
@@ -49,10 +50,8 @@ public class RefreshTokenEndpoint {
     private TokenExtractor tokenExtractor;
 
     @RequestMapping(value = "/api/auth/token", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public
-    @ResponseBody
-    JwtToken refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String tokenPayload = tokenExtractor.extract(request.getHeader(WebSecurtyConf.JWT_TOKEN_HEADER_PARAM));
+    public @ResponseBody JwtToken refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String tokenPayload = tokenExtractor.extract(request.getHeader(WebSecurtyConfig.JWT_TOKEN_HEADER_PARAM));
 
         RawAccessJwtToken rawToken = new RawAccessJwtToken(tokenPayload);
         RefreshToken refreshToken = RefreshToken.create(rawToken, jwtSettings.getTokenSigningKey()).orElseThrow(() -> new InvalidJwtToken());
@@ -63,15 +62,21 @@ public class RefreshTokenEndpoint {
         }
 
         String subject = refreshToken.getSubject();
-        User user = userService.getByUsername(subject).orElseThrow(() -> new UsernameNotFoundException("User not found: " + subject));
+        User user=new User();
+        try{
+            user = userService.getByUsername(subject);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            new UsernameNotFoundException("User not found: " + subject);
+        }
 
-        if (user.getRoles() == null)
+        if (user.getRole() == null)
             throw new InsufficientAuthenticationException("User has no roles assigned");
-        List<GrantedAuthority> authorities = user.getRoles().stream()
-                .map(authority -> new SimpleGrantedAuthority(authority.getRole().authority()))
+        List<GrantedAuthority> authorities = Arrays.asList(user.getRole()).stream()
+                .map(authority -> new SimpleGrantedAuthority(authority.getYetkiAdi()))
                 .collect(Collectors.toList());
 
-        UserContext userContext = UserContext.create(user.getUsername(), authorities);
+        UserContext userContext = UserContext.create(user.getUserName(), authorities);
 
         return tokenFactory.createAccessJwtToken(userContext);
     }
