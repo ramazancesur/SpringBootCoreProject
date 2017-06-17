@@ -10,15 +10,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DepoService extends GenericServiceImpl<Depo, Long> implements IDepoService {
-  private DepoDao depoDao;
+    private DepoDao depoDao;
 
-  @Autowired
-  public DepoService(@Qualifier("depoDao") GenericDao<Depo, Long> genericDao) {
-    super(genericDao);
-    this.depoDao = (DepoDao) genericDao;
-  }
+    @Autowired
+    public DepoService(@Qualifier("depoDao") GenericDao<Depo, Long> genericDao) {
+        super(genericDao);
+        this.depoDao = (DepoDao) genericDao;
+    }
 
-  public DepoService() {
-    // TODO Auto-generated constructor stub
-  }
+    public DepoService() {
+        // TODO Auto-generated constructor stub
+    }
 }

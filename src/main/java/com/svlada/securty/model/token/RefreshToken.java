@@ -12,48 +12,49 @@ import java.util.Optional;
  * Created by ramazancesur on 17/06/2017.
  */
 public class RefreshToken implements JwtToken {
-  private Jws<Claims> claims;
+    private Jws<Claims> claims;
 
-  private RefreshToken(Jws<Claims> claims) {
-    this.claims = claims;
-  }
-
-  /**
-   * Creates and validates Refresh token
-   * @param token
-   * @param signingKey
-   * @return
-   * @throws BadCredentialsException
-   * @throws JwtExpiredTokenException
-   */
-  public static Optional<RefreshToken> create(RawAccessJwtToken token, String signingKey) {
-    Jws<Claims> claims = token.parseClaims(signingKey);
-
-    List<String> scopes = claims.getBody().get("scopes", List.class);
-    if (scopes == null || scopes.isEmpty()
-        || !scopes.stream().filter(scope -> Scopes.REFRESH_TOKEN.authority().equals(scope)).findFirst().isPresent()) {
-      return Optional.empty();
+    private RefreshToken(Jws<Claims> claims) {
+        this.claims = claims;
     }
 
-    return Optional.of(new RefreshToken(claims));
-  }
+    /**
+     * Creates and validates Refresh token
+     *
+     * @param token
+     * @param signingKey
+     * @return
+     * @throws BadCredentialsException
+     * @throws JwtExpiredTokenException
+     */
+    public static Optional<RefreshToken> create(RawAccessJwtToken token, String signingKey) {
+        Jws<Claims> claims = token.parseClaims(signingKey);
 
-  @Override
-  public String getToken() {
-    return null;
-  }
+        List<String> scopes = claims.getBody().get("scopes", List.class);
+        if (scopes == null || scopes.isEmpty()
+                || !scopes.stream().filter(scope -> Scopes.REFRESH_TOKEN.authority().equals(scope)).findFirst().isPresent()) {
+            return Optional.empty();
+        }
 
-  public Jws<Claims> getClaims() {
-    return claims;
-  }
+        return Optional.of(new RefreshToken(claims));
+    }
 
-  public String getJti() {
-    return claims.getBody().getId();
-  }
+    @Override
+    public String getToken() {
+        return null;
+    }
 
-  public String getSubject() {
-    return claims.getBody().getSubject();
-  }
+    public Jws<Claims> getClaims() {
+        return claims;
+    }
+
+    public String getJti() {
+        return claims.getBody().getId();
+    }
+
+    public String getSubject() {
+        return claims.getBody().getSubject();
+    }
 
 
 }

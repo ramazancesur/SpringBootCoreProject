@@ -9,16 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 public class SubeService extends GenericServiceImpl<Sube, Long> implements ISubeService {
-  private ISubeDao subeDao;
+    private ISubeDao subeDao;
 
-  public SubeService() {
-    // TODO Auto-generated constructor stub
-  }
+    public SubeService() {
+        // TODO Auto-generated constructor stub
+    }
 
-  @Autowired
-  public SubeService(@Qualifier("subeDao") GenericDao<Sube, Long> genericDao) {
-    super(genericDao);
-    this.subeDao = (SubeDao) genericDao;
-  }
+    @Autowired
+    public SubeService(@Qualifier("subeDao") GenericDao<Sube, Long> genericDao) {
+        super(genericDao);
+        this.subeDao = (SubeDao) genericDao;
+    }
 
 }

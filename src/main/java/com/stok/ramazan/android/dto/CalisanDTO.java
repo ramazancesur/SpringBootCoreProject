@@ -6,78 +6,78 @@ import java.util.Date;
 import java.util.List;
 
 public class CalisanDTO extends BaseDTO {
-  private EnumUtil.EmployeeType employeeType;
-  private String ad;
-  private String soyad;
-  private String kullaniciAdi;
-  private String sifre;
-  private List<AdresTelefon> lstAddresTel;
-  private Date iseGirisTarihi;
+    private EnumUtil.EmployeeType employeeType;
+    private String ad;
+    private String soyad;
+    private String kullaniciAdi;
+    private String sifre;
+    private List<AdresTelefon> lstAddresTel;
+    private Date iseGirisTarihi;
 
-  // Tamamlandığında yazılacaktır
-  private SirketDTO sirketDTO;
+    // Tamamlandığında yazılacaktır
+    private SirketDTO sirketDTO;
 
-  public EnumUtil.EmployeeType getEmployeeType() {
-    return employeeType;
-  }
+    public EnumUtil.EmployeeType getEmployeeType() {
+        return employeeType;
+    }
 
-  public void setEmployeeType(EnumUtil.EmployeeType employeeType) {
-    this.employeeType = employeeType;
-  }
+    public void setEmployeeType(EnumUtil.EmployeeType employeeType) {
+        this.employeeType = employeeType;
+    }
 
-  public String getAd() {
-    return ad;
-  }
+    public String getAd() {
+        return ad;
+    }
 
-  public void setAd(String ad) {
-    this.ad = ad;
-  }
+    public void setAd(String ad) {
+        this.ad = ad;
+    }
 
-  public String getSoyad() {
-    return soyad;
-  }
+    public String getSoyad() {
+        return soyad;
+    }
 
-  public void setSoyad(String soyad) {
-    this.soyad = soyad;
-  }
+    public void setSoyad(String soyad) {
+        this.soyad = soyad;
+    }
 
-  public String getKullaniciAdi() {
-    return kullaniciAdi;
-  }
+    public String getKullaniciAdi() {
+        return kullaniciAdi;
+    }
 
-  public void setKullaniciAdi(String kullaniciAdi) {
-    this.kullaniciAdi = kullaniciAdi;
-  }
+    public void setKullaniciAdi(String kullaniciAdi) {
+        this.kullaniciAdi = kullaniciAdi;
+    }
 
-  public String getSifre() {
-    return sifre;
-  }
+    public String getSifre() {
+        return sifre;
+    }
 
-  public void setSifre(String sifre) {
-    this.sifre = sifre;
-  }
+    public void setSifre(String sifre) {
+        this.sifre = sifre;
+    }
 
-  public List<AdresTelefon> getLstAddresTel() {
-    return lstAddresTel;
-  }
+    public List<AdresTelefon> getLstAddresTel() {
+        return lstAddresTel;
+    }
 
-  public void setLstAddresTel(List<AdresTelefon> lstAddresTel) {
-    this.lstAddresTel = lstAddresTel;
-  }
+    public void setLstAddresTel(List<AdresTelefon> lstAddresTel) {
+        this.lstAddresTel = lstAddresTel;
+    }
 
-  public Date getIseGirisTarihi() {
-    return iseGirisTarihi;
-  }
+    public Date getIseGirisTarihi() {
+        return iseGirisTarihi;
+    }
 
-  public void setIseGirisTarihi(Date iseGirisTarihi) {
-    this.iseGirisTarihi = iseGirisTarihi;
-  }
+    public void setIseGirisTarihi(Date iseGirisTarihi) {
+        this.iseGirisTarihi = iseGirisTarihi;
+    }
 
-  public SirketDTO getSirketDTO() {
-    return sirketDTO;
-  }
+    public SirketDTO getSirketDTO() {
+        return sirketDTO;
+    }
 
-  public void setSirketDTO(SirketDTO sirketDTO) {
-    this.sirketDTO = sirketDTO;
-  }
+    public void setSirketDTO(SirketDTO sirketDTO) {
+        this.sirketDTO = sirketDTO;
+    }
 }

@@ -5,48 +5,42 @@ import com.stok.ramazan.service.interfaces.IPriceDetayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class PriceDetayController extends BaseController<PriceDetay> {
-  @Autowired
-  private IPriceDetayService service;
+    @Autowired
+    private IPriceDetayService service;
 
-  @GetMapping("/PriceDetay/all")
-  public ResponseEntity<List<PriceDetay>> getAll() {
-    List<PriceDetay> lstPriceDetay = this.service.getAll();
-    return new ResponseEntity<List<PriceDetay>>(lstPriceDetay, HttpStatus.OK);
-  }
+    @GetMapping("/PriceDetay/all")
+    public ResponseEntity<List<PriceDetay>> getAll() {
+        List<PriceDetay> lstPriceDetay = this.service.getAll();
+        return new ResponseEntity<List<PriceDetay>>(lstPriceDetay, HttpStatus.OK);
+    }
 
-  @GetMapping(value = "/PriceDetay/{id}")
-  public ResponseEntity<PriceDetay> getDataById(@PathVariable("id") Long id) {
-    PriceDetay PriceDetay = this.service.get(id);
-    return new ResponseEntity<PriceDetay>(PriceDetay, HttpStatus.OK);
-  }
+    @GetMapping(value = "/PriceDetay/{id}")
+    public ResponseEntity<PriceDetay> getDataById(@PathVariable("id") Long id) {
+        PriceDetay PriceDetay = this.service.get(id);
+        return new ResponseEntity<PriceDetay>(PriceDetay, HttpStatus.OK);
+    }
 
-  @PostMapping(value = "/PriceDetay")
-  public ResponseEntity<Boolean> addData(@RequestBody PriceDetay PriceDetay) {
-    this.service.add(PriceDetay);
-    return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
-  }
+    @PostMapping(value = "/PriceDetay")
+    public ResponseEntity<Boolean> addData(@RequestBody PriceDetay PriceDetay) {
+        this.service.add(PriceDetay);
+        return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
+    }
 
-  @PutMapping(value = "/PriceDetay")
-  public ResponseEntity<Boolean> updateData(@RequestBody PriceDetay PriceDetay) {
-    this.service.update(PriceDetay);
-    return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-  }
+    @PutMapping(value = "/PriceDetay")
+    public ResponseEntity<Boolean> updateData(@RequestBody PriceDetay PriceDetay) {
+        this.service.update(PriceDetay);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+    }
 
-  @DeleteMapping(value = "/PriceDetay")
-  public ResponseEntity<Boolean> deleteData(PriceDetay PriceDetay) {
-    this.service.remove(PriceDetay);
-    return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
-  }
+    @DeleteMapping(value = "/PriceDetay")
+    public ResponseEntity<Boolean> deleteData(PriceDetay PriceDetay) {
+        this.service.remove(PriceDetay);
+        return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
+    }
 }

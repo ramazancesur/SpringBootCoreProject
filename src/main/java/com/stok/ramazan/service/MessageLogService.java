@@ -20,34 +20,34 @@ import javax.mail.MessagingException;
  */
 @Service
 public class MessageLogService extends GenericServiceImpl<MessageLog, Long>
-    implements IMessageLogService {
-  private static final Logger LOGGER = LoggerFactory.getLogger(MessageLog.class);
-  @Autowired
-  SmtpMailSender mailSender;
-  SendMessage send = new SendMessage();
-  private IMessageLogDao messageLogDao;
+        implements IMessageLogService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageLog.class);
+    @Autowired
+    SmtpMailSender mailSender;
+    SendMessage send = new SendMessage();
+    private IMessageLogDao messageLogDao;
 
-  @Autowired
-  public MessageLogService(@Qualifier("messageLogDao") GenericDao<MessageLog, Long> genericDao) {
-    super(genericDao);
-    this.messageLogDao = (MessageLogDao) genericDao;
-  }
-
-  public void sendSMS(MessageLog messageLog) {
-    String content = "Sayın " + messageLog.getMusteriAdSoyad() + " " + messageLog.getMessageContent();
-    try {
-      send.sendData(content, messageLog.getPhoneNumber());
-      LOGGER.info("mesaj basari ile gonderildi ");
-    } catch (Exception ex) {
-      LOGGER.error("MESSAGE LOG SERVİSİNDE HATA MEYDANA GELDİ " + ex.getMessage());
-      ex.printStackTrace();
-      try {
-        mailSender.send("ramazancesur3@gmail.com", "Halı Yıkama Uygulaması Mesaj Gonderim Hatası", content);
-      } catch (MessagingException e) {
-        LOGGER.error("mail atarken hata olustu  " + ex.getMessage());
-        e.printStackTrace();
-      }
+    @Autowired
+    public MessageLogService(@Qualifier("messageLogDao") GenericDao<MessageLog, Long> genericDao) {
+        super(genericDao);
+        this.messageLogDao = (MessageLogDao) genericDao;
     }
 
-  }
+    public void sendSMS(MessageLog messageLog) {
+        String content = "Sayın " + messageLog.getMusteriAdSoyad() + " " + messageLog.getMessageContent();
+        try {
+            send.sendData(content, messageLog.getPhoneNumber());
+            LOGGER.info("mesaj basari ile gonderildi ");
+        } catch (Exception ex) {
+            LOGGER.error("MESSAGE LOG SERVİSİNDE HATA MEYDANA GELDİ " + ex.getMessage());
+            ex.printStackTrace();
+            try {
+                mailSender.send("ramazancesur3@gmail.com", "Halı Yıkama Uygulaması Mesaj Gonderim Hatası", content);
+            } catch (MessagingException e) {
+                LOGGER.error("mail atarken hata olustu  " + ex.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+    }
 }

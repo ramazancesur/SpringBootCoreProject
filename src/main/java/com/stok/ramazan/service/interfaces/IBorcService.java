@@ -6,13 +6,13 @@ import com.stok.ramazan.entity.Borc;
 import java.util.List;
 
 public interface IBorcService extends IGenericService<Borc, Long> {
-  List<SiparisListesiDTO> getAllSiparis();
+    List<SiparisListesiDTO> getAllSiparis();
 
-  SiparisListesiDTO getSiparis(Long siparisListesiOid);
+    SiparisListesiDTO getSiparis(Long siparisListesiOid);
 
-  boolean addSiparis(SiparisListesiDTO siparisListesiDTO);
+    boolean addSiparis(SiparisListesiDTO siparisListesiDTO);
 
-  boolean updateSiparis(SiparisListesiDTO siparisListesiDTO);
+    boolean updateSiparis(SiparisListesiDTO siparisListesiDTO);
 
-  boolean deleteSiparis(Long siparisListesiOid);
+    boolean deleteSiparis(Long siparisListesiOid);
 }

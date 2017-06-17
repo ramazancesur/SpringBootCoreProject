@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 /**
  * An {@link AuthenticationProvider} implementation that will use provided
  * instance of {@link JwtToken} to perform authentication.
+ *
  * @author vladimir.stankovic
  *         <p>
  *         Aug 5, 2016
@@ -27,31 +28,31 @@ import java.util.stream.Collectors;
 @Component
 @SuppressWarnings("unchecked")
 public class JwtAuthenticationProvider implements AuthenticationProvider {
-  private final JwtSettings jwtSettings;
+    private final JwtSettings jwtSettings;
 
-  @Autowired
-  public JwtAuthenticationProvider(JwtSettings jwtSettings) {
-    this.jwtSettings = jwtSettings;
-  }
+    @Autowired
+    public JwtAuthenticationProvider(JwtSettings jwtSettings) {
+        this.jwtSettings = jwtSettings;
+    }
 
-  @Override
-  public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-    RawAccessJwtToken rawAccessToken = (RawAccessJwtToken) authentication.getCredentials();
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        RawAccessJwtToken rawAccessToken = (RawAccessJwtToken) authentication.getCredentials();
 
-    Jws<Claims> jwsClaims = rawAccessToken.parseClaims(jwtSettings.getTokenSigningKey());
-    String subject = jwsClaims.getBody().getSubject();
-    List<String> scopes = jwsClaims.getBody().get("scopes", List.class);
-    List<GrantedAuthority> authorities = scopes.stream()
-        .map(authority -> new SimpleGrantedAuthority(authority))
-        .collect(Collectors.toList());
+        Jws<Claims> jwsClaims = rawAccessToken.parseClaims(jwtSettings.getTokenSigningKey());
+        String subject = jwsClaims.getBody().getSubject();
+        List<String> scopes = jwsClaims.getBody().get("scopes", List.class);
+        List<GrantedAuthority> authorities = scopes.stream()
+                .map(authority -> new SimpleGrantedAuthority(authority))
+                .collect(Collectors.toList());
 
-    UserContext context = UserContext.create(subject, authorities);
+        UserContext context = UserContext.create(subject, authorities);
 
-    return new JwtAuthenticationToken(context, context.getAuthorities());
-  }
+        return new JwtAuthenticationToken(context, context.getAuthorities());
+    }
 
-  @Override
-  public boolean supports(Class<?> authentication) {
-    return (JwtAuthenticationToken.class.isAssignableFrom(authentication));
-  }
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return (JwtAuthenticationToken.class.isAssignableFrom(authentication));
+    }
 }

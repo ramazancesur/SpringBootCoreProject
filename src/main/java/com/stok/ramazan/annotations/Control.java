@@ -9,9 +9,9 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE, ElementType.FIELD})
 @SuppressWarnings("rawtypes")
 public @interface Control {
-  Class[] nullControl() default Class.class;
+    Class[] nullControl() default Class.class;
 
-  int lenght() default 0;
+    int lenght() default 0;
 
-  int minlenght() default 0;
+    int minlenght() default 0;
 }

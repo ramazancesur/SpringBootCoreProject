@@ -16,34 +16,34 @@ import java.util.List;
 @Repository("firmaDao")
 public class FirmaDao extends GenericDaoImpl<Firma, Long> implements IFirmaDao {
 
-  public List<Lisans> getAllActiveLisans(Long firmaOid) {
-    Criteria criteria = currentSession().createCriteria(Lisans.class, "lisans");
-    criteria.createAlias("lisans.firma", "firma");
-    criteria.add(Restrictions.eq("firma.entityState", EnumUtil.EntityState.ACTIVE));
-    criteria.add(Restrictions.eq("lisans.entityState", EnumUtil.EntityState.ACTIVE));
-    criteria.add(Restrictions.eq("firma.oid", firmaOid));
-    return criteria.list();
-  }
+    public List<Lisans> getAllActiveLisans(Long firmaOid) {
+        Criteria criteria = currentSession().createCriteria(Lisans.class, "lisans");
+        criteria.createAlias("lisans.firma", "firma");
+        criteria.add(Restrictions.eq("firma.entityState", EnumUtil.EntityState.ACTIVE));
+        criteria.add(Restrictions.eq("lisans.entityState", EnumUtil.EntityState.ACTIVE));
+        criteria.add(Restrictions.eq("firma.oid", firmaOid));
+        return criteria.list();
+    }
 
-  public Firma getFirma(String sirketAdi, String sirketLogoYol) {
-    Criteria criteria = currentSession().createCriteria(Firma.class, "firma");
-    criteria.add(Restrictions.eq("firma.entityState", EnumUtil.EntityState.ACTIVE));
-    criteria.add(Restrictions.eq("firma.firmaAdi", sirketAdi));
-    criteria.add(Restrictions.eq("firma.firmaLogoYolu", sirketLogoYol));
-    Firma firma = (Firma) criteria.uniqueResult();
-    return firma;
-  }
+    public Firma getFirma(String sirketAdi, String sirketLogoYol) {
+        Criteria criteria = currentSession().createCriteria(Firma.class, "firma");
+        criteria.add(Restrictions.eq("firma.entityState", EnumUtil.EntityState.ACTIVE));
+        criteria.add(Restrictions.eq("firma.firmaAdi", sirketAdi));
+        criteria.add(Restrictions.eq("firma.firmaLogoYolu", sirketLogoYol));
+        Firma firma = (Firma) criteria.uniqueResult();
+        return firma;
+    }
 
-  public List<Firma> getAllEssentialFirm() {
-    String hql = "select firma from Lisans as lisans \n" +
-        " inner join lisans.firma as firma  \n" +
-        "where lisans.entityState= :state and firma.entityState =:state \n" +
-        " and lisans.licenseStartDate> :currentDate \n" +
-        " and lisans.licenseFinishDate< :currentDate \n";
-    Query query = currentSession().createQuery(hql);
-    query.setParameter("currentDate", new Date());
-    query.setParameter("state", EnumUtil.EntityState.ACTIVE);
-    query.setResultTransformer(Transformers.aliasToBean(Firma.class));
-    return query.list();
-  }
+    public List<Firma> getAllEssentialFirm() {
+        String hql = "select firma from Lisans as lisans \n" +
+                " inner join lisans.firma as firma  \n" +
+                "where lisans.entityState= :state and firma.entityState =:state \n" +
+                " and lisans.licenseStartDate> :currentDate \n" +
+                " and lisans.licenseFinishDate< :currentDate \n";
+        Query query = currentSession().createQuery(hql);
+        query.setParameter("currentDate", new Date());
+        query.setParameter("state", EnumUtil.EntityState.ACTIVE);
+        query.setResultTransformer(Transformers.aliasToBean(Firma.class));
+        return query.list();
+    }
 }

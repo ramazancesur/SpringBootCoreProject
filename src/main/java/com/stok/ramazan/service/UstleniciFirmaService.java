@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UstleniciFirmaService extends GenericServiceImpl<UstleniciFirma, Long> implements IUstleniciFirmaService {
-  private IUstleniciFirmaDao ustleniciFirmaDao;
+    private IUstleniciFirmaDao ustleniciFirmaDao;
 
-  public UstleniciFirmaService() {
-    // TODO Auto-generated constructor stub
-  }
+    public UstleniciFirmaService() {
+        // TODO Auto-generated constructor stub
+    }
 
-  @Autowired
-  public UstleniciFirmaService(@Qualifier("ustleniciFirmaDao") GenericDao<UstleniciFirma, Long> genericDao) {
-    super(genericDao);
-    this.ustleniciFirmaDao = (UstleniciFirmaDao) genericDao;
-  }
+    @Autowired
+    public UstleniciFirmaService(@Qualifier("ustleniciFirmaDao") GenericDao<UstleniciFirma, Long> genericDao) {
+        super(genericDao);
+        this.ustleniciFirmaDao = (UstleniciFirmaDao) genericDao;
+    }
 }

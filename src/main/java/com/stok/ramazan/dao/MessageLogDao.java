@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("messageLogDao")
 public class MessageLogDao extends GenericDaoImpl<MessageLog, Long>
-    implements IMessageLogDao {
+        implements IMessageLogDao {
 }

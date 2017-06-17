@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("faturaDao")
 public class FaturaDao extends GenericDaoImpl<Fatura, Long>
-    implements IFaturaDao {
+        implements IFaturaDao {
 
 }

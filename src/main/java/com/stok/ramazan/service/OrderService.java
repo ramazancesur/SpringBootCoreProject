@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class OrderService extends GenericServiceImpl<Order, Long> implements IOrderService {
-  private OrderDao orderDao;
+    private OrderDao orderDao;
 
-  public OrderService() {
-    // TODO Auto-generated constructor stub
-  }
+    public OrderService() {
+        // TODO Auto-generated constructor stub
+    }
 
-  @Autowired
-  public OrderService(@Qualifier("orderDao") GenericDao<Order, Long> genericDao) {
-    super(genericDao);
-    this.orderDao = (OrderDao) genericDao;
-  }
+    @Autowired
+    public OrderService(@Qualifier("orderDao") GenericDao<Order, Long> genericDao) {
+        super(genericDao);
+        this.orderDao = (OrderDao) genericDao;
+    }
 
 }

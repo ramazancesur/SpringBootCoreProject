@@ -6,13 +6,13 @@ import com.stok.ramazan.entity.Payment;
 import java.util.List;
 
 public interface IPaymentService extends IGenericService<Payment, Long> {
-  List<OdemeDTO> getAllOdemeDTO();
+    List<OdemeDTO> getAllOdemeDTO();
 
-  OdemeDTO getOdemeDTO(Long oid);
+    OdemeDTO getOdemeDTO(Long oid);
 
-  boolean deleteOdeme(OdemeDTO odemeDTO);
+    boolean deleteOdeme(OdemeDTO odemeDTO);
 
-  OdemeDTO addOdeme(OdemeDTO odemeDTO);
+    OdemeDTO addOdeme(OdemeDTO odemeDTO);
 
-  OdemeDTO updateOdeme(OdemeDTO odemeDTO);
+    OdemeDTO updateOdeme(OdemeDTO odemeDTO);
 }

@@ -6,5 +6,5 @@ package com.svlada.securty.auth.jwt.verifier;
  *         Aug 17, 2016
  */
 public interface TokenVerifier {
-  public boolean verify(String jti);
+    public boolean verify(String jti);
 }

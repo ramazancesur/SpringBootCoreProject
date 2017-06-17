@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PriceDetayService extends GenericServiceImpl<PriceDetay, Long> implements IPriceDetayService {
-  private IPriceDetayDao priceDetayDao;
+    private IPriceDetayDao priceDetayDao;
 
-  public PriceDetayService() {
-    // TODO Auto-generated constructor stub
-  }
+    public PriceDetayService() {
+        // TODO Auto-generated constructor stub
+    }
 
-  @Autowired
-  public PriceDetayService(@Qualifier("priceDetayDao") GenericDao<PriceDetay, Long> genericDao) {
-    super(genericDao);
-    this.priceDetayDao = (PriceDetayDao) genericDao;
-  }
+    @Autowired
+    public PriceDetayService(@Qualifier("priceDetayDao") GenericDao<PriceDetay, Long> genericDao) {
+        super(genericDao);
+        this.priceDetayDao = (PriceDetayDao) genericDao;
+    }
 }

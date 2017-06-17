@@ -12,21 +12,21 @@ import java.util.stream.Collectors;
 
 public final class JwtUserFactory {
 
-  private JwtUserFactory() {
-  }
-
-  public static JwtUser create(User user) {
-    boolean aktifPasif = false;
-    if (user.getEntityState() == EntityState.ACTIVE) {
-      aktifPasif = true;
+    private JwtUserFactory() {
     }
-    return new JwtUser(user.getOid(), user.getUserName(), user.getAdi(), user.getSoyadi(), user.getUserName(),
-        user.getPassword(), mapToGrantedAuthorities(Arrays.asList(user.getRole())), aktifPasif,
-        user.getCreatedDate());
-  }
 
-  private static List<GrantedAuthority> mapToGrantedAuthorities(List<Role> authorities) {
-    return authorities.stream().map(authority -> new SimpleGrantedAuthority(authority.getYetkiAdi()))
-        .collect(Collectors.toList());
-  }
+    public static JwtUser create(User user) {
+        boolean aktifPasif = false;
+        if (user.getEntityState() == EntityState.ACTIVE) {
+            aktifPasif = true;
+        }
+        return new JwtUser(user.getOid(), user.getUserName(), user.getAdi(), user.getSoyadi(), user.getUserName(),
+                user.getPassword(), mapToGrantedAuthorities(Arrays.asList(user.getRole())), aktifPasif,
+                user.getCreatedDate());
+    }
+
+    private static List<GrantedAuthority> mapToGrantedAuthorities(List<Role> authorities) {
+        return authorities.stream().map(authority -> new SimpleGrantedAuthority(authority.getYetkiAdi()))
+                .collect(Collectors.toList());
+    }
 }

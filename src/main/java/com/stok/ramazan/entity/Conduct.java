@@ -9,29 +9,29 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CONDUCT")
 public class Conduct extends BaseEntity {
-  /**
-   *
-   */
-  private static final long serialVersionUID = 1L;
-  @Column(name = "CONDUCT_TIPI")
-  private ContactTipi contactType;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    @Column(name = "CONDUCT_TIPI")
+    private ContactTipi contactType;
 
-  @Column(name = "TEL_NO")
-  private String telNo;
+    @Column(name = "TEL_NO")
+    private String telNo;
 
-  public ContactTipi getContactType() {
-    return contactType;
-  }
+    public ContactTipi getContactType() {
+        return contactType;
+    }
 
-  public void setContactType(ContactTipi contactType) {
-    this.contactType = contactType;
-  }
+    public void setContactType(ContactTipi contactType) {
+        this.contactType = contactType;
+    }
 
-  public String getTelNo() {
-    return telNo;
-  }
+    public String getTelNo() {
+        return telNo;
+    }
 
-  public void setTelNo(String telNo) {
-    this.telNo = telNo;
-  }
+    public void setTelNo(String telNo) {
+        this.telNo = telNo;
+    }
 }

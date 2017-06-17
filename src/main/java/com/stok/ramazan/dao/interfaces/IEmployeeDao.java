@@ -6,7 +6,7 @@ import com.stok.ramazan.entity.Employee;
 import java.util.List;
 
 public interface IEmployeeDao extends GenericDao<Employee, Long> {
-  List<CalisanDTO> getAllCalisan();
+    List<CalisanDTO> getAllCalisan();
 
-  CalisanDTO getCalisan(Long calisanOid);
+    CalisanDTO getCalisan(Long calisanOid);
 }

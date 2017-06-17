@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class LisansService extends GenericServiceImpl<Lisans, Long> implements ILisansService {
-  private ILisansDao lisansDao;
+    private ILisansDao lisansDao;
 
-  @Autowired
-  public LisansService(@Qualifier("lisansDao") GenericDao<Lisans, Long> genericDao) {
-    super(genericDao);
-    this.lisansDao = (LisansDao) genericDao;
-  }
+    @Autowired
+    public LisansService(@Qualifier("lisansDao") GenericDao<Lisans, Long> genericDao) {
+        super(genericDao);
+        this.lisansDao = (LisansDao) genericDao;
+    }
 }

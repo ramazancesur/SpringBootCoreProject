@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TaksitService extends GenericServiceImpl<Taksit, Long> implements ITaksitService {
-  private ITaksitDao taksitDao;
+    private ITaksitDao taksitDao;
 
-  public TaksitService() {
-    // TODO Auto-generated constructor stub
-  }
+    public TaksitService() {
+        // TODO Auto-generated constructor stub
+    }
 
-  @Autowired
-  public TaksitService(@Qualifier("taksitDao") GenericDao<Taksit, Long> genericDao) {
-    super(genericDao);
-    this.taksitDao = (TaksitDao) genericDao;
-  }
+    @Autowired
+    public TaksitService(@Qualifier("taksitDao") GenericDao<Taksit, Long> genericDao) {
+        super(genericDao);
+        this.taksitDao = (TaksitDao) genericDao;
+    }
 }

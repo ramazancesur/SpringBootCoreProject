@@ -8,26 +8,26 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface GenericDao<E extends BaseEntity, K extends Serializable> {
-  E add(E entity);
+    E add(E entity);
 
-  // Doo kısmı ikiye ayrıldım interface ve entity die ve işlemleri base
-  // entityden yapılmasını sağlıyorum
+    // Doo kısmı ikiye ayrıldım interface ve entity die ve işlemleri base
+    // entityden yapılmasını sağlıyorum
 
-  // JPA Repository ye benzer bir şey
-  E saveOrUpdate(E entity);
+    // JPA Repository ye benzer bir şey
+    E saveOrUpdate(E entity);
 
-  E update(E entity);
+    E update(E entity);
 
-  boolean remove(E entity);
+    boolean remove(E entity);
 
-  boolean remove(K key);
+    boolean remove(K key);
 
-  E find(K key);
+    E find(K key);
 
-  List<E> getAll();
+    List<E> getAll();
 
-  Criteria getData(List<DataProperty> lstRelationClass, List<DataProperty> lstProperty);
+    Criteria getData(List<DataProperty> lstRelationClass, List<DataProperty> lstProperty);
 
-  public List<Object> getAllPojo(List<DataProperty> lstRelationClass, List<DataProperty> lstProperty, Class clazz);
+    public List<Object> getAllPojo(List<DataProperty> lstRelationClass, List<DataProperty> lstProperty, Class clazz);
 
 }

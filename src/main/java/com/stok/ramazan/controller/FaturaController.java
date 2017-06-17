@@ -9,12 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,104 +18,104 @@ import java.util.List;
  */
 @Controller
 public class FaturaController extends BaseController<Fatura> {
-  private static final Logger LOGGER = LoggerFactory.getLogger(FaturaController.class);
-  @Autowired
-  private IFaturaService faturaService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(FaturaController.class);
+    @Autowired
+    private IFaturaService faturaService;
 
-  @Override
-  @GetMapping("/Fatura/all")
-  public ResponseEntity<List<Fatura>> getAll() {
-    List<Fatura> lstFatura = faturaService.getAll();
-    return new ResponseEntity<List<Fatura>>(lstFatura, HttpStatus.OK);
-  }
-
-  @GetMapping("/Fatura/FaturaDTO/all")
-  public ResponseEntity<List<FaturaDTO>> getAllFaturaDTO() {
-    List<FaturaDTO> lstFatura = faturaService.getAllFatura();
-    return new ResponseEntity<List<FaturaDTO>>(lstFatura, HttpStatus.OK);
-  }
-
-
-  @GetMapping("/Fatura/FaturaDTO/{id}")
-  public ResponseEntity<FaturaDTO> getFaturaDTOById(@PathVariable("id") Long id) {
-    FaturaDTO fatura = faturaService.getFatura(id);
-    return new ResponseEntity<FaturaDTO>(fatura, HttpStatus.OK);
-  }
-
-
-  @Override
-  @GetMapping("/Fatura/{id}")
-  public ResponseEntity<Fatura> getDataById(@PathVariable("id") Long id) {
-    Fatura fatura = faturaService.get(id);
-    return new ResponseEntity<Fatura>(fatura, HttpStatus.OK);
-  }
-
-  @Override
-  @PostMapping("/Fatura")
-  public ResponseEntity<Boolean> addData(@RequestBody Fatura data) {
-    try {
-      faturaService.add(data);
-      return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-    } catch (Exception ex) {
-      LOGGER.error("hata meydana geldi" + ex.getMessage());
-      return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+    @Override
+    @GetMapping("/Fatura/all")
+    public ResponseEntity<List<Fatura>> getAll() {
+        List<Fatura> lstFatura = faturaService.getAll();
+        return new ResponseEntity<List<Fatura>>(lstFatura, HttpStatus.OK);
     }
-  }
 
-  @PostMapping("/Fatura/FaturaDTO")
-  public ResponseEntity<Boolean> addFaturaDTO(@RequestBody FaturaDTO data) {
-    try {
-      faturaService.addFatura(data);
-      return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-    } catch (Exception ex) {
-      LOGGER.error("hata meydana geldi" + ex.getMessage());
-      return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+    @GetMapping("/Fatura/FaturaDTO/all")
+    public ResponseEntity<List<FaturaDTO>> getAllFaturaDTO() {
+        List<FaturaDTO> lstFatura = faturaService.getAllFatura();
+        return new ResponseEntity<List<FaturaDTO>>(lstFatura, HttpStatus.OK);
     }
-  }
 
-  @Override
-  @PutMapping("/Fatura")
-  public ResponseEntity<Boolean> updateData(@RequestBody Fatura data) {
-    try {
-      faturaService.update(data);
-      return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-    } catch (Exception ex) {
-      LOGGER.error("hata meydana geldi" + ex.getMessage());
-      return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
-    }
-  }
 
-  @PutMapping("/Fatura/FaturaDTO")
-  public ResponseEntity<Boolean> updateFaturaDTO(@RequestBody FaturaDTO data) {
-    try {
-      faturaService.updateFatura(data);
-      return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-    } catch (Exception ex) {
-      LOGGER.error("hata meydana geldi" + ex.getMessage());
-      return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+    @GetMapping("/Fatura/FaturaDTO/{id}")
+    public ResponseEntity<FaturaDTO> getFaturaDTOById(@PathVariable("id") Long id) {
+        FaturaDTO fatura = faturaService.getFatura(id);
+        return new ResponseEntity<FaturaDTO>(fatura, HttpStatus.OK);
     }
-  }
 
-  @Override
-  @DeleteMapping("/Fatura")
-  public ResponseEntity<Boolean> deleteData(Fatura data) {
-    try {
-      faturaService.remove(data);
-      return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-    } catch (Exception ex) {
-      LOGGER.error("hata meydana geldi" + ex.getMessage());
-      return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
-    }
-  }
 
-  @DeleteMapping("/Fatura/FaturaDTO")
-  public ResponseEntity<Boolean> deleteFaturaDTO(FaturaDTO data) {
-    try {
-      faturaService.removeFatura(data.getOid());
-      return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-    } catch (Exception ex) {
-      LOGGER.error("hata meydana geldi" + ex.getMessage());
-      return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+    @Override
+    @GetMapping("/Fatura/{id}")
+    public ResponseEntity<Fatura> getDataById(@PathVariable("id") Long id) {
+        Fatura fatura = faturaService.get(id);
+        return new ResponseEntity<Fatura>(fatura, HttpStatus.OK);
     }
-  }
+
+    @Override
+    @PostMapping("/Fatura")
+    public ResponseEntity<Boolean> addData(@RequestBody Fatura data) {
+        try {
+            faturaService.add(data);
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        } catch (Exception ex) {
+            LOGGER.error("hata meydana geldi" + ex.getMessage());
+            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/Fatura/FaturaDTO")
+    public ResponseEntity<Boolean> addFaturaDTO(@RequestBody FaturaDTO data) {
+        try {
+            faturaService.addFatura(data);
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        } catch (Exception ex) {
+            LOGGER.error("hata meydana geldi" + ex.getMessage());
+            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    @PutMapping("/Fatura")
+    public ResponseEntity<Boolean> updateData(@RequestBody Fatura data) {
+        try {
+            faturaService.update(data);
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        } catch (Exception ex) {
+            LOGGER.error("hata meydana geldi" + ex.getMessage());
+            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/Fatura/FaturaDTO")
+    public ResponseEntity<Boolean> updateFaturaDTO(@RequestBody FaturaDTO data) {
+        try {
+            faturaService.updateFatura(data);
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        } catch (Exception ex) {
+            LOGGER.error("hata meydana geldi" + ex.getMessage());
+            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    @DeleteMapping("/Fatura")
+    public ResponseEntity<Boolean> deleteData(Fatura data) {
+        try {
+            faturaService.remove(data);
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        } catch (Exception ex) {
+            LOGGER.error("hata meydana geldi" + ex.getMessage());
+            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/Fatura/FaturaDTO")
+    public ResponseEntity<Boolean> deleteFaturaDTO(FaturaDTO data) {
+        try {
+            faturaService.removeFatura(data.getOid());
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        } catch (Exception ex) {
+            LOGGER.error("hata meydana geldi" + ex.getMessage());
+            return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

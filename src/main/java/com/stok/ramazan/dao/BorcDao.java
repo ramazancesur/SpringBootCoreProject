@@ -12,20 +12,20 @@ import java.math.BigDecimal;
 
 @Repository("borcDao")
 public class BorcDao extends GenericDaoImpl<Borc, Long>
-    implements IBorcDao {
+        implements IBorcDao {
 
-  @Override
-  public Double getToplamBorcByMusteriOid(Long musteriOid) {
-    Criteria criteria = this.currentSession().createCriteria(Borc.class, "borc");
-    criteria.createAlias("borc.musteri", "musteri");
-    criteria.add(Restrictions.eq("musteri.oid", musteriOid));
-    criteria.setProjection(Projections.projectionList().add(
-        Projections.sum("borc.kalanBorc"))
-    );
-    criteria.setResultTransformer(Transformers.aliasToBean(BigDecimal.class));
-    BigDecimal toplamBorc = (BigDecimal) criteria.uniqueResult();
-    return toplamBorc.doubleValue();
-  }
+    @Override
+    public Double getToplamBorcByMusteriOid(Long musteriOid) {
+        Criteria criteria = this.currentSession().createCriteria(Borc.class, "borc");
+        criteria.createAlias("borc.musteri", "musteri");
+        criteria.add(Restrictions.eq("musteri.oid", musteriOid));
+        criteria.setProjection(Projections.projectionList().add(
+                Projections.sum("borc.kalanBorc"))
+        );
+        criteria.setResultTransformer(Transformers.aliasToBean(BigDecimal.class));
+        BigDecimal toplamBorc = (BigDecimal) criteria.uniqueResult();
+        return toplamBorc.doubleValue();
+    }
 
 
 }
