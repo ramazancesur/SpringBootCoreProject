@@ -24,9 +24,4 @@ public class UserService extends GenericServiceImpl<User, Long> implements IUser
         super(genericDao);
         this.userDao = (UserDao) genericDao;
     }
-
-    @Override
-    public User getByUsername(String userName) {
-        return userDao.findByUsername(userName);
-    }
 }
