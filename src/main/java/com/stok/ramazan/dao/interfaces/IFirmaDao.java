@@ -11,4 +11,6 @@ public interface IFirmaDao extends GenericDao<Firma, Long> {
     Firma getFirma(String sirketAdi, String sirketLogoYol);
 
     List<Firma> getAllEssentialFirm();
+
+    Firma getFirma(String userName);
 }

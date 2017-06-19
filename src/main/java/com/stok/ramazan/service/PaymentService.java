@@ -4,16 +4,23 @@ import com.stok.ramazan.android.dto.OdemeDTO;
 import com.stok.ramazan.dao.PaymentDao;
 import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.dao.interfaces.IBorcDao;
+import com.stok.ramazan.dao.interfaces.IFirmaDao;
 import com.stok.ramazan.dao.interfaces.IMusteriDao;
 import com.stok.ramazan.dao.interfaces.IPaymentDao;
+import com.stok.ramazan.dao.interfaces.ISubeDao;
 import com.stok.ramazan.entity.Borc;
+import com.stok.ramazan.entity.Firma;
 import com.stok.ramazan.entity.Musteri;
 import com.stok.ramazan.entity.Payment;
+import com.stok.ramazan.entity.Sube;
+import com.stok.ramazan.helper.EnumUtil;
 import com.stok.ramazan.service.interfaces.IPaymentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -29,6 +36,12 @@ public class PaymentService extends GenericServiceImpl<Payment, Long> implements
     @Autowired
     private IMusteriDao musteriDao;
 
+    @Autowired
+    private IFirmaDao firmaDao;
+
+    @Autowired
+    private ISubeDao subeDao;
+
     public PaymentService() {
         // TODO Auto-generated constructor stub
     }
@@ -41,6 +54,9 @@ public class PaymentService extends GenericServiceImpl<Payment, Long> implements
 
     @Override
     public List<OdemeDTO> getAllOdemeDTO() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        System.out.println(name);
         List<OdemeDTO> lstOdemeDTO = new LinkedList<>();
         paymentDao.getAll().stream()
                 .filter(x -> x.getBorc() != null && x.getBorc().getMusteri() != null && x.getBorc().getKalanBorc() != null)
@@ -94,6 +110,29 @@ public class PaymentService extends GenericServiceImpl<Payment, Long> implements
         payment.setBeklenenOdemeTarihi(odemeDTO.getOdemeTarihi());
         payment.setGerceklesenOdemeTarihi(odemeDTO.getOdemeTarihi());
         payment.setBorc(borc);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userName = auth.getName();
+
+        Firma firma= firmaDao.getFirma(userName);
+        List<Sube> lstSube= subeDao.getAllSube(firma.getOid());
+
+        if (lstSube.size()==0){
+            Sube sube=new Sube();
+            sube.setAdress(firma.getAdress());
+            sube.setFirma(firma);
+            sube.setFirmaAdi(firma.getFirmaAdi());
+            sube.setFirmaTipi(EnumUtil.FirmaTipi.KAYITLI_FIRMA);
+            sube.setLstConduct(firma.getLstConduct());
+            subeDao.add(sube);
+
+            payment.setSaticiSube(sube);
+        }
+
+
+        // Düzeltilecek
+
+        payment.setSaticiSube(lstSube.get(0));
 
         paymentDao.add(payment);
         return odemeDTO;

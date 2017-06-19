@@ -37,7 +37,6 @@ public class Borc extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
-
     @JoinColumn(name = "BORC_DETAY_OID")
     private List<BorcDetay> lstBorceDetay;
 

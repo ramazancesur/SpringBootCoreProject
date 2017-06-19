@@ -3,6 +3,7 @@ package com.stok.ramazan.dao;
 import com.stok.ramazan.dao.interfaces.IFirmaDao;
 import com.stok.ramazan.entity.Firma;
 import com.stok.ramazan.entity.Lisans;
+import com.stok.ramazan.entity.Sube;
 import com.stok.ramazan.helper.EnumUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -45,5 +46,15 @@ public class FirmaDao extends GenericDaoImpl<Firma, Long> implements IFirmaDao {
         query.setParameter("state", EnumUtil.EntityState.ACTIVE);
         query.setResultTransformer(Transformers.aliasToBean(Firma.class));
         return query.list();
+    }
+
+    @Override
+    public Firma getFirma(String userName) {
+        Criteria criteria=currentSession().createCriteria(Firma.class,"firma");
+        criteria.createAlias("firma.user","user");
+        criteria.add(Restrictions.eq("user.userName",userName));
+        criteria.add(Restrictions.eq("firma.entityState", EnumUtil.EntityState.ACTIVE));
+        criteria.add(Restrictions.eq("user.entityState", EnumUtil.EntityState.ACTIVE));
+        return (Firma) criteria.uniqueResult();
     }
 }

@@ -4,12 +4,14 @@ import com.stok.ramazan.dao.interfaces.IPaymentDao;
 import com.stok.ramazan.entity.Payment;
 import com.stok.ramazan.helper.EnumUtil;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Repository("paymentDao")
 public class PaymentDao extends GenericDaoImpl<Payment, Long> implements IPaymentDao {
@@ -31,5 +33,14 @@ public class PaymentDao extends GenericDaoImpl<Payment, Long> implements IPaymen
         criteria.setResultTransformer(Transformers.aliasToBean(BigDecimal.class));
         BigDecimal totalOdeme = (BigDecimal) criteria.uniqueResult();
         return totalOdeme.doubleValue();
+    }
+
+    @Override
+    public List<Payment> getAllPaymentForAuthType(String userName) {
+        String hql="select payment from Payment as payment " +
+            "where payment.saticiSube.firma.user.userName= :userName";
+        Query query=currentSession().createQuery(hql);
+        query.setParameter("userName",userName);
+        return query.list();
     }
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "PAYMENT")
-public class Payment extends BaseEntity {
+public class  Payment extends BaseEntity {
     @Column
     private BigDecimal OdemeTutari;
     @Column(name = "ODEME_TIPI")
