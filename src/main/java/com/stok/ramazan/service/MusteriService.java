@@ -6,8 +6,10 @@ import com.stok.ramazan.dao.MusteriDao;
 import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.dao.interfaces.IAdressDao;
 import com.stok.ramazan.dao.interfaces.IConductDao;
+import com.stok.ramazan.dao.interfaces.IFirmaDao;
 import com.stok.ramazan.entity.Address;
 import com.stok.ramazan.entity.Conduct;
+import com.stok.ramazan.entity.Firma;
 import com.stok.ramazan.entity.Musteri;
 import com.stok.ramazan.helper.EnumUtil;
 import com.stok.ramazan.service.interfaces.IMusteriService;
@@ -27,8 +29,12 @@ public class MusteriService extends GenericServiceImpl<Musteri, Long> implements
 
     @Autowired
     private IAdressDao adresDao;
+
     @Autowired
     private IConductDao conductDao;
+
+    @Autowired
+    private IFirmaDao firmaDao;
 
     public MusteriService() {
         // TODO Auto-generated constructor stub
@@ -89,6 +95,10 @@ public class MusteriService extends GenericServiceImpl<Musteri, Long> implements
                 });
         musteri.setLstAddress(lstAddres);
         musteri.setLstConduct(lstConduct);
+        Firma firma= firmaDao.find(musteriDTO.getFirmMusteriOid());
+
+        musteri.setFirma(firma);
+
         musteriDao.add(musteri);
         return musteriDTO;
     }

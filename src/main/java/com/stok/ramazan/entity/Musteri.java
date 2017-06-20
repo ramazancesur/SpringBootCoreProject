@@ -8,21 +8,34 @@ import java.util.List;
 public class Musteri extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-
-    @Column(name = "SOYADI")
-    private String soyadi;
     @Column(name = "ADI")
     private String adi;
+    @Column(name = "SOYADI")
+    private String soyadi;
+    @ManyToOne
+    @JoinColumn(name = "FIRMA")
+    private Firma firma;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "MUSTERI_CONTACT")
     private List<Conduct> lstConduct;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "MUSTERI_ADRES")
     private List<Address> lstAddress;
-
     @OneToMany
     @JoinColumn(name = "MUSTERI_KEFIL", nullable = true)
     private List<Kefil> lstKefil;
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getAdi() {
+        return adi;
+    }
+
+    public void setAdi(String adi) {
+        this.adi = adi;
+    }
 
     public String getSoyadi() {
         return soyadi;
@@ -32,12 +45,12 @@ public class Musteri extends BaseEntity {
         this.soyadi = soyadi;
     }
 
-    public String getAdi() {
-        return adi;
+    public Firma getFirma() {
+        return firma;
     }
 
-    public void setAdi(String adi) {
-        this.adi = adi;
+    public void setFirma(Firma firma) {
+        this.firma = firma;
     }
 
     public List<Conduct> getLstConduct() {

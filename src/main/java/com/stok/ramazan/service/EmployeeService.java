@@ -7,6 +7,7 @@ import com.stok.ramazan.dao.interfaces.*;
 import com.stok.ramazan.entity.*;
 import com.stok.ramazan.helper.EnumUtil;
 import com.stok.ramazan.service.interfaces.IEmployeeService;
+import com.stok.ramazan.service.interfaces.ISubeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,9 @@ public class EmployeeService extends
 
     @Autowired
     private ISubeDao subeDao;
+
+    @Autowired
+    private ISubeService subeService;
 
     @Autowired
     public EmployeeService(@Qualifier("employeeDao") GenericDao<Employee, Long> genericDao) {
@@ -92,21 +96,8 @@ public class EmployeeService extends
         user.setRole(role);
         userDao.add(user);
         employee.setUser(user);
-        Firma firma = firmaDao.find(calisanDTO.getSirketDTO().getOid());
-        List<Sube> lstSube = subeDao.getAllSube(calisanDTO.getSirketDTO().getOid());
-        if (lstSube.size() != 0) {
-            employee.setFirma(lstSube.get(0));
-        } else {
-            Sube sube = new Sube();
-            Address address = firma.getAdress();
-            sube.setAdress(address);
-            sube.setFirma(firma);
-            sube.setFirmaAdi(firma.getFirmaAdi());
-            sube.setLstConduct(firma.getLstConduct());
-            sube.setFirmaTipi(EnumUtil.FirmaTipi.KAYITLI_FIRMA);
-            subeDao.add(sube);
-            employee.setFirma(sube);
-        }
+        employee.setFirma(subeService.getUserFirmSube());
+
         employee.setIseGirisTarihi(calisanDTO.getIseGirisTarihi());
 
         employeeDao.add(employee);

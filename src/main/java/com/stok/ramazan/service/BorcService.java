@@ -7,10 +7,14 @@ import com.stok.ramazan.dao.BorcDao;
 import com.stok.ramazan.dao.interfaces.*;
 import com.stok.ramazan.entity.Borc;
 import com.stok.ramazan.entity.BorcDetay;
+import com.stok.ramazan.entity.Firma;
 import com.stok.ramazan.entity.Product;
 import com.stok.ramazan.service.interfaces.IBorcService;
+import com.stok.ramazan.service.interfaces.ISubeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -33,6 +37,9 @@ public class BorcService extends GenericServiceImpl<Borc, Long>
     private IProductDao productDao;
 
     @Autowired
+    private ISubeService subeService;
+
+    @Autowired
     public BorcService(@Qualifier("borcDao") GenericDao<Borc, Long> genericDao) {
         super(genericDao);
         this.borcDao = (BorcDao) genericDao;
@@ -44,7 +51,7 @@ public class BorcService extends GenericServiceImpl<Borc, Long>
 
     @Override
     public List<SiparisListesiDTO> getAllSiparis() {
-        List<Borc> lstBorc = borcDao.getAll();
+        List<Borc> lstBorc = borcDao.getAllBorcByAuthenticated();
         List<SiparisListesiDTO> lstSiparisListesi = new LinkedList<>();
         for (Borc borc : lstBorc) {
             lstSiparisListesi.add(getSiparisListesiDTObyBorc(borc));
@@ -110,6 +117,8 @@ public class BorcService extends GenericServiceImpl<Borc, Long>
                 borcDetay.setProduct(product);
                 lstBorcDetay.add(borcDetay);
             }
+            borc.setOdemeSube(subeService.getUserFirmSube());
+
             borc.setLstBorceDetay(lstBorcDetay);
             borc.setToplamBorc(BigDecimal.valueOf(siparisListesiDTO.getToplamSiparisBorcu()));
             borc.setMusteri(musteriDao.find(siparisListesiDTO.getMusteri().getOid()));

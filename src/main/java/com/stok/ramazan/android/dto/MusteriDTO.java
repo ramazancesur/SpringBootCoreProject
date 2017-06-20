@@ -10,6 +10,8 @@ public class MusteriDTO extends BaseDTO {
     // Toplam Harcama - Toplam Ödeme
     private Double toplamBorc;
 
+    private Long firmMusteriOid;
+
     public String getAd() {
         return ad;
     }
@@ -40,5 +42,13 @@ public class MusteriDTO extends BaseDTO {
 
     public void setToplamBorc(Double toplamBorc) {
         this.toplamBorc = toplamBorc;
+    }
+
+    public Long getFirmMusteriOid() {
+        return firmMusteriOid;
+    }
+
+    public void setFirmMusteriOid(Long firmMusteriOid) {
+        this.firmMusteriOid = firmMusteriOid;
     }
 }

@@ -9,4 +9,6 @@ public interface IEmployeeDao extends GenericDao<Employee, Long> {
     List<CalisanDTO> getAllCalisan();
 
     CalisanDTO getCalisan(Long calisanOid);
+
+    Employee getEmployeeByUserName(String userName);
 }

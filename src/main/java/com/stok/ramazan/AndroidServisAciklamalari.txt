@@ -1,3 +1,5 @@
+// Siparis Durumu Eklenecek
+
 SiparisListesi Servisleri
 @GetMapping("/Borc/SiparisListesi/all")
 
@@ -13,6 +15,7 @@ SirketDTO Servisleri
 MusteriDTO Servisleri
 @GetMapping("/Musteri/MusteriDTO/all")
 
+// Bu ikisine firmalar eklenecek  ve bir de musteriOdeme Listesi eklenecek tarih verilebilecek faturaoid sine göre...
 OdemeDTO Servisleri
 @GetMapping("/Payment/OdemeDTO/all")
 
