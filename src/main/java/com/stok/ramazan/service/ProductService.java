@@ -5,9 +5,11 @@ import com.stok.ramazan.dao.ProductDao;
 import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.dao.interfaces.IPriceDao;
 import com.stok.ramazan.dao.interfaces.IProductDao;
+import com.stok.ramazan.entity.Firma;
 import com.stok.ramazan.entity.Price;
 import com.stok.ramazan.entity.Product;
 import com.stok.ramazan.service.interfaces.IProductService;
+import com.stok.ramazan.service.interfaces.ISubeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class ProductService extends GenericServiceImpl<Product, Long>
     @Autowired
     private IPriceDao priceDao;
 
+    @Autowired
+    private ISubeService subeService;
+
     public ProductService() {
         // TODO Auto-generated constructor stub
     }
@@ -39,7 +44,7 @@ public class ProductService extends GenericServiceImpl<Product, Long>
 
     @Override
     public List<UrunDTO> getAllUrun() {
-        List<Product> lstProduct = productDao.getAll();
+        List<Product> lstProduct = productDao.getAllProductforFirmOid();
         List<UrunDTO> lstUrunDTO = new LinkedList<>();
         lstProduct.stream()
                 .filter(x -> x.getLstPrice() != null)
@@ -76,7 +81,7 @@ public class ProductService extends GenericServiceImpl<Product, Long>
     @Override
     public boolean addUrunDTO(UrunDTO urunDTO) {
         try {
-            Product product = productDao.find(urunDTO.getOid());
+            Product product = new Product();
             Price price = product.getLstPrice().get(product.getLstPrice().size() - 1);
             price.setAciklamasi("Mobile den gelen veri product name " + urunDTO.getProductName());
             price.setFiyati(BigDecimal.valueOf(urunDTO.getPrice()));
@@ -88,7 +93,10 @@ public class ProductService extends GenericServiceImpl<Product, Long>
             product.setProductName(urunDTO.getProductName());
             product.setUnitType(urunDTO.getUnitType());
             product.setLstPrice(Arrays.asList(price));
-            productDao.update(product);
+
+            Firma firma= subeService.getFirmByUser();
+            product.setFirma(firma);
+            productDao.add(product);
             return true;
         } catch (Exception ex) {
             LOGGER.error(getClass().getSimpleName() + " classında hata alındı " + ex.getMessage());
@@ -104,13 +112,23 @@ public class ProductService extends GenericServiceImpl<Product, Long>
             price.setAciklamasi("Mobile den gelen veri product name " + urunDTO.getProductName());
             price.setFiyati(BigDecimal.valueOf(urunDTO.getPrice()));
             priceDao.add(price);
-            Product product = new Product();
+            Product product = productDao.find(urunDTO.getOid());
+            if (product==null){
+                throw new RuntimeException("hatalı Urun Gonderildi");
+            }
             product.setAciklama(urunDTO.getUrunAciklamasi());
             product.setCommingDate(urunDTO.getGelisTarihi());
             product.setSonKullanmaTarihi(urunDTO.getSonKullanmaTarihi());
             product.setProductName(urunDTO.getProductName());
             product.setUnitType(urunDTO.getUnitType());
-            product.setLstPrice(Arrays.asList(price));
+
+            List<Price> lstPrice= product.getLstPrice();
+
+            lstPrice.sort((price1,price2)->price1.getCreatedDate().compareTo(price2.getCreatedDate()));
+
+            lstPrice.add(price);
+
+            product.setLstPrice(lstPrice);
             productDao.add(product);
             return true;
         } catch (Exception ex) {

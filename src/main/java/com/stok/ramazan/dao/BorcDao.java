@@ -1,9 +1,13 @@
 package com.stok.ramazan.dao;
 
 import com.stok.ramazan.dao.interfaces.IBorcDao;
+import com.stok.ramazan.dao.interfaces.IEmployeeDao;
 import com.stok.ramazan.dao.interfaces.IFirmaDao;
+import com.stok.ramazan.dao.interfaces.IUserDao;
 import com.stok.ramazan.entity.Borc;
+import com.stok.ramazan.entity.Employee;
 import com.stok.ramazan.entity.Firma;
+import com.stok.ramazan.entity.User;
 import com.stok.ramazan.helper.EnumUtil;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
@@ -24,6 +28,12 @@ public class BorcDao extends GenericDaoImpl<Borc, Long>
     @Autowired
     private IFirmaDao firmaDao;
 
+    @Autowired
+    private IUserDao userDao;
+
+    @Autowired
+    private IEmployeeDao employeeDao;
+
     @Override
     public Double getToplamBorcByMusteriOid(Long musteriOid) {
         Criteria criteria = this.currentSession().createCriteria(Borc.class, "borc");
@@ -41,21 +51,21 @@ public class BorcDao extends GenericDaoImpl<Borc, Long>
     public List<Borc> getAllBorcByAuthenticated() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userName = auth.getName();
-        System.out.println(userName);
-
-
+        User user=userDao.findByUsername(userName);
         Criteria criteria=currentSession().createCriteria(Borc.class,"borc");
         criteria.createAlias("borc.odemeSube","sube");
         criteria.createAlias("sube.firma","firma");
-        criteria.createAlias("firma.user","user");
-
-        criteria.add(Restrictions.eq("user.entityState", EnumUtil.EntityState.ACTIVE));
+        if (user.getUserType()== EnumUtil.UserType.CALISAN){
+            Employee employee=employeeDao.getEmployeeByUserName(userName);
+            criteria.add(Restrictions.eq("firma.oid",employee.getFirma().getFirma().getOid()));
+        }else {
+            criteria.createAlias("firma.user","user");
+            criteria.add(Restrictions.eq("user.userName",userName));
+            criteria.add(Restrictions.eq("user.entityState", EnumUtil.EntityState.ACTIVE));
+        }
         criteria.add(Restrictions.eq("borc.entityState", EnumUtil.EntityState.ACTIVE));
-
-        criteria.add(Restrictions.eq("user.userName",userName));
-
+        criteria.add(Restrictions.eq("firma.entityState", EnumUtil.EntityState.ACTIVE));
         return criteria.list();
     }
-
 
 }

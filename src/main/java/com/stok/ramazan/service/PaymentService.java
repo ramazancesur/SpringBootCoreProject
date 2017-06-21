@@ -47,7 +47,7 @@ public class PaymentService extends GenericServiceImpl<Payment, Long> implements
   @Override
   public List<OdemeDTO> getAllOdemeDTO() {
     List<OdemeDTO> lstOdemeDTO = new LinkedList<>();
-    paymentDao.getAll().stream()
+    paymentDao.getAllPaymentByUser().stream()
         .filter(x -> x.getBorc() != null && x.getBorc().getMusteri() != null && x.getBorc().getKalanBorc() != null)
         .forEach(x -> {
           lstOdemeDTO.add(getOdemeDTO(x));

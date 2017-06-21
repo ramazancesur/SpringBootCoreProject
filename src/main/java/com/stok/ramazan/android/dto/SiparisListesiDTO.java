@@ -1,5 +1,7 @@
 package com.stok.ramazan.android.dto;
 
+import com.stok.ramazan.helper.EnumUtil;
+
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +12,7 @@ public class SiparisListesiDTO extends BaseDTO {
     private String saticiNotu;
     private Date beklenenTeslimatTarihi;
     private List<SiparisDTO> lstSiparisDTOS;
+    private EnumUtil.SiparisDurum siparisDurum;
 
     public MusteriDTO getMusteri() {
         return musteri;
@@ -57,5 +60,13 @@ public class SiparisListesiDTO extends BaseDTO {
 
     public void setLstSiparisDTOS(List<SiparisDTO> lstSiparisDTOS) {
         this.lstSiparisDTOS = lstSiparisDTOS;
+    }
+
+    public EnumUtil.SiparisDurum getSiparisDurum() {
+        return siparisDurum;
+    }
+
+    public void setSiparisDurum(EnumUtil.SiparisDurum siparisDurum) {
+        this.siparisDurum = siparisDurum;
     }
 }

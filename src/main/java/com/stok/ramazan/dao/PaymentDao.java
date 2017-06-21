@@ -1,20 +1,31 @@
 package com.stok.ramazan.dao;
 
 import com.stok.ramazan.dao.interfaces.IPaymentDao;
+import com.stok.ramazan.dao.interfaces.IUserDao;
 import com.stok.ramazan.entity.Payment;
+import com.stok.ramazan.entity.Sube;
+import com.stok.ramazan.entity.User;
 import com.stok.ramazan.helper.EnumUtil;
+import com.stok.ramazan.service.interfaces.ISubeService;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository("paymentDao")
 public class PaymentDao extends GenericDaoImpl<Payment, Long> implements IPaymentDao {
+
+    @Autowired
+    private ISubeService subeService;
 
     @Override
     public Double getToplamOdemeByMusteriOid(Long musteriOid) {
@@ -42,5 +53,19 @@ public class PaymentDao extends GenericDaoImpl<Payment, Long> implements IPaymen
         Query query=currentSession().createQuery(hql);
         query.setParameter("userName",userName);
         return query.list();
+    }
+
+    @Override
+    public List<Payment> getAllPaymentByUser() {
+        Sube sube=subeService.getUserFirmSube();
+        if (sube!=null) {
+            Criteria criteria = currentSession().createCriteria(Payment.class, "payment");
+            criteria.createAlias("payment.saticiSube", "sube");
+            criteria.add(Restrictions.eq("sube.oid", sube.getOid()));
+            criteria.add(Restrictions.eq("payment.entityState", EnumUtil.EntityState.ACTIVE));
+            return criteria.list();
+        }else {
+            return new ArrayList<>();
+        }
     }
 }

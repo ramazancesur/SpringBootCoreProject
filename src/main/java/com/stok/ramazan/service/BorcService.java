@@ -89,6 +89,7 @@ public class BorcService extends GenericServiceImpl<Borc, Long>
 
                         lstSiparis.add(siparisDTO);
                     });
+            siparisListesiDTO.setSiparisDurum(borc.getSiparisDurum());
             siparisListesiDTO.setLstSiparisDTOS(lstSiparis);
             siparisListesiDTO.setBeklenenTeslimatTarihi(borc.getBeklenenOdemeTarihi());
             siparisListesiDTO.setMusteri(musteriDao.getMusteriDTO(borc.getMusteri().getOid()));
@@ -118,7 +119,7 @@ public class BorcService extends GenericServiceImpl<Borc, Long>
                 lstBorcDetay.add(borcDetay);
             }
             borc.setOdemeSube(subeService.getUserFirmSube());
-
+            borc.setSiparisDurum(siparisListesiDTO.getSiparisDurum());
             borc.setLstBorceDetay(lstBorcDetay);
             borc.setToplamBorc(BigDecimal.valueOf(siparisListesiDTO.getToplamSiparisBorcu()));
             borc.setMusteri(musteriDao.find(siparisListesiDTO.getMusteri().getOid()));

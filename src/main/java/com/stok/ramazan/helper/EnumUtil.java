@@ -121,4 +121,7 @@ public class EnumUtil {
     public enum UnitType {
         ADET, KG, ML
     }
+    public enum SiparisDurum{
+        TESLIM_EDILECEK,TESLIME_HAZIR,TESLIM
+    }
 }

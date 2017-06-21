@@ -25,6 +25,10 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "MALZEME_FIYAT_LISTESI")
     private List<Price> lstPrice;
 
+    @ManyToOne
+    @JoinColumn(name = "FIRMA_OID")
+    private Firma firma;
+
     public String getProductName() {
         return productName;
     }
@@ -79,5 +83,13 @@ public class Product extends BaseEntity {
 
     public void setLstPrice(List<Price> lstPrice) {
         this.lstPrice = lstPrice;
+    }
+
+    public Firma getFirma() {
+        return firma;
+    }
+
+    public void setFirma(Firma firma) {
+        this.firma = firma;
     }
 }
