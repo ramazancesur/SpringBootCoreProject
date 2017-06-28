@@ -1,11 +1,16 @@
 package com.stok.ramazan.service;
 
+import com.stok.ramazan.dao.interfaces.IFirmaDao;
+import com.stok.ramazan.entity.Address;
 import com.stok.ramazan.entity.Conduct;
+import com.stok.ramazan.entity.Firma;
 import com.stok.ramazan.entity.Role;
 import com.stok.ramazan.entity.User;
 import com.stok.ramazan.helper.EnumUtil;
 import com.stok.ramazan.helper.EnumUtil.UserType;
+import com.stok.ramazan.service.interfaces.IAddresService;
 import com.stok.ramazan.service.interfaces.IConductService;
+import com.stok.ramazan.service.interfaces.IFirmaService;
 import com.stok.ramazan.service.interfaces.IRoleService;
 import com.stok.ramazan.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +29,10 @@ public class Initilaze implements ApplicationRunner {
     private IUserService userService;
     @Autowired
     private IConductService conductService;
+    @Autowired
+    private IAddresService addresService;
+    @Autowired
+    private IFirmaService firmaService;
 
     @Override
     public void run(ApplicationArguments arg0) throws Exception {
@@ -98,6 +107,17 @@ public class Initilaze implements ApplicationRunner {
             user.setPassword("$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi");
             user.setRole(role);
             userService.add(user);
+            Firma firma=new Firma();
+            Address address=new Address();
+            address.setAdres("test");
+            address.setAdresTipi(EnumUtil.AddresTipi.GENEL);
+            addresService.add(address);
+
+            firma.setAdress(address);
+            firma.setUser(user);
+            firma.setFirmaAdi("TEST");
+            firma.setLstConduct(user.getLstConduct());
+            firmaService.add(firma);
 
         } catch (Exception e) {
             e.printStackTrace();

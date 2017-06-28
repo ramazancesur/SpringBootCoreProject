@@ -7,12 +7,14 @@ import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.dao.interfaces.IAdressDao;
 import com.stok.ramazan.dao.interfaces.IConductDao;
 import com.stok.ramazan.dao.interfaces.IFirmaDao;
+import com.stok.ramazan.dao.interfaces.ISubeDao;
 import com.stok.ramazan.entity.Address;
 import com.stok.ramazan.entity.Conduct;
 import com.stok.ramazan.entity.Firma;
 import com.stok.ramazan.entity.Musteri;
 import com.stok.ramazan.helper.EnumUtil;
 import com.stok.ramazan.service.interfaces.IMusteriService;
+import com.stok.ramazan.service.interfaces.ISubeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,9 @@ public class MusteriService extends GenericServiceImpl<Musteri, Long> implements
     @Autowired
     private IConductDao conductDao;
 
+
     @Autowired
-    private IFirmaDao firmaDao;
+    private ISubeService subeService;
 
     public MusteriService() {
         // TODO Auto-generated constructor stub
@@ -95,7 +98,8 @@ public class MusteriService extends GenericServiceImpl<Musteri, Long> implements
                 });
         musteri.setLstAddress(lstAddres);
         musteri.setLstConduct(lstConduct);
-        Firma firma= firmaDao.find(musteriDTO.getFirmMusteriOid());
+
+        Firma firma= subeService.getFirmByUser();
 
         musteri.setFirma(firma);
 
