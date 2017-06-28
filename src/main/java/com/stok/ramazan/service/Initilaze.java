@@ -91,9 +91,9 @@ public class Initilaze implements ApplicationRunner {
 
             user.setLstConduct(Arrays.asList(conduct));
 
-            user.setAdi("ramazan");
-            user.setSoyadi("cesur");
-            user.setUserType(UserType.ADMIN);
+            user.setAdi("test verisi");
+            user.setSoyadi("test verisi");
+            user.setUserType(UserType.FIRMA);
             user.setUserName("admin");
             user.setPassword("$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi");
             user.setRole(role);
