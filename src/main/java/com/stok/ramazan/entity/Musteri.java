@@ -1,5 +1,8 @@
 package com.stok.ramazan.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,14 +18,17 @@ public class Musteri extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "FIRMA")
     private Firma firma;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "MUSTERI_CONTACT")
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Conduct> lstConduct;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "MUSTERI_ADRES")
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Address> lstAddress;
-    @OneToMany
-    @JoinColumn(name = "MUSTERI_KEFIL", nullable = true)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "MUSTERI_KEFIL")
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Kefil> lstKefil;
 
     public static long getSerialVersionUID() {

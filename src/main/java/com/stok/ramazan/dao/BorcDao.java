@@ -42,6 +42,9 @@ public class BorcDao extends GenericDaoImpl<Borc, Long>
         criteria.setProjection(Projections.projectionList().add(
                 Projections.sum("borc.kalanBorc"))
         );
+        if(criteria.uniqueResult()==null){
+            return 0.0;
+        }
         criteria.setResultTransformer(Transformers.aliasToBean(BigDecimal.class));
         BigDecimal toplamBorc = (BigDecimal) criteria.uniqueResult();
         return toplamBorc.doubleValue();

@@ -1,5 +1,6 @@
 package com.stok.ramazan.android.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.stok.ramazan.helper.EnumUtil;
 
 import java.util.Date;
@@ -12,6 +13,7 @@ public class CalisanDTO extends BaseDTO {
     private String kullaniciAdi;
     private String sifre;
     private List<AdresTelefon> lstAddresTel;
+    @JsonFormat(pattern = "MMMM d, yyyy HH:mm:ss a")
     private Date iseGirisTarihi;
 
     // Tamamlandığında yazılacaktır

@@ -1,5 +1,6 @@
 package com.stok.ramazan.android.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.stok.ramazan.helper.EnumUtil;
 
 import java.util.Date;
@@ -10,6 +11,7 @@ public class SiparisListesiDTO extends BaseDTO {
     private double toplamSiparisBorcu;
     private String musteriNotu;
     private String saticiNotu;
+    @JsonFormat(pattern = "MMMM d, yyyy HH:mm:ss a")
     private Date beklenenTeslimatTarihi;
     private List<SiparisDTO> lstSiparisDTOS;
     private EnumUtil.SiparisDurum siparisDurum;

@@ -41,6 +41,9 @@ public class PaymentDao extends GenericDaoImpl<Payment, Long> implements IPaymen
         criteria.setProjection(Projections.projectionList().add(
                 Projections.sum("payment.OdemeTutari")
         ));
+        if (criteria.uniqueResult()==null){
+            return 0.0;
+        }
         criteria.setResultTransformer(Transformers.aliasToBean(BigDecimal.class));
         BigDecimal totalOdeme = (BigDecimal) criteria.uniqueResult();
         return totalOdeme.doubleValue();

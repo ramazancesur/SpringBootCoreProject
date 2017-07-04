@@ -20,11 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
 
 @Repository("musteriDao")
+@Transactional
 public class MusteriDao extends GenericDaoImpl<Musteri, Long> implements IMusteriDao {
   @Autowired
   private IBorcDao borcDao;

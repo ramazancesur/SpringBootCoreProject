@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService extends GenericServiceImpl<Product, Long>
@@ -58,9 +59,11 @@ public class ProductService extends GenericServiceImpl<Product, Long>
         UrunDTO urunDTO = new UrunDTO();
         urunDTO.setCreatedDate(product.getCreatedDate());
         urunDTO.setProductName(product.getProductName());
+        Optional<Price> price=product.getLstPrice().stream().sorted((o1, o2)->o1.getUpdatedDate().compareTo(o2.getUpdatedDate())).findFirst();
         urunDTO.setPrice(product.getLstPrice().get(product.getLstPrice().size() - 1).getFiyati().doubleValue());
         urunDTO.setOid(product.getOid());
         urunDTO.setUpdatedDate(product.getUpdatedDate());
+        urunDTO.setPrice(price.get().getFiyati().doubleValue());
         urunDTO.setGelisTarihi(product.getCommingDate());
         urunDTO.setSonKullanmaTarihi(product.getSonKullanmaTarihi());
         urunDTO.setUrunAciklamasi(product.getAciklama());
@@ -82,7 +85,7 @@ public class ProductService extends GenericServiceImpl<Product, Long>
     public boolean addUrunDTO(UrunDTO urunDTO) {
         try {
             Product product = new Product();
-            Price price = product.getLstPrice().get(product.getLstPrice().size() - 1);
+            Price price = new Price();
             price.setAciklamasi("Mobile den gelen veri product name " + urunDTO.getProductName());
             price.setFiyati(BigDecimal.valueOf(urunDTO.getPrice()));
             priceDao.update(price);
@@ -122,10 +125,7 @@ public class ProductService extends GenericServiceImpl<Product, Long>
             product.setProductName(urunDTO.getProductName());
             product.setUnitType(urunDTO.getUnitType());
 
-            List<Price> lstPrice= product.getLstPrice();
-
-            lstPrice.sort((price1,price2)->price1.getCreatedDate().compareTo(price2.getCreatedDate()));
-
+            List<Price> lstPrice=product.getLstPrice();
             lstPrice.add(price);
 
             product.setLstPrice(lstPrice);

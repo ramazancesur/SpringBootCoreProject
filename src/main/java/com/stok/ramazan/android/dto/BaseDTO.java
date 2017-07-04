@@ -1,10 +1,14 @@
 package com.stok.ramazan.android.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class BaseDTO implements Serializable {
+    @JsonFormat(pattern = "MMMM d, yyyy HH:mm:ss a")
     private Date createdDate;
+    @JsonFormat(pattern = "MMMM d, yyyy HH:mm:ss a")
     private Date updatedDate;
     private Long oid;
 
