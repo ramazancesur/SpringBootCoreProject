@@ -8,17 +8,12 @@ import com.stok.ramazan.dao.interfaces.IFirmaDao;
 import com.stok.ramazan.dao.interfaces.IMusteriDao;
 import com.stok.ramazan.dao.interfaces.IPaymentDao;
 import com.stok.ramazan.dao.interfaces.IUserDao;
-import com.stok.ramazan.entity.Employee;
-import com.stok.ramazan.entity.Firma;
 import com.stok.ramazan.entity.Musteri;
-import com.stok.ramazan.entity.User;
 import com.stok.ramazan.helper.EnumUtil;
 import com.stok.ramazan.service.interfaces.ISubeService;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,6 +73,7 @@ public class MusteriDao extends GenericDaoImpl<Musteri, Long> implements IMuster
           AdresTelefon adresTelefon = new AdresTelefon();
           adresTelefon.setTelOrAddres(EnumUtil.TelOrAddres.TELEFON);
           adresTelefon.setDeger(y.getTelNo());
+          adresTelefon.setTelTipi(EnumUtil.ContactTipi.GENEL);
           adresTelefon.setOid(y.getOid());
           lstAdresTel.add(adresTelefon);
         });

@@ -6,7 +6,13 @@ import com.stok.ramazan.service.interfaces.IFirmaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -67,13 +73,13 @@ public class FirmaController extends BaseController<Firma> {
     }
 
     @DeleteMapping(value = "/Firma")
-    public ResponseEntity<Boolean> deleteData(Firma Firma) {
+    public ResponseEntity<Boolean> deleteData(@RequestBody Firma Firma) {
         this.service.remove(Firma);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(value = "/Firma/SirketDTO")
-    public ResponseEntity<Boolean> deleteSirket(SirketDTO sirketDTO) {
+    public ResponseEntity<Boolean> deleteSirket(@RequestBody SirketDTO sirketDTO) {
         return new ResponseEntity<Boolean>(this.service.deleteSirket(sirketDTO.getOid()), HttpStatus.NO_CONTENT);
     }
 }

@@ -1,10 +1,19 @@
 package com.stok.ramazan.entity;
 
 import com.stok.ramazan.helper.EnumUtil.UnitType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "MALZEME")
@@ -21,8 +30,9 @@ public class Product extends BaseEntity {
     private UnitType unitType;
     @Column(name = "GELIS_TARIHI")
     private Date commingDate;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "MALZEME_FIYAT_LISTESI")
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Price> lstPrice;
 
     @ManyToOne

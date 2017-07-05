@@ -8,6 +8,7 @@ import com.stok.ramazan.dao.interfaces.IProductDao;
 import com.stok.ramazan.entity.Firma;
 import com.stok.ramazan.entity.Price;
 import com.stok.ramazan.entity.Product;
+import com.stok.ramazan.helper.EnumUtil;
 import com.stok.ramazan.service.interfaces.IProductService;
 import com.stok.ramazan.service.interfaces.ISubeService;
 import org.slf4j.Logger;
@@ -60,10 +61,11 @@ public class ProductService extends GenericServiceImpl<Product, Long>
         urunDTO.setCreatedDate(product.getCreatedDate());
         urunDTO.setProductName(product.getProductName());
         Optional<Price> price=product.getLstPrice().stream().sorted((o1, o2)->o1.getUpdatedDate().compareTo(o2.getUpdatedDate())).findFirst();
-        urunDTO.setPrice(product.getLstPrice().get(product.getLstPrice().size() - 1).getFiyati().doubleValue());
+        if (price.isPresent() && price.get().getEntityState() != null && price.get().getEntityState() != EnumUtil.EntityState.PASSIVE) {
+            urunDTO.setPrice(product.getLstPrice().get(product.getLstPrice().size() - 1).getFiyati().doubleValue());
+        }
         urunDTO.setOid(product.getOid());
         urunDTO.setUpdatedDate(product.getUpdatedDate());
-        urunDTO.setPrice(price.get().getFiyati().doubleValue());
         urunDTO.setGelisTarihi(product.getCommingDate());
         urunDTO.setSonKullanmaTarihi(product.getSonKullanmaTarihi());
         urunDTO.setUrunAciklamasi(product.getAciklama());
@@ -88,7 +90,7 @@ public class ProductService extends GenericServiceImpl<Product, Long>
             Price price = new Price();
             price.setAciklamasi("Mobile den gelen veri product name " + urunDTO.getProductName());
             price.setFiyati(BigDecimal.valueOf(urunDTO.getPrice()));
-            priceDao.update(price);
+            priceDao.add(price);
 
             product.setAciklama(urunDTO.getUrunAciklamasi());
             product.setCommingDate(urunDTO.getGelisTarihi());

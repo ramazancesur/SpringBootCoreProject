@@ -6,8 +6,6 @@ import com.stok.ramazan.dao.MusteriDao;
 import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.dao.interfaces.IAdressDao;
 import com.stok.ramazan.dao.interfaces.IConductDao;
-import com.stok.ramazan.dao.interfaces.IFirmaDao;
-import com.stok.ramazan.dao.interfaces.ISubeDao;
 import com.stok.ramazan.entity.Address;
 import com.stok.ramazan.entity.Conduct;
 import com.stok.ramazan.entity.Firma;
@@ -136,6 +134,7 @@ public class MusteriService extends GenericServiceImpl<Musteri, Long> implements
                     });
             musteri.setLstConduct(lstConduct);
             musteri.setLstAddress(lstAdres);
+            musteriDao.update(musteri);
             return musteriDTO;
         }
     }

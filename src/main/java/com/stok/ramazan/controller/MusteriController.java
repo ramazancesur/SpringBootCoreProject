@@ -6,7 +6,13 @@ import com.stok.ramazan.service.interfaces.IMusteriService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -66,14 +72,14 @@ public class MusteriController extends BaseController<Musteri> {
     }
 
     @DeleteMapping(value = "/Musteri")
-    public ResponseEntity<Boolean> deleteData(Musteri Musteri) {
+    public ResponseEntity<Boolean> deleteData(@RequestBody Musteri Musteri) {
 
         this.service.remove(Musteri);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(value = "/Musteri/MusteriDTO")
-    public ResponseEntity<Boolean> deleteMusteriDto(MusteriDTO musteriDTO) {
+    public ResponseEntity<Boolean> deleteMusteriDto(@RequestBody MusteriDTO musteriDTO) {
         return new ResponseEntity<Boolean>(this.service.deleteMusteriDto(musteriDTO.getOid()), HttpStatus.NO_CONTENT);
     }
 }

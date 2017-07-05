@@ -6,7 +6,13 @@ import com.stok.ramazan.service.interfaces.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -65,14 +71,14 @@ public class EmployeeController extends BaseController<Employee> {
     }
 
     @DeleteMapping(value = "/Employee")
-    public ResponseEntity<Boolean> deleteData(Employee Employee) {
+    public ResponseEntity<Boolean> deleteData(@RequestBody Employee Employee) {
         this.service.remove(Employee);
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }
 
 
     @DeleteMapping(value = "/Employee/CalisanDTO")
-    public ResponseEntity<Boolean> deleteCalisan(CalisanDTO calisanDTO) {
+    public ResponseEntity<Boolean> deleteCalisan(@RequestBody CalisanDTO calisanDTO) {
         this.service.deleteCalisan(calisanDTO.getOid());
         return new ResponseEntity<Boolean>(true, HttpStatus.NO_CONTENT);
     }
