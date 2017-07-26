@@ -54,13 +54,13 @@ public class BorcController extends BaseController<Borc> {
 
     @PostMapping(value = "/Borc/SiparisListesiDTO")
     public ResponseEntity<SiparisListesiDTO> addSiparisListesi(@RequestBody SiparisListesiDTO siparisListesiDTO) {
-        this.service.addSiparis(siparisListesiDTO);
+        this.service.updateSiparis(siparisListesiDTO);
         return new ResponseEntity(siparisListesiDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/Borc/SiparisListesiDTO")
     public ResponseEntity<SiparisListesiDTO> updateSiparisListesi(@RequestBody SiparisListesiDTO siparisListesiDTO) {
-        this.service.updateSiparis(siparisListesiDTO);
+        this.service.addSiparis(siparisListesiDTO);
         return new ResponseEntity(siparisListesiDTO, HttpStatus.CREATED);
     }
 

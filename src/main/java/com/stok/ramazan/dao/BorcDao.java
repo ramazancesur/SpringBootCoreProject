@@ -6,13 +6,11 @@ import com.stok.ramazan.dao.interfaces.IFirmaDao;
 import com.stok.ramazan.dao.interfaces.IUserDao;
 import com.stok.ramazan.entity.Borc;
 import com.stok.ramazan.entity.Employee;
-import com.stok.ramazan.entity.Firma;
 import com.stok.ramazan.entity.User;
 import com.stok.ramazan.helper.EnumUtil;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Projections;
+import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,17 +34,19 @@ public class BorcDao extends GenericDaoImpl<Borc, Long>
 
     @Override
     public Double getToplamBorcByMusteriOid(Long musteriOid) {
-        Criteria criteria = this.currentSession().createCriteria(Borc.class, "borc");
-        criteria.createAlias("borc.musteri", "musteri");
-        criteria.add(Restrictions.eq("musteri.oid", musteriOid));
-        criteria.setProjection(Projections.projectionList().add(
-                Projections.sum("borc.kalanBorc"))
-        );
-        if(criteria.uniqueResult()==null){
+        String hql = "select sum(borc.kalanBorc) from Borc as borc   " +
+            " inner join borc.musteri as musteri " +
+            " where musteri.oid =:musteriOid ";
+
+        Query query = currentSession().createQuery(hql);
+        query.setParameter("musteriOid", musteriOid);
+        BigDecimal toplamBorc = BigDecimal.ZERO;
+        try {
+            toplamBorc = (BigDecimal) query.uniqueResult();
+        } catch (Exception ex) {
+            ex.printStackTrace();
             return 0.0;
         }
-        criteria.setResultTransformer(Transformers.aliasToBean(BigDecimal.class));
-        BigDecimal toplamBorc = (BigDecimal) criteria.uniqueResult();
         return toplamBorc.doubleValue();
     }
 
