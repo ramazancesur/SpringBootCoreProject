@@ -48,7 +48,7 @@ public class BorcController extends BaseController<Borc> {
 
     @PostMapping(value = "/Borc")
     public ResponseEntity<Boolean> addData(@RequestBody Borc Borc) {
-        this.service.add(Borc);
+        this.service.update(Borc);
         return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
@@ -66,7 +66,7 @@ public class BorcController extends BaseController<Borc> {
 
     @PutMapping(value = "/Borc")
     public ResponseEntity<Boolean> updateData(@RequestBody Borc Borc) {
-        this.service.update(Borc);
+        this.service.add(Borc);
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 

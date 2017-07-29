@@ -55,6 +55,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializabl
         entity.setEntityState(EntityState.ACTIVE);
         entity.setUpdatedDate(new Date());
         currentSession().save(entity);
+        currentSession().clear();
         return entity;
     }
 
@@ -91,16 +92,16 @@ public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializabl
     @Override
     public E update(E entity) {
         entity.setUpdatedDate(new Date());
-        currentSession().saveOrUpdate(entity);
+        currentSession().update(entity);
+        currentSession().clear();
         return entity;
     }
 
     @Override
     public boolean remove(E entity) {
         try {
-            entity.setUpdatedDate(new Date());
             entity.setEntityState(EntityState.PASSIVE);
-            currentSession().update(entity);
+            update(entity);
             return true;
         } catch (Exception e) {
             LOGGER.error(e.getMessage());

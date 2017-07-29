@@ -3,18 +3,27 @@ package com.stok.ramazan.entity;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "MUSTERI")
 public class Musteri extends BaseEntity {
-
     private static final long serialVersionUID = 1L;
     @Column(name = "ADI")
     private String adi;
     @Column(name = "SOYADI")
     private String soyadi;
+    @Column(name = "MUSTERI_TOPLAM_BORCU")
+    private BigDecimal musteriToplamBorcu;
     @ManyToOne
     @JoinColumn(name = "FIRMA")
     private Firma firma;
@@ -31,8 +40,12 @@ public class Musteri extends BaseEntity {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Kefil> lstKefil;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public List<Kefil> getLstKefil() {
+        return lstKefil;
+    }
+
+    public void setLstKefil(List<Kefil> lstKefil) {
+        this.lstKefil = lstKefil;
     }
 
     public String getAdi() {
@@ -49,6 +62,14 @@ public class Musteri extends BaseEntity {
 
     public void setSoyadi(String soyadi) {
         this.soyadi = soyadi;
+    }
+
+    public BigDecimal getMusteriToplamBorcu() {
+        return musteriToplamBorcu;
+    }
+
+    public void setMusteriToplamBorcu(BigDecimal musteriToplamBorcu) {
+        this.musteriToplamBorcu = musteriToplamBorcu;
     }
 
     public Firma getFirma() {
@@ -73,13 +94,5 @@ public class Musteri extends BaseEntity {
 
     public void setLstAddress(List<Address> lstAddress) {
         this.lstAddress = lstAddress;
-    }
-
-    public List<Kefil> getLstKefil() {
-        return lstKefil;
-    }
-
-    public void setLstKefil(List<Kefil> lstKefil) {
-        this.lstKefil = lstKefil;
     }
 }

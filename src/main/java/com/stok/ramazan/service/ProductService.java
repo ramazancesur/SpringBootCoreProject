@@ -101,6 +101,7 @@ public class ProductService extends GenericServiceImpl<Product, Long>
 
             Firma firma= subeService.getFirmByUser();
             product.setFirma(firma);
+
             productDao.add(product);
             return true;
         } catch (Exception ex) {

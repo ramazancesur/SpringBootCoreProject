@@ -2,15 +2,19 @@ package com.stok.ramazan.entity;
 
 import com.stok.ramazan.helper.EnumUtil.OdemeTipi;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "PAYMENT")
 public class  Payment extends BaseEntity {
-    @Column
-    private BigDecimal OdemeTutari;
+    @Column(name = "ODEME_TUTARI")
+    private BigDecimal odemeTutari;
     @Column(name = "ODEME_TIPI")
     private OdemeTipi odemeTipi;
     @Column(name = "BEKLENEN_ODEME_TARIHI")
@@ -29,11 +33,11 @@ public class  Payment extends BaseEntity {
     private Borc borc;
 
     public BigDecimal getOdemeTutari() {
-        return OdemeTutari;
+        return odemeTutari;
     }
 
     public void setOdemeTutari(BigDecimal odemeTutari) {
-        OdemeTutari = odemeTutari;
+        this.odemeTutari = odemeTutari;
     }
 
     public OdemeTipi getOdemeTipi() {
@@ -42,6 +46,22 @@ public class  Payment extends BaseEntity {
 
     public void setOdemeTipi(OdemeTipi odemeTipi) {
         this.odemeTipi = odemeTipi;
+    }
+
+    public Date getBeklenenOdemeTarihi() {
+        return beklenenOdemeTarihi;
+    }
+
+    public void setBeklenenOdemeTarihi(Date beklenenOdemeTarihi) {
+        this.beklenenOdemeTarihi = beklenenOdemeTarihi;
+    }
+
+    public Date getGerceklesenOdemeTarihi() {
+        return gerceklesenOdemeTarihi;
+    }
+
+    public void setGerceklesenOdemeTarihi(Date gerceklesenOdemeTarihi) {
+        this.gerceklesenOdemeTarihi = gerceklesenOdemeTarihi;
     }
 
     public Sube getSaticiSube() {
@@ -58,23 +78,6 @@ public class  Payment extends BaseEntity {
 
     public void setUstleniciSube(Sube ustleniciSube) {
         this.ustleniciSube = ustleniciSube;
-    }
-
-
-    public Date getBeklenenOdemeTarihi() {
-        return beklenenOdemeTarihi;
-    }
-
-    public void setBeklenenOdemeTarihi(Date beklenenOdemeTarihi) {
-        this.beklenenOdemeTarihi = beklenenOdemeTarihi;
-    }
-
-    public Date getGerceklesenOdemeTarihi() {
-        return gerceklesenOdemeTarihi;
-    }
-
-    public void setGerceklesenOdemeTarihi(Date gerceklesenOdemeTarihi) {
-        this.gerceklesenOdemeTarihi = gerceklesenOdemeTarihi;
     }
 
     public Borc getBorc() {

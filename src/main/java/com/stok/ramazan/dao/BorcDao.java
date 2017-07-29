@@ -36,7 +36,7 @@ public class BorcDao extends GenericDaoImpl<Borc, Long>
     public Double getToplamBorcByMusteriOid(Long musteriOid) {
         String hql = "select sum(borc.kalanBorc) from Borc as borc   " +
             " inner join borc.musteri as musteri " +
-            " where musteri.oid =:musteriOid ";
+            " where musteri.oid = :musteriOid ";
 
         Query query = currentSession().createQuery(hql);
         query.setParameter("musteriOid", musteriOid);
