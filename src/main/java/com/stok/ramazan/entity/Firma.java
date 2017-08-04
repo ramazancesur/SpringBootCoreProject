@@ -1,7 +1,17 @@
 package com.stok.ramazan.entity;
 
-import javax.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "FIRMA")
@@ -22,6 +32,7 @@ public class Firma extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "FIRMA_CONDUCT_ID")
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Conduct> lstConduct;
 
     public String getFirmaAdi() {

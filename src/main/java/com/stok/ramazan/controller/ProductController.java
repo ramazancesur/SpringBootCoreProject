@@ -48,25 +48,25 @@ public class ProductController extends BaseController<Product> {
 
     @PostMapping(value = "/Product")
     public ResponseEntity<Boolean> addData(@RequestBody Product Product) {
-        this.service.add(Product);
+        this.service.update(Product);
         return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/Product/UrunDTO")
     public ResponseEntity<UrunDTO> addUrunDTO(@RequestBody UrunDTO urunDTO) {
-        this.service.addUrunDTO(urunDTO);
+        this.service.updateUrunDTO(urunDTO);
         return new ResponseEntity<UrunDTO>(urunDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/Product/UrunDTO")
     public ResponseEntity<UrunDTO> updateUrunDTO(@RequestBody UrunDTO urunDTO) {
-        this.service.updateUrunDTO(urunDTO);
+        this.service.addUrunDTO(urunDTO);
         return new ResponseEntity<UrunDTO>(urunDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/Product")
     public ResponseEntity<Boolean> updateData(@RequestBody Product Product) {
-        this.service.update(Product);
+        this.service.add(Product);
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 

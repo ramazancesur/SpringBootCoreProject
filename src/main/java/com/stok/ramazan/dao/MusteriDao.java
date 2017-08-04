@@ -102,8 +102,16 @@ public class MusteriDao extends GenericDaoImpl<Musteri, Long> implements IMuster
     musteriDTO.setOid(musteri.getOid());
     musteriDTO.setCreatedDate(musteri.getCreatedDate());
     musteriDTO.setUpdatedDate(musteri.getUpdatedDate());
-    musteriDTO.setToplamBorc(Double.valueOf(musteri.getMusteriToplamBorcu().longValue()));
-
+    try {
+      musteriDTO.setToplamBorc(Double.valueOf(musteri.getMusteriToplamBorcu().longValue()));
+    } catch (Exception ex) {
+      LOGGER.error("musteri dao da musteri toplam borcu hesaplanamadi ", ex.getMessage());
+      if (ex instanceof NullPointerException) {
+        musteri.setMusteriToplamBorcu(BigDecimal.ZERO);
+        this.update(musteri);
+      }
+      musteriDTO.setToplamBorc(0.0);
+    }
 
     musteriDTO.setFirmMusteriOid(musteri.getFirma().getOid());
 

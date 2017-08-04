@@ -55,7 +55,6 @@ public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializabl
         entity.setEntityState(EntityState.ACTIVE);
         entity.setUpdatedDate(new Date());
         currentSession().save(entity);
-        currentSession().clear();
         return entity;
     }
 

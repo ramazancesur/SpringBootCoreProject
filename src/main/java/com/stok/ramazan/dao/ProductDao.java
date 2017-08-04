@@ -23,7 +23,7 @@ public class ProductDao extends GenericDaoImpl<Product, Long> implements IProduc
     Firma firma= subeService.getFirmByUser();
     Criteria criteria=currentSession().createCriteria(Product.class,"product");
     criteria.createAlias("product.firma","firma");
-    criteria.createAlias("product.lstPrice", "price");
+    criteria.createAlias("product.price", "price");
     criteria.add(Restrictions.eq("firma.oid",firma.getOid()));
     criteria.add(Restrictions.eq("price.entityState", EnumUtil.EntityState.ACTIVE));
     criteria.add(Restrictions.eq("product.entityState", EnumUtil.EntityState.ACTIVE));

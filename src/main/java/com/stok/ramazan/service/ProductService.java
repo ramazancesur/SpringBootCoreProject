@@ -4,11 +4,12 @@ import com.stok.ramazan.android.dto.UrunDTO;
 import com.stok.ramazan.dao.ProductDao;
 import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.dao.interfaces.IPriceDao;
+import com.stok.ramazan.dao.interfaces.IPriceDetayDao;
 import com.stok.ramazan.dao.interfaces.IProductDao;
 import com.stok.ramazan.entity.Firma;
 import com.stok.ramazan.entity.Price;
+import com.stok.ramazan.entity.PriceDetay;
 import com.stok.ramazan.entity.Product;
-import com.stok.ramazan.helper.EnumUtil;
 import com.stok.ramazan.service.interfaces.IProductService;
 import com.stok.ramazan.service.interfaces.ISubeService;
 import org.slf4j.Logger;
@@ -18,10 +19,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService extends GenericServiceImpl<Product, Long>
@@ -30,6 +29,9 @@ public class ProductService extends GenericServiceImpl<Product, Long>
     private IProductDao productDao;
     @Autowired
     private IPriceDao priceDao;
+
+    @Autowired
+    private IPriceDetayDao priceDetayDao;
 
     @Autowired
     private ISubeService subeService;
@@ -49,7 +51,7 @@ public class ProductService extends GenericServiceImpl<Product, Long>
         List<Product> lstProduct = productDao.getAllProductforFirmOid();
         List<UrunDTO> lstUrunDTO = new LinkedList<>();
         lstProduct.stream()
-                .filter(x -> x.getLstPrice() != null)
+            .filter(x -> x.getPrice() != null)
                 .forEach(product -> {
                     lstUrunDTO.add(getUrunDTO(product));
                 });
@@ -60,10 +62,7 @@ public class ProductService extends GenericServiceImpl<Product, Long>
         UrunDTO urunDTO = new UrunDTO();
         urunDTO.setCreatedDate(product.getCreatedDate());
         urunDTO.setProductName(product.getProductName());
-        Optional<Price> price=product.getLstPrice().stream().sorted((o1, o2)->o1.getUpdatedDate().compareTo(o2.getUpdatedDate())).findFirst();
-        if (price.isPresent() && price.get().getEntityState() != null && price.get().getEntityState() != EnumUtil.EntityState.PASSIVE) {
-            urunDTO.setPrice(product.getLstPrice().get(product.getLstPrice().size() - 1).getFiyati().doubleValue());
-        }
+        urunDTO.setPrice(product.getPrice().getFiyati().doubleValue());
         urunDTO.setOid(product.getOid());
         urunDTO.setUpdatedDate(product.getUpdatedDate());
         urunDTO.setGelisTarihi(product.getCommingDate());
@@ -92,12 +91,18 @@ public class ProductService extends GenericServiceImpl<Product, Long>
             price.setFiyati(BigDecimal.valueOf(urunDTO.getPrice()));
             priceDao.add(price);
 
+            PriceDetay priceDetay = new PriceDetay();
+            priceDetay.setOncekiFiyat(BigDecimal.ZERO);
+            priceDetay.setSonrakiFiyat(price.getFiyati());
+            priceDetay.setPrice(price);
+            priceDetayDao.add(priceDetay);
+
             product.setAciklama(urunDTO.getUrunAciklamasi());
             product.setCommingDate(urunDTO.getGelisTarihi());
             product.setSonKullanmaTarihi(urunDTO.getSonKullanmaTarihi());
             product.setProductName(urunDTO.getProductName());
             product.setUnitType(urunDTO.getUnitType());
-            product.setLstPrice(Arrays.asList(price));
+            product.setPrice(price);
 
             Firma firma= subeService.getFirmByUser();
             product.setFirma(firma);
@@ -114,25 +119,37 @@ public class ProductService extends GenericServiceImpl<Product, Long>
     @Override
     public boolean updateUrunDTO(UrunDTO urunDTO) {
         try {
-            Price price = new Price();
-            price.setAciklamasi("Mobile den gelen veri product name " + urunDTO.getProductName());
-            price.setFiyati(BigDecimal.valueOf(urunDTO.getPrice()));
-            priceDao.add(price);
             Product product = productDao.find(urunDTO.getOid());
             if (product==null){
                 throw new RuntimeException("hatalı Urun Gonderildi");
             }
+
+            PriceDetay priceDetay = new PriceDetay();
+            Price price = product.getPrice();
+
+            price.setAciklamasi("Mobile den gelen veri product name " + urunDTO.getProductName());
+
+            priceDetay.setOncekiFiyat(price.getFiyati());
+
+            price.setFiyati(BigDecimal.valueOf(urunDTO.getPrice()));
+            priceDao.update(price);
+
+            priceDetay.setPrice(price);
+            priceDetay.setSonrakiFiyat(price.getFiyati());
+
+            if (priceDetay.getOncekiFiyat().doubleValue() != priceDetay.getSonrakiFiyat().doubleValue()) {
+                priceDetayDao.add(priceDetay);
+            }
+
             product.setAciklama(urunDTO.getUrunAciklamasi());
             product.setCommingDate(urunDTO.getGelisTarihi());
             product.setSonKullanmaTarihi(urunDTO.getSonKullanmaTarihi());
             product.setProductName(urunDTO.getProductName());
             product.setUnitType(urunDTO.getUnitType());
 
-            List<Price> lstPrice=product.getLstPrice();
-            lstPrice.add(price);
+            product.setPrice(price);
 
-            product.setLstPrice(lstPrice);
-            productDao.add(product);
+            productDao.update(product);
             return true;
         } catch (Exception ex) {
             LOGGER.error(getClass().getSimpleName() + " classında hata alındı " + ex.getMessage());
