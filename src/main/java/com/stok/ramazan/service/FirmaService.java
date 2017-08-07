@@ -12,14 +12,18 @@ import com.stok.ramazan.dao.interfaces.IUserDao;
 import com.stok.ramazan.entity.Address;
 import com.stok.ramazan.entity.Conduct;
 import com.stok.ramazan.entity.Firma;
+import com.stok.ramazan.entity.Lisans;
 import com.stok.ramazan.entity.Role;
 import com.stok.ramazan.entity.User;
 import com.stok.ramazan.helper.EnumUtil;
+import com.stok.ramazan.helper.FileOperations;
+import com.stok.ramazan.helper.Helper;
 import com.stok.ramazan.service.interfaces.IFirmaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -71,14 +75,13 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
     sirketDTO.setCreatedDate(firma.getCreatedDate());
     sirketDTO.setOid(firma.getOid());
     sirketDTO.setUpdatedDate(firma.getUpdatedDate());
-    List<String> lstLisansKey = new LinkedList<>();
-    firmaDao.getAllActiveLisans(firma.getOid())
-        .stream().filter(lisans -> lisans.getFirma() != null)
-        .forEach(lisans -> {
-          if (lisans.getLicenseKey() != null) {
-            lstLisansKey.add(lisans.getLicenseKey());
-          }
-        });
+
+
+    Lisans lisans = firmaDao.getAllActiveLisans(firma.getOid());
+    sirketDTO.setSirketLisansKey(lisans.getLicenseKey());
+    sirketDTO.setLisansEndTimes(lisans.getLicenseFinishDate());
+    sirketDTO.setLisansStartTimes(lisans.getLicenseStartDate());
+
     List<AdresTelefon> lstAdresTel = new LinkedList<>();
     if (firma.getAdress() != null) {
       AdresTelefon adresTelefon = new AdresTelefon();
@@ -102,16 +105,7 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
           lstAdresTel.add(adresTelefon);
         });
 
-
-    lisansDao.getLisansListbyFirmID(firma.getOid())
-        .stream()
-        .filter(lisans -> lisans.getLicenseKey() != null && lisans.getFirma() != null)
-        .forEach(lisans -> {
-          lstLisansKey.add(lisans.getLicenseKey());
-        });
-
     sirketDTO.setLstAdresTel(lstAdresTel);
-    sirketDTO.setSirketLisansKey(lstLisansKey);
     sirketDTO.setUserOid(firma.getUser().getOid());
     return sirketDTO;
   }
@@ -126,6 +120,17 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
   public boolean addSirket(SirketDTO sirketDTO) {
     try {
       Firma firma = new Firma();
+      // Android tarafında resim okunacak ve encode edilip java server tarafına gönderilecek
+      firma.setFirmaAdi(sirketDTO.getSirketAdi());
+
+      String base64Image = sirketDTO.getEncodedImages();
+
+      String fileLocation = FileOperations.convertBytesToFile(Helper.getInstance().decodeBase64(base64Image), "/firmaLogo", firma.getFirmaAdi());
+
+      firma.setFirmaLogoYolu(fileLocation);
+      // Kalan sms tutarını update edebilir
+      firma.setKalanSms(sirketDTO.getKalanSms());
+
       List<Conduct> lstConduct = new LinkedList<>();
       if (sirketDTO.getLstAdresTel().size() != 0) {
         for (AdresTelefon adresTelefon : sirketDTO.getLstAdresTel()) {
@@ -150,12 +155,11 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
       Role role;
       List<Role> lstRole = roleDao.getAll();
       if (lstRole.size() != 0) {
-        role=lstRole.get(0);
-      }
-      else{
-        role=new Role();
-        role.setYetkiAciklamasi("ADMIN rolü");
-        role.setYetkiAdi("ADMIN");
+        role = lstRole.get(0);
+      } else {
+        role = new Role();
+        role.setYetkiAciklamasi("FIRMA rolü");
+        role.setYetkiAdi("FIRMA");
         roleDao.add(role);
       }
       User user = new User();
@@ -167,10 +171,17 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
 
       firma.setLstConduct(lstConduct);
       firma.setUser(user);
-      firma.setFirmaAdi(sirketDTO.getSirketAdi());
-      firma.setFirmaLogoYolu(sirketDTO.getLogoPath());
 
       firmaDao.add(firma);
+
+      Lisans lisans = new Lisans();
+      lisans.setFirma(firma);
+      lisans.setLicenseStartDate(new Date());
+      lisans.setLicenseFinishDate(sirketDTO.getLisansEndTimes());
+      String lisansKey = Helper.generateUnique();
+      lisans.setLicenseKey(lisansKey);
+      lisansDao.add(lisans);
+
     } catch (Exception ex) {
       ex.printStackTrace();
       return false;
@@ -182,6 +193,16 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
   public boolean updateSirket(SirketDTO sirketDTO) {
     try {
       Firma firma = firmaDao.find(sirketDTO.getOid());
+      // Şirket resmini update edebilir
+
+      String base64Image = sirketDTO.getEncodedImages();
+
+      String fileLocation = FileOperations.convertBytesToFile(Helper.getInstance().decodeBase64(base64Image), "/firmaLogo", firma.getFirmaAdi());
+
+      firma.setFirmaLogoYolu(fileLocation);
+      // Kalan sms tutarını update edebilir
+      firma.setKalanSms(sirketDTO.getKalanSms());
+
       List<Conduct> lstConduct = new LinkedList<>();
       if (sirketDTO.getLstAdresTel().size() != 0) {
         for (AdresTelefon adresTelefon : sirketDTO.getLstAdresTel()) {
@@ -199,8 +220,6 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
             adressDao.update(address);
 
             firma.setAdress(address);
-
-
           }
         }
       }
@@ -213,6 +232,24 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
       firma.setFirmaLogoYolu(sirketDTO.getLogoPath());
 
       firmaDao.update(firma);
+      Lisans tempLisans = firmaDao.getAllActiveLisans(firma.getOid());
+
+      if (tempLisans != null) {
+        tempLisans.setLicenseFinishDate(sirketDTO.getLisansEndTimes());
+        lisansDao.update(tempLisans);
+      }
+
+      if (tempLisans == null) {
+        Lisans lisans = new Lisans();
+        lisans.setFirma(firma);
+        lisans.setLicenseStartDate(new Date());
+        lisans.setLicenseFinishDate(sirketDTO.getLisansEndTimes());
+        String lisansKey = Helper.generateUnique();
+        lisans.setLicenseKey(lisansKey);
+        lisansDao.add(lisans);
+      }
+
+
     } catch (Exception ex) {
       ex.printStackTrace();
       return false;

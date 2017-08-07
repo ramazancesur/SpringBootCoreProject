@@ -15,6 +15,7 @@ import org.hibernate.loader.criteria.CriteriaQueryTranslator;
 import org.hibernate.persister.entity.OuterJoinLoadable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.misc.BASE64Decoder;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -65,33 +66,18 @@ public class Helper {
     return instance;
   }
 
-  public String readWebUrl(String url) {
-    URL uri;
-    InputStream is = null;
-    BufferedReader br;
-    String line;
-    StringBuilder sb = new StringBuilder();
-    try {
-      uri = new URL(url);
-      is = uri.openStream(); // throws an IOException
-      br = new BufferedReader(new InputStreamReader(is));
+  // Android için bitmap
+  public byte[] decodeBase64(String input) {
+    byte[] imageByte;
 
-      while ((line = br.readLine()) != null) {
-        sb.append(line);
-      }
-    } catch (MalformedURLException mue) {
-      mue.printStackTrace();
-    } catch (IOException ioe) {
-      ioe.printStackTrace();
-    } finally {
-      try {
-        if (is != null)
-          is.close();
-      } catch (IOException ioe) {
-        // nothing to see here
-      }
+    BASE64Decoder decoder = new BASE64Decoder();
+    try {
+      imageByte = decoder.decodeBuffer(input);
+      return imageByte;
+    } catch (IOException e) {
+      e.printStackTrace();
+      return null;
     }
-    return sb.toString();
   }
 
   /**
@@ -188,6 +174,35 @@ public class Helper {
     System.out.println("************** Sql Query Sistemi ********* \n ");
     System.out.println(sql);
     System.out.println("************** Sql Query Sistemi ********* \n\n\n");
+  }
+
+  public String readWebUrl(String url) {
+    URL uri;
+    InputStream is = null;
+    BufferedReader br;
+    String line;
+    StringBuilder sb = new StringBuilder();
+    try {
+      uri = new URL(url);
+      is = uri.openStream(); // throws an IOException
+      br = new BufferedReader(new InputStreamReader(is));
+
+      while ((line = br.readLine()) != null) {
+        sb.append(line);
+      }
+    } catch (MalformedURLException mue) {
+      mue.printStackTrace();
+    } catch (IOException ioe) {
+      ioe.printStackTrace();
+    } finally {
+      try {
+        if (is != null)
+          is.close();
+      } catch (IOException ioe) {
+        // nothing to see here
+      }
+    }
+    return sb.toString();
   }
 
   public boolean isValidEmailAddress(String email) {

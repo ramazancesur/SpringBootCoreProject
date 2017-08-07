@@ -6,7 +6,7 @@ import com.stok.ramazan.entity.Lisans;
 import java.util.List;
 
 public interface IFirmaDao extends GenericDao<Firma, Long> {
-    List<Lisans> getAllActiveLisans(Long firmaOid);
+  Lisans getAllActiveLisans(Long firmaOid);
 
     Firma getFirma(String sirketAdi, String sirketLogoYol);
 

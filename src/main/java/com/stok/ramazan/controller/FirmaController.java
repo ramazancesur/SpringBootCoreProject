@@ -53,7 +53,7 @@ public class FirmaController extends BaseController<Firma> {
         return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/Firma/SirketDTO")
+    @PutMapping(value = "/Firma/SirketDTO")
     public ResponseEntity<SirketDTO> addSirket(@RequestBody SirketDTO sirketDTO) {
         this.service.addSirket(sirketDTO);
         return new ResponseEntity<SirketDTO>(sirketDTO, HttpStatus.CREATED);
@@ -66,7 +66,7 @@ public class FirmaController extends BaseController<Firma> {
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/Firma/SirketDTO")
+    @PostMapping(value = "/Firma/SirketDTO")
     public ResponseEntity<SirketDTO> updateSirket(@PathVariable Long id, @RequestBody SirketDTO sirketDTO) {
         this.service.updateSirket(sirketDTO);
         return new ResponseEntity<SirketDTO>(sirketDTO, HttpStatus.OK);

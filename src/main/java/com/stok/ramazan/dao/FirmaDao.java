@@ -3,7 +3,6 @@ package com.stok.ramazan.dao;
 import com.stok.ramazan.dao.interfaces.IFirmaDao;
 import com.stok.ramazan.entity.Firma;
 import com.stok.ramazan.entity.Lisans;
-import com.stok.ramazan.entity.Sube;
 import com.stok.ramazan.helper.EnumUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -17,13 +16,16 @@ import java.util.List;
 @Repository("firmaDao")
 public class FirmaDao extends GenericDaoImpl<Firma, Long> implements IFirmaDao {
 
-    public List<Lisans> getAllActiveLisans(Long firmaOid) {
+  public Lisans getAllActiveLisans(Long firmaOid) {
         Criteria criteria = currentSession().createCriteria(Lisans.class, "lisans");
         criteria.createAlias("lisans.firma", "firma");
         criteria.add(Restrictions.eq("firma.entityState", EnumUtil.EntityState.ACTIVE));
         criteria.add(Restrictions.eq("lisans.entityState", EnumUtil.EntityState.ACTIVE));
         criteria.add(Restrictions.eq("firma.oid", firmaOid));
-        return criteria.list();
+    criteria.add(Restrictions.ge("lisans.licenseFinishDate", new Date()));
+    criteria.add(Restrictions.le("lisans.licenseStartDate", new Date()));
+    criteria.add(Restrictions.isNotNull("lisans.licenseKey"));
+    return (Lisans) criteria.uniqueResult();
     }
 
     public Firma getFirma(String sirketAdi, String sirketLogoYol) {
