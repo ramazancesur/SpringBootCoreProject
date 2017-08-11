@@ -25,11 +25,61 @@ public class FileOperations {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileOperations.class);
 
     private static final String file_DIR = "/C:/FileServer/fileMRP";
-    private static final String file_DIR_LINUX = "/haliYikama/Files/tempFile";
+    private static final String file_DIR_LINUX = "/FileServer/haliYikama/Files/tempFile";
 
     public static byte[] encodeFileToBase64Byte(String filePath) throws IOException {
         byte[] bytes = convertFileToByte(filePath);
         return encodeFileToBase64Byte(bytes);
+    }
+
+    public static String convertBytesToFile(byte[] bytes, String locationName, String fileName) throws IOException {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd_MM_yyyy HH:mm:ss.SS");
+        String strDate = sdf.format(cal.getTime());
+
+        String path = "";
+        if (OSDetector.isWindows()) {
+            path = file_DIR;
+        } else if (OSDetector.isUnix() || OSDetector.isSolaris()) {
+            path = file_DIR_LINUX;
+        } else if (OSDetector.isMac()) {
+            path = "/Users/" + Helper.getInstance().getSystemUserNameList().get(0) + file_DIR_LINUX;
+        }
+        path = path + "/" + fileName;
+        if (locationName.contains("/")) {
+            path = path.replace(".", "_") + "/" + strDate.replace(" ", "").replace("_", "").replace(":", "")
+
+                + locationName;
+
+        } else {
+            path = path.replace(".", "_") + "/" + strDate.replace(" ", "").replace("_", "").replace(":", "") + "/" + locationName;
+        }
+        String fileLocation = path;
+
+        BufferedImage image = null;
+
+
+        ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+        image = ImageIO.read(bis);
+        bis.close();
+
+// write the image to a file
+        File outputfile = new File(fileLocation.replace(".", "_") + "/" + fileName + ".png");
+        File parentDir = outputfile.getParentFile();
+
+        parentDir.setReadable(true, false);
+        parentDir.setExecutable(true, false);
+        parentDir.setWritable(true, false);
+
+        if (parentDir != null && !parentDir.exists()) {
+            if (!parentDir.mkdirs()) {
+                throw new IOException("error creating directories");
+            }
+        }
+        ImageIO.write(image, "png", outputfile);
+
+
+        return fileLocation.replace(".", "_") + "/" + fileName + ".png";
     }
 
     public static byte[] encodeFileToBase64Byte(byte[] bytes) {
@@ -90,54 +140,27 @@ public class FileOperations {
 
     }
 
-    public static String convertBytesToFile(byte[] bytes, String locationName, String fileName) throws IOException {
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd_MM_yyyy HH:mm:ss.SS");
-        String strDate = sdf.format(cal.getTime());
-
-        String path = "";
-        if (OSDetector.isWindows()) {
-            path = file_DIR;
-        } else if (OSDetector.isUnix() || OSDetector.isSolaris()) {
-            path = file_DIR_LINUX;
-        } else if (OSDetector.isMac()) {
-            path = "/tmp" + file_DIR_LINUX;
-        }
-        path = path + "/" + fileName;
-        if (locationName.contains("/")) {
-            path = path.replace(".", "_") + "/" + strDate.replace(" ", "").replace("_", "").replace(":", "")
-
-                + locationName;
-
-        } else {
-            path = path.replace(".", "_") + "/" + strDate.replace(" ", "").replace("_", "").replace(":", "") + "/" + locationName;
-        }
-        String fileLocation = path;
+    public byte[] convertImagetoByteArray(String filePath) {
 
         BufferedImage image = null;
+        File f = null;
 
+        // read image file
+        try {
+            f = new File(filePath);
+            image = ImageIO.read(f);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
+            baos.flush();
+            byte[] imageInByte = baos.toByteArray();
+            baos.close();
+            return baos.toByteArray();
 
-        ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-        image = ImageIO.read(bis);
-        bis.close();
-
-// write the image to a file
-        File outputfile = new File(fileLocation.replace(".", "_") + "/" + fileName + ".png");
-        File parentDir = outputfile.getParentFile();
-
-        parentDir.setReadable(true, false);
-        parentDir.setExecutable(true, false);
-        parentDir.setWritable(true, false);
-
-        if (parentDir != null && !parentDir.exists()) {
-            if (!parentDir.mkdirs()) {
-                throw new IOException("error creating directories");
-            }
+        } catch (IOException e) {
+            System.out.println("Error: " + e);
         }
-        ImageIO.write(image, "png", outputfile);
 
-
-        return fileLocation.replace(".", "_") + "/" + fileName + ".png";
+        return null;
     }
 
 }

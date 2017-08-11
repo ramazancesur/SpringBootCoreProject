@@ -36,6 +36,8 @@ import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.mail.internet.AddressException;
@@ -66,6 +68,27 @@ public class Helper {
     return instance;
   }
 
+
+  public List<String> getSystemUserNameList() {
+    List<String> lstMacUser = new LinkedList<>();
+
+    File actual = new File("/Users/");
+    for (File f : actual.listFiles()) {
+      if (f.isDirectory()) {
+        System.out.println(f.getName());
+        lstMacUser.add(f.getName());
+      }
+    }
+    return lstMacUser;
+  }
+
+
+  public String createCurrentDate() {
+    Calendar cal = Calendar.getInstance();
+    SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+    String formatted = format1.format(cal.getTime());
+    return formatted;
+  }
   // Android için bitmap
   public byte[] decodeBase64(String input) {
     byte[] imageByte;

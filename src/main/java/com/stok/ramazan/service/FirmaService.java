@@ -63,51 +63,60 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
 
     for (Firma firma : lstFirma) {
       SirketDTO sirketDTO = getSirket(firma);
-      lstSirket.add(sirketDTO);
+      if (sirketDTO != null) {
+        lstSirket.add(sirketDTO);
+      }
     }
     return lstSirket;
   }
 
   private SirketDTO getSirket(Firma firma) {
-    SirketDTO sirketDTO = new SirketDTO();
-    sirketDTO.setLogoPath(firma.getFirmaLogoYolu());
-    sirketDTO.setSirketAdi(firma.getFirmaAdi());
-    sirketDTO.setCreatedDate(firma.getCreatedDate());
-    sirketDTO.setOid(firma.getOid());
-    sirketDTO.setUpdatedDate(firma.getUpdatedDate());
+    try {
+      SirketDTO sirketDTO = new SirketDTO();
+      sirketDTO.setLogoPath(firma.getFirmaLogoYolu());
+      sirketDTO.setSirketAdi(firma.getFirmaAdi());
+      sirketDTO.setCreatedDate(firma.getCreatedDate());
+      sirketDTO.setOid(firma.getOid());
+      sirketDTO.setUpdatedDate(firma.getUpdatedDate());
+      sirketDTO.setAndroidLogoPath(firma.getAndroidLogoPath());
+      sirketDTO.setChangeImage(false);
 
+      Lisans lisans = firmaDao.getAllActiveLisans(firma.getOid());
+      sirketDTO.setSirketLisansKey(lisans.getLicenseKey());
+      sirketDTO.setLisansEndTimes(lisans.getLicenseFinishDate());
+      sirketDTO.setLisansStartTimes(lisans.getLicenseStartDate());
 
-    Lisans lisans = firmaDao.getAllActiveLisans(firma.getOid());
-    sirketDTO.setSirketLisansKey(lisans.getLicenseKey());
-    sirketDTO.setLisansEndTimes(lisans.getLicenseFinishDate());
-    sirketDTO.setLisansStartTimes(lisans.getLicenseStartDate());
+      List<AdresTelefon> lstAdresTel = new LinkedList<>();
+      if (firma.getAdress() != null) {
+        AdresTelefon adresTelefon = new AdresTelefon();
+        adresTelefon.setAddresTipi(EnumUtil.AddresTipi.GENEL);
+        adresTelefon.setTelOrAddres(EnumUtil.TelOrAddres.ADDRES);
+        adresTelefon.setOid(firma.getAdress().getOid());
+        adresTelefon.setDeger(firma.getAdress().getAdres());
 
-    List<AdresTelefon> lstAdresTel = new LinkedList<>();
-    if (firma.getAdress() != null) {
-      AdresTelefon adresTelefon = new AdresTelefon();
-      adresTelefon.setAddresTipi(EnumUtil.AddresTipi.GENEL);
-      adresTelefon.setTelOrAddres(EnumUtil.TelOrAddres.ADDRES);
-      adresTelefon.setOid(firma.getAdress().getOid());
-      adresTelefon.setDeger(firma.getAdress().getAdres());
+        lstAdresTel.add(adresTelefon);
+      }
 
-      lstAdresTel.add(adresTelefon);
+      firma.getLstConduct()
+          .stream()
+          .filter(conduct -> conduct.getTelNo() != null)
+          .forEach(conduct -> {
+            AdresTelefon adresTelefon = new AdresTelefon();
+            adresTelefon.setTelTipi(EnumUtil.ContactTipi.GENEL);
+            adresTelefon.setTelOrAddres(EnumUtil.TelOrAddres.TELEFON);
+            adresTelefon.setOid(conduct.getOid());
+            adresTelefon.setDeger(conduct.getTelNo());
+            lstAdresTel.add(adresTelefon);
+          });
+
+      sirketDTO.setLstAdresTel(lstAdresTel);
+      sirketDTO.setUserOid(firma.getUser().getOid());
+      sirketDTO.setKalanSms(firma.getKalanSms());
+      return sirketDTO;
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-
-    firma.getLstConduct()
-        .stream()
-        .filter(conduct -> conduct.getTelNo() != null)
-        .forEach(conduct -> {
-          AdresTelefon adresTelefon = new AdresTelefon();
-          adresTelefon.setTelTipi(EnumUtil.ContactTipi.GENEL);
-          adresTelefon.setTelOrAddres(EnumUtil.TelOrAddres.TELEFON);
-          adresTelefon.setOid(conduct.getOid());
-          adresTelefon.setDeger(conduct.getTelNo());
-          lstAdresTel.add(adresTelefon);
-        });
-
-    sirketDTO.setLstAdresTel(lstAdresTel);
-    sirketDTO.setUserOid(firma.getUser().getOid());
-    return sirketDTO;
+    return null;
   }
 
   @Override
@@ -120,14 +129,15 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
   public boolean addSirket(SirketDTO sirketDTO) {
     try {
       Firma firma = new Firma();
-      // Android tarafında resim okunacak ve encode edilip java server tarafına gönderilecek
       firma.setFirmaAdi(sirketDTO.getSirketAdi());
 
-      String base64Image = sirketDTO.getEncodedImages();
-
-      String fileLocation = FileOperations.convertBytesToFile(Helper.getInstance().decodeBase64(base64Image), "/firmaLogo", firma.getFirmaAdi());
-
-      firma.setFirmaLogoYolu(fileLocation);
+      // Android tarafında imagenin datası yüklenecek
+      if (sirketDTO.isChangeImage()) {
+        String base64Image = sirketDTO.getEncodedImages();
+        String fileLocation = FileOperations.convertBytesToFile(Helper.getInstance().decodeBase64(base64Image), "/firmaLogo", firma.getFirmaAdi());
+        firma.setFirmaLogoYolu(fileLocation);
+      }
+      firma.setAndroidLogoPath(sirketDTO.getAndroidLogoPath());
       // Kalan sms tutarını update edebilir
       firma.setKalanSms(sirketDTO.getKalanSms());
 

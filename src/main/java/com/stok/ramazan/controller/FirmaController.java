@@ -2,6 +2,7 @@ package com.stok.ramazan.controller;
 
 import com.stok.ramazan.android.dto.SirketDTO;
 import com.stok.ramazan.entity.Firma;
+import com.stok.ramazan.helper.FileOperations;
 import com.stok.ramazan.service.interfaces.IFirmaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,8 @@ public class FirmaController extends BaseController<Firma> {
     @Autowired
     private IFirmaService service;
 
+    FileOperations fileOperations = new FileOperations();
+
     @GetMapping("/Firma/all")
     public ResponseEntity<List<Firma>> getAll() {
         List<Firma> lstFirma = this.service.getAll();
@@ -37,6 +40,13 @@ public class FirmaController extends BaseController<Firma> {
     public ResponseEntity<Firma> getDataById(@PathVariable("id") Long id) {
         Firma Firma = this.service.get(id);
         return new ResponseEntity<Firma>(Firma, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/Firma/{filePath}")
+    public ResponseEntity<byte[]> getDataById(@PathVariable("filePath") String filePath) {
+        byte[] firmaImage = fileOperations.convertImagetoByteArray(filePath);
+        return new ResponseEntity<byte[]>(firmaImage, HttpStatus.OK);
     }
 
 

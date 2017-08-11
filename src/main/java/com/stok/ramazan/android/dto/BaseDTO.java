@@ -6,9 +6,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class BaseDTO implements Serializable {
-    @JsonFormat(pattern = "MMMM d, yyyy HH:mm:ss a")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private Date createdDate;
-    @JsonFormat(pattern = "MMMM d, yyyy HH:mm:ss a")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private Date updatedDate;
     private Long oid;
 

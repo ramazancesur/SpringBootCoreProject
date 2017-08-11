@@ -16,14 +16,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "FIRMA")
 public class Firma extends BaseEntity {
-
   @Column(name = "FIRM_ADI")
   private String firmaAdi;
   @Column(name = "FIRMA_LOGO_YOLU")
   private String firmaLogoYolu;
 
   @Column(name = "KALAN_SMS")
-  private int kalanSms;
+  private Integer kalanSms;
 
   @OneToOne
   @JoinColumn(name = "FIRM_USER")
@@ -37,6 +36,10 @@ public class Firma extends BaseEntity {
   @JoinColumn(name = "FIRMA_CONDUCT_ID")
   @Fetch(value = FetchMode.SUBSELECT)
   private List<Conduct> lstConduct;
+
+  @Column(name = "ANDROID_LOGO_PATH")
+  private String androidLogoPath;
+
 
   public String getFirmaAdi() {
     return firmaAdi;
@@ -84,5 +87,13 @@ public class Firma extends BaseEntity {
 
   public void setLstConduct(List<Conduct> lstConduct) {
     this.lstConduct = lstConduct;
+  }
+
+  public String getAndroidLogoPath() {
+    return androidLogoPath;
+  }
+
+  public void setAndroidLogoPath(String androidLogoPath) {
+    this.androidLogoPath = androidLogoPath;
   }
 }
