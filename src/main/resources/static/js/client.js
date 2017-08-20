@@ -26,7 +26,7 @@ $(function () {
 
     function doLogin(loginData) {
         $.ajax({
-            url: "/auth",
+            url: "/haliYikama/auth",
             type: "POST",
             data: JSON.stringify(loginData),
             contentType: "application/json; charset=utf-8",
@@ -76,7 +76,7 @@ $(function () {
 
     function showUserInformation() {
         $.ajax({
-            url: "/user",
+            url: "/haliYikama/User/all",
             type: "GET",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -130,7 +130,7 @@ $(function () {
 
     $("#exampleServiceBtn").click(function () {
         $.ajax({
-            url: "/Employee/CalisanDTO/all",
+            url: "/haliYikama/Employee/CalisanDTO/all",
             type: "GET",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -147,7 +147,7 @@ $(function () {
 
     $("#adminServiceBtn").click(function () {
         $.ajax({
-            url: "/protected",
+            url: "/haliYikama/protected",
             type: "GET",
             contentType: "application/json; charset=utf-8",
             headers: createAuthorizationTokenHeader(),
