@@ -1,18 +1,9 @@
 package com.stok.ramazan.service;
 
-import com.stok.ramazan.dao.interfaces.IFirmaDao;
-import com.stok.ramazan.entity.Address;
-import com.stok.ramazan.entity.Conduct;
-import com.stok.ramazan.entity.Firma;
-import com.stok.ramazan.entity.Role;
-import com.stok.ramazan.entity.User;
+import com.stok.ramazan.entity.*;
 import com.stok.ramazan.helper.EnumUtil;
 import com.stok.ramazan.helper.EnumUtil.UserType;
-import com.stok.ramazan.service.interfaces.IAddresService;
-import com.stok.ramazan.service.interfaces.IConductService;
-import com.stok.ramazan.service.interfaces.IFirmaService;
-import com.stok.ramazan.service.interfaces.IRoleService;
-import com.stok.ramazan.service.interfaces.IUserService;
+import com.stok.ramazan.service.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -107,8 +98,8 @@ public class Initilaze implements ApplicationRunner {
             user.setPassword("$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi");
             user.setRole(role);
             userService.add(user);
-            Firma firma=new Firma();
-            Address address=new Address();
+            Firma firma = new Firma();
+            Address address = new Address();
             address.setAdres("test");
             address.setAdresTipi(EnumUtil.AddresTipi.GENEL);
             addresService.add(address);

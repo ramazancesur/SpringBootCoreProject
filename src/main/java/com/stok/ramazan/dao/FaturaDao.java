@@ -19,26 +19,26 @@ import java.util.List;
  */
 @Repository("faturaDao")
 public class FaturaDao extends GenericDaoImpl<Fatura, Long>
-    implements IFaturaDao {
-  @Autowired
-  private IUserDao userDao;
+        implements IFaturaDao {
+    @Autowired
+    private IUserDao userDao;
 
-  @Override
-  public List<Fatura> getAllFaturaByAuth() {
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    String userName = auth.getName();
+    @Override
+    public List<Fatura> getAllFaturaByAuth() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userName = auth.getName();
 
-    User user = userDao.findByUsername(userName);
-    Criteria criteria = currentSession().createCriteria(Fatura.class, "fatura");
-    if (user.getUserType() == EnumUtil.UserType.CALISAN) {
-      criteria.createAlias("fatura.employee", "emp");
-      criteria.createAlias("emp.user", "user");
-    } else if (user.getUserType() == EnumUtil.UserType.FIRMA) {
-      criteria.createAlias("fatura.firma", "firma");
-      criteria.createAlias("firma.user", "user");
+        User user = userDao.findByUsername(userName);
+        Criteria criteria = currentSession().createCriteria(Fatura.class, "fatura");
+        if (user.getUserType() == EnumUtil.UserType.CALISAN) {
+            criteria.createAlias("fatura.employee", "emp");
+            criteria.createAlias("emp.user", "user");
+        } else if (user.getUserType() == EnumUtil.UserType.FIRMA) {
+            criteria.createAlias("fatura.firma", "firma");
+            criteria.createAlias("firma.user", "user");
+        }
+        criteria.add(Restrictions.eq("user.userName", userName));
+        criteria.add(Restrictions.eq("fatura.entityState", EnumUtil.EntityState.ACTIVE));
+        return criteria.list();
     }
-    criteria.add(Restrictions.eq("user.userName", userName));
-    criteria.add(Restrictions.eq("fatura.entityState", EnumUtil.EntityState.ACTIVE));
-    return criteria.list();
-  }
 }

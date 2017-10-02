@@ -4,25 +4,19 @@ import com.stok.ramazan.android.dto.SirketDTO;
 import com.stok.ramazan.entity.Firma;
 import com.stok.ramazan.helper.FileOperations;
 import com.stok.ramazan.service.interfaces.IFirmaService;
+import com.stok.ramazan.settings.SmtpMailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class FirmaController extends BaseController<Firma> {
+    FileOperations fileOperations = new FileOperations();
     @Autowired
     private IFirmaService service;
-
-    FileOperations fileOperations = new FileOperations();
 
     @GetMapping("/Firma/all")
     public ResponseEntity<List<Firma>> getAll() {
@@ -72,7 +66,7 @@ public class FirmaController extends BaseController<Firma> {
 
     @PutMapping(value = "/Firma")
     public ResponseEntity<Boolean> updateData(@RequestBody Firma Firma) {
-        this.service.update(Firma);
+        this.service.add(Firma);
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 

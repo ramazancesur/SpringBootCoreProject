@@ -2,17 +2,13 @@ package com.stok.ramazan.entity;
 
 import com.stok.ramazan.helper.EnumUtil.OdemeTipi;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "PAYMENT")
-public class  Payment extends BaseEntity {
+public class Payment extends BaseEntity {
     @Column(name = "ODEME_TUTARI")
     private BigDecimal odemeTutari;
     @Column(name = "ODEME_TIPI")

@@ -129,7 +129,7 @@ public abstract class GenericDaoImpl<E extends BaseEntity, K extends Serializabl
     public List<E> getAll() {
         Criteria criteria = this.createEntityCriteria();
         criteria.add(Restrictions.eq("entityState", EntityState.ACTIVE));
-      criteria.addOrder(Order.asc("id"));
+        criteria.addOrder(Order.asc("id"));
         return criteria.list();
     }
 

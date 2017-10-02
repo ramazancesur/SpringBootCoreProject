@@ -1,65 +1,66 @@
 package com.stok.ramazan.android.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.stok.ramazan.helper.CustomerDateAndTimeDeserialize;
 import com.stok.ramazan.helper.EnumUtil;
 
 import java.util.Date;
 
 public class UrunDTO extends BaseDTO {
-  private String productName;
-  private double price;
-  @JsonFormat(pattern = "MMMM d, yyyy HH:mm:ss a")
-  private Date sonKullanmaTarihi;
-  @JsonFormat(pattern = "MMMM d, yyyy HH:mm:ss a")
-  private Date gelisTarihi;
-  private String urunAciklamasi;
-  private EnumUtil.UnitType unitType;
+    private String productName;
+    private double price;
+    @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
+    private Date sonKullanmaTarihi;
+    @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
+    private Date gelisTarihi;
+    private String urunAciklamasi;
+    private EnumUtil.UnitType unitType;
 
-  public String getProductName() {
-    return productName;
-  }
+    public String getProductName() {
+        return productName;
+    }
 
-  public void setProductName(String productName) {
-    this.productName = productName;
-  }
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
-  public double getPrice() {
-    return price;
-  }
+    public double getPrice() {
+        return price;
+    }
 
-  public void setPrice(double price) {
-    this.price = price;
-  }
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-  public Date getSonKullanmaTarihi() {
-    return sonKullanmaTarihi;
-  }
+    public Date getSonKullanmaTarihi() {
+        return sonKullanmaTarihi;
+    }
 
-  public void setSonKullanmaTarihi(Date sonKullanmaTarihi) {
-    this.sonKullanmaTarihi = sonKullanmaTarihi;
-  }
+    public void setSonKullanmaTarihi(Date sonKullanmaTarihi) {
+        this.sonKullanmaTarihi = sonKullanmaTarihi;
+    }
 
-  public Date getGelisTarihi() {
-    return gelisTarihi;
-  }
+    public Date getGelisTarihi() {
+        return gelisTarihi;
+    }
 
-  public void setGelisTarihi(Date gelisTarihi) {
-    this.gelisTarihi = gelisTarihi;
-  }
+    public void setGelisTarihi(Date gelisTarihi) {
+        this.gelisTarihi = gelisTarihi;
+    }
 
-  public String getUrunAciklamasi() {
-    return urunAciklamasi;
-  }
+    public String getUrunAciklamasi() {
+        return urunAciklamasi;
+    }
 
-  public void setUrunAciklamasi(String urunAciklamasi) {
-    this.urunAciklamasi = urunAciklamasi;
-  }
+    public void setUrunAciklamasi(String urunAciklamasi) {
+        this.urunAciklamasi = urunAciklamasi;
+    }
 
-  public EnumUtil.UnitType getUnitType() {
-    return unitType;
-  }
+    public EnumUtil.UnitType getUnitType() {
+        return unitType;
+    }
 
-  public void setUnitType(EnumUtil.UnitType unitType) {
-    this.unitType = unitType;
-  }
+    public void setUnitType(EnumUtil.UnitType unitType) {
+        this.unitType = unitType;
+    }
 }

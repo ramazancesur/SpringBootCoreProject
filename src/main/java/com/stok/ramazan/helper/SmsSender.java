@@ -16,7 +16,7 @@ import java.net.URLConnection;
 /**
  * Created by Ramazan on 3.10.2016.
  */
-public class SendMessage {
+public class SmsSender {
     private static final String USER_AGENT = "Mozilla/5.0";
     Helper helper = Helper.getInstance();
 

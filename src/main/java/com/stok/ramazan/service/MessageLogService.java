@@ -4,7 +4,7 @@ import com.stok.ramazan.dao.MessageLogDao;
 import com.stok.ramazan.dao.interfaces.GenericDao;
 import com.stok.ramazan.dao.interfaces.IMessageLogDao;
 import com.stok.ramazan.entity.MessageLog;
-import com.stok.ramazan.helper.SendMessage;
+import com.stok.ramazan.helper.SmsSender;
 import com.stok.ramazan.service.interfaces.IMessageLogService;
 import com.stok.ramazan.settings.SmtpMailSender;
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ public class MessageLogService extends GenericServiceImpl<MessageLog, Long>
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageLog.class);
     @Autowired
     SmtpMailSender mailSender;
-    SendMessage send = new SendMessage();
+    SmsSender send = new SmsSender();
     private IMessageLogDao messageLogDao;
 
     @Autowired

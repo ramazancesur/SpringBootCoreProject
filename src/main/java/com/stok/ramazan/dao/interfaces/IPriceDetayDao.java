@@ -5,5 +5,5 @@ import com.stok.ramazan.entity.PriceDetay;
 import java.util.List;
 
 public interface IPriceDetayDao extends GenericDao<PriceDetay, Long> {
-  List<PriceDetay> getPriceDetayByProduct(Long productOid);
+    List<PriceDetay> getPriceDetayByProduct(Long productOid);
 }

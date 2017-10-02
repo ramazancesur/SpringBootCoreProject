@@ -30,10 +30,10 @@ public class PaymentDao extends GenericDaoImpl<Payment, Long> implements IPaymen
     public Double getToplamOdemeByMusteriOid(Long musteriOid) {
         // Müşteri ödemeleri toplami
         String hql = "select sum(payment.odemeTutari) as odemeTutari from Payment as payment " +
-            " inner join payment.borc as borc " +
-            " inner join borc.musteri as musteri " +
-            " where payment.entityState = :entityState and borc.entityState= :entityState " +
-            " and musteri.entityState= :entityState and musteri.oid= :musteriOid ";
+                " inner join payment.borc as borc " +
+                " inner join borc.musteri as musteri " +
+                " where payment.entityState = :entityState and borc.entityState= :entityState " +
+                " and musteri.entityState= :entityState and musteri.oid= :musteriOid ";
         Query query = getSession().createQuery(hql);
         query.setParameter("entityState", EnumUtil.EntityState.ACTIVE);
         query.setParameter("musteriOid", musteriOid);
@@ -47,23 +47,23 @@ public class PaymentDao extends GenericDaoImpl<Payment, Long> implements IPaymen
 
     @Override
     public List<Payment> getAllPaymentForAuthType(String userName) {
-        String hql="select payment from Payment as payment " +
-            "where payment.saticiSube.firma.user.userName= :userName";
-        Query query=currentSession().createQuery(hql);
-        query.setParameter("userName",userName);
+        String hql = "select payment from Payment as payment " +
+                "where payment.saticiSube.firma.user.userName= :userName";
+        Query query = currentSession().createQuery(hql);
+        query.setParameter("userName", userName);
         return query.list();
     }
 
     @Override
     public List<Payment> getAllPaymentByUser() {
-        Sube sube=subeService.getUserFirmSube();
-        if (sube!=null) {
+        Sube sube = subeService.getUserFirmSube();
+        if (sube != null) {
             Criteria criteria = currentSession().createCriteria(Payment.class, "payment");
             criteria.createAlias("payment.saticiSube", "sube");
             criteria.add(Restrictions.eq("sube.oid", sube.getOid()));
             criteria.add(Restrictions.eq("payment.entityState", EnumUtil.EntityState.ACTIVE));
             return criteria.list();
-        }else {
+        } else {
             return new ArrayList<>();
         }
     }
@@ -71,9 +71,9 @@ public class PaymentDao extends GenericDaoImpl<Payment, Long> implements IPaymen
     @Override
     public Payment getLastPayment(Long borcOid) {
         String hql = "select payment from Payment as payment" +
-            " inner join payment.borc as borc  " +
-            " where borc.oid = :borcOid " +
-            " order by date(payment.createdDate) desc ";
+                " inner join payment.borc as borc  " +
+                " where borc.oid = :borcOid " +
+                " order by date(payment.createdDate) desc ";
         Query query = currentSession().createQuery(hql).setMaxResults(1);
         query.setParameter("borcOid", borcOid);
         Payment lastedPayment = (Payment) query.uniqueResult();

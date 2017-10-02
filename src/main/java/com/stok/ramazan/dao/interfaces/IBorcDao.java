@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface IBorcDao extends GenericDao<Borc, Long> {
     Double getToplamBorcByMusteriOid(Long musteriOid);
+
     List<Borc> getAllBorcByAuthenticated();
 }

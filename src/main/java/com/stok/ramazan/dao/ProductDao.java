@@ -15,18 +15,18 @@ import java.util.List;
 @Repository("productDao")
 public class ProductDao extends GenericDaoImpl<Product, Long> implements IProductDao {
 
-  @Autowired
-  private ISubeService subeService;
+    @Autowired
+    private ISubeService subeService;
 
-  @Override
-  public List<Product> getAllProductforFirmOid() {
-    Firma firma= subeService.getFirmByUser();
-    Criteria criteria=currentSession().createCriteria(Product.class,"product");
-    criteria.createAlias("product.firma","firma");
-    criteria.createAlias("product.price", "price");
-    criteria.add(Restrictions.eq("firma.oid",firma.getOid()));
-    criteria.add(Restrictions.eq("price.entityState", EnumUtil.EntityState.ACTIVE));
-    criteria.add(Restrictions.eq("product.entityState", EnumUtil.EntityState.ACTIVE));
-    return criteria.list();
-  }
+    @Override
+    public List<Product> getAllProductforFirmOid() {
+        Firma firma = subeService.getFirmByUser();
+        Criteria criteria = currentSession().createCriteria(Product.class, "product");
+        criteria.createAlias("product.firma", "firma");
+        criteria.createAlias("product.price", "price");
+        criteria.add(Restrictions.eq("firma.oid", firma.getOid()));
+        criteria.add(Restrictions.eq("price.entityState", EnumUtil.EntityState.ACTIVE));
+        criteria.add(Restrictions.eq("product.entityState", EnumUtil.EntityState.ACTIVE));
+        return criteria.list();
+    }
 }

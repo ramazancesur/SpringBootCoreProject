@@ -1,6 +1,7 @@
 package com.stok.ramazan.android.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.stok.ramazan.helper.CustomerDateAndTimeDeserialize;
 
 import java.util.Date;
 
@@ -9,7 +10,7 @@ import java.util.Date;
  */
 public class OdemeDTO extends BaseDTO {
     private Long musteriOid;
-    @JsonFormat(pattern = "MMMM d, yyyy HH:mm:ss a")
+    @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
     private Date odemeTarihi;
     private Double odemeMiktari;
     private Double kalanMiktar;

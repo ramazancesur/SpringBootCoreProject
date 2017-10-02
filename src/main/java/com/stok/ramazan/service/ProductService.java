@@ -51,7 +51,7 @@ public class ProductService extends GenericServiceImpl<Product, Long>
         List<Product> lstProduct = productDao.getAllProductforFirmOid();
         List<UrunDTO> lstUrunDTO = new LinkedList<>();
         lstProduct.stream()
-            .filter(x -> x.getPrice() != null)
+                .filter(x -> x.getPrice() != null)
                 .forEach(product -> {
                     lstUrunDTO.add(getUrunDTO(product));
                 });
@@ -104,7 +104,7 @@ public class ProductService extends GenericServiceImpl<Product, Long>
             product.setUnitType(urunDTO.getUnitType());
             product.setPrice(price);
 
-            Firma firma= subeService.getFirmByUser();
+            Firma firma = subeService.getFirmByUser();
             product.setFirma(firma);
 
             productDao.add(product);
@@ -120,7 +120,7 @@ public class ProductService extends GenericServiceImpl<Product, Long>
     public boolean updateUrunDTO(UrunDTO urunDTO) {
         try {
             Product product = productDao.find(urunDTO.getOid());
-            if (product==null){
+            if (product == null) {
                 throw new RuntimeException("hatalı Urun Gonderildi");
             }
 

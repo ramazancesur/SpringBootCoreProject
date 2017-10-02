@@ -1,5 +1,5 @@
 package com.stok.ramazan.helper;
-
+ 
 import com.stok.ramazan.settings.OSDetector;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -7,19 +7,14 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import javax.imageio.ImageIO;
 
 public class FileOperations {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileOperations.class);
@@ -49,12 +44,12 @@ public class FileOperations {
         if (locationName.contains("/")) {
             path = path.replace(".", "_") + "/" + strDate.replace(" ", "").replace("_", "").replace(":", "")
 
-                + locationName;
+                    + locationName;
 
         } else {
             path = path.replace(".", "_") + "/" + strDate.replace(" ", "").replace("_", "").replace(":", "") + "/" + locationName;
         }
-        String fileLocation = path;
+        String fileLocation = path.replace(".", "_").replace(",", "").replace(" ", "");
 
         BufferedImage image = null;
 

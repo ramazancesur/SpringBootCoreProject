@@ -136,7 +136,7 @@ $(function () {
             dataType: "json",
             headers: createAuthorizationTokenHeader(),
             success: function (data, textStatus, jqXHR) {
-            	debugger;
+                debugger;
                 showResponse(jqXHR.status, JSON.stringify(data));
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -162,8 +162,8 @@ $(function () {
 
     $loggedIn.click(function () {
         $loggedIn
-                .toggleClass("text-hidden")
-                .toggleClass("text-shown");
+            .toggleClass("text-hidden")
+            .toggleClass("text-shown");
     });
 
     // INITIAL CALLS =============================================================

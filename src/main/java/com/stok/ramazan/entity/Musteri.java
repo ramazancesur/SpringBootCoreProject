@@ -3,16 +3,9 @@ package com.stok.ramazan.entity;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "MUSTERI")
@@ -27,15 +20,15 @@ public class Musteri extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "FIRMA")
     private Firma firma;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "MUSTERI_CONTACT")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Conduct> lstConduct;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "MUSTERI_ADRES")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Address> lstAddress;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "MUSTERI_KEFIL")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Kefil> lstKefil;

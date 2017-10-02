@@ -97,7 +97,7 @@ public class MusteriService extends GenericServiceImpl<Musteri, Long> implements
         musteri.setLstAddress(lstAddres);
         musteri.setLstConduct(lstConduct);
 
-        Firma firma= subeService.getFirmByUser();
+        Firma firma = subeService.getFirmByUser();
 
         musteri.setFirma(firma);
 

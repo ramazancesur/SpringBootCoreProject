@@ -35,8 +35,8 @@ public class BorcDao extends GenericDaoImpl<Borc, Long>
     @Override
     public Double getToplamBorcByMusteriOid(Long musteriOid) {
         String hql = "select sum(borc.kalanBorc) from Borc as borc   " +
-            " inner join borc.musteri as musteri " +
-            " where musteri.oid = :musteriOid ";
+                " inner join borc.musteri as musteri " +
+                " where musteri.oid = :musteriOid ";
 
         Query query = currentSession().createQuery(hql);
         query.setParameter("musteriOid", musteriOid);
@@ -54,16 +54,16 @@ public class BorcDao extends GenericDaoImpl<Borc, Long>
     public List<Borc> getAllBorcByAuthenticated() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userName = auth.getName();
-        User user=userDao.findByUsername(userName);
-        Criteria criteria=currentSession().createCriteria(Borc.class,"borc");
-        criteria.createAlias("borc.odemeSube","sube");
-        criteria.createAlias("sube.firma","firma");
-        if (user.getUserType()== EnumUtil.UserType.CALISAN){
-            Employee employee=employeeDao.getEmployeeByUserName(userName);
-            criteria.add(Restrictions.eq("firma.oid",employee.getFirma().getFirma().getOid()));
-        }else {
-            criteria.createAlias("firma.user","user");
-            criteria.add(Restrictions.eq("user.userName",userName));
+        User user = userDao.findByUsername(userName);
+        Criteria criteria = currentSession().createCriteria(Borc.class, "borc");
+        criteria.createAlias("borc.odemeSube", "sube");
+        criteria.createAlias("sube.firma", "firma");
+        if (user.getUserType() == EnumUtil.UserType.CALISAN) {
+            Employee employee = employeeDao.getEmployeeByUserName(userName);
+            criteria.add(Restrictions.eq("firma.oid", employee.getFirma().getFirma().getOid()));
+        } else {
+            criteria.createAlias("firma.user", "user");
+            criteria.add(Restrictions.eq("user.userName", userName));
             criteria.add(Restrictions.eq("user.entityState", EnumUtil.EntityState.ACTIVE));
         }
         criteria.add(Restrictions.eq("borc.entityState", EnumUtil.EntityState.ACTIVE));

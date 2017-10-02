@@ -4,17 +4,10 @@ import com.stok.ramazan.helper.EnumUtil;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "BORC")
@@ -32,7 +25,7 @@ public class Borc extends BaseEntity {
     @Column(name = "BEKLENEN_ODEME_TARIHI")
     private Date beklenenOdemeTarihi;
 
-    @Column(name ="SIPARIS_DURUMU")
+    @Column(name = "SIPARIS_DURUMU")
     private EnumUtil.SiparisDurum siparisDurum;
 
     @ManyToOne

@@ -5,5 +5,5 @@ import com.stok.ramazan.entity.Product;
 import java.util.List;
 
 public interface IProductDao extends GenericDao<Product, Long> {
-  List<Product> getAllProductforFirmOid();
+    List<Product> getAllProductforFirmOid();
 }
