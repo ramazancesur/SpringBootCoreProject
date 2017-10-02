@@ -1,5 +1,8 @@
 package com.stok.ramazan.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.stok.ramazan.helper.CustomerDateAndTimeDeserialize;
 import com.stok.ramazan.helper.EnumUtil;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -23,6 +26,8 @@ public class Borc extends BaseEntity {
     private String saticiNotu;
 
     @Column(name = "BEKLENEN_ODEME_TARIHI")
+    @JsonIgnore
+    @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
     private Date beklenenOdemeTarihi;
 
     @Column(name = "SIPARIS_DURUMU")

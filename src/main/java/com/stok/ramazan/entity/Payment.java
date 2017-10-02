@@ -1,5 +1,8 @@
 package com.stok.ramazan.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.stok.ramazan.helper.CustomerDateAndTimeDeserialize;
 import com.stok.ramazan.helper.EnumUtil.OdemeTipi;
 
 import javax.persistence.*;
@@ -14,8 +17,12 @@ public class Payment extends BaseEntity {
     @Column(name = "ODEME_TIPI")
     private OdemeTipi odemeTipi;
     @Column(name = "BEKLENEN_ODEME_TARIHI")
+    @JsonIgnore
+    @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
     private Date beklenenOdemeTarihi;
     @Column(name = "GERCEKLESEN_ODEME_TARIHI")
+    @JsonIgnore
+    @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
     private Date gerceklesenOdemeTarihi;
     @ManyToOne
     @JoinColumn(name = "SATICI_SUBE")

@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class CustomerDateAndTimeDeserialize extends JsonDeserializer<Date> {
 
-    SimpleDateFormat oldFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm:ss a");
+    SimpleDateFormat oldFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm:ss aaa");
     SimpleDateFormat newFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override

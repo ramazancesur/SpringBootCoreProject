@@ -1,5 +1,9 @@
 package com.stok.ramazan.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.stok.ramazan.helper.CustomerDateAndTimeDeserialize;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -16,6 +20,8 @@ public class Taksit extends BaseEntity {
     @Column(name = "TAKSIT_TUTARI")
     private BigDecimal taksitTutari;
     @Column(name = "BEKLENEN_ODEME_TARIHI")
+    @JsonIgnore
+    @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
     private Date beklenenOdemeTarihi;
     @ManyToOne
     @JoinColumn(name = "BORC")

@@ -1,6 +1,8 @@
 package com.stok.ramazan.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.stok.ramazan.helper.CustomerDateAndTimeDeserialize;
 import com.stok.ramazan.helper.EnumUtil;
 
 import javax.persistence.*;
@@ -17,10 +19,12 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "LAST_UPDATED_VERSION")
     private Long lastUpdated;
     @Column(name = "CREAYED_DATE")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonIgnore
+    @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
     private Date createdDate;
     @Column(name = "UPDATED_DATE")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonIgnore
+    @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
     private Date updatedDate;
     @Column(name = "DURUM")
     private EnumUtil.EntityState entityState;

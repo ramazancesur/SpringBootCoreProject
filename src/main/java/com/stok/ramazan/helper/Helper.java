@@ -3,7 +3,6 @@ package com.stok.ramazan.helper;
 import com.google.common.io.BaseEncoding;
 import com.stok.ramazan.settings.OSDetector;
 import com.sun.jersey.core.header.FormDataContentDisposition;
-import com.sun.xml.internal.bind.marshaller.CharacterEscapeHandler;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Criteria;
@@ -63,15 +62,6 @@ public class Helper {
             Marshaller m = jc.createMarshaller();
             // m.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-            m.setProperty(CharacterEscapeHandler.class.getName(),
-                    new CharacterEscapeHandler() {
-                        @Override
-                        public void escape(char[] ac, int i, int j, boolean flag,
-                                           Writer writer) throws IOException {
-                            writer.write(ac, i, j);
-                        }
-                    });
             m.marshal(obj, sw);
             return sw.toString();
         } catch (JAXBException jbe) {

@@ -1,5 +1,8 @@
 package com.stok.ramazan.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.stok.ramazan.helper.CustomerDateAndTimeDeserialize;
 import com.stok.ramazan.helper.EnumUtil;
 
 import javax.persistence.*;
@@ -13,6 +16,8 @@ public class Employee extends BaseEntity {
     @JoinColumn(name = "EMP_USER")
     private User user;
     @Column(name = "ISE_GIRIS_TARIHI")
+    @JsonIgnore
+    @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
     private Date iseGirisTarihi;
     @Column(name = "ISTEN_CIKIS_TARIHI")
     private Date istenCikisTarihi;

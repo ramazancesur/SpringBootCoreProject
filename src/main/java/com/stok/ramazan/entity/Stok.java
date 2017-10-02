@@ -1,5 +1,9 @@
 package com.stok.ramazan.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.stok.ramazan.helper.CustomerDateAndTimeDeserialize;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,6 +18,8 @@ public class Stok extends BaseEntity {
     @JoinColumn(name = "PRODUCT")
     private Product product;
     @Column(name = "GELIS_TARIHI")
+    @JsonIgnore
+    @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
     private Date gelisTarihi;
     @Column(name = "ADET")
     private int adet;

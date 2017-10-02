@@ -23,6 +23,7 @@ public class SmsSender {
     private static String createSms(String smsContent, String telNo) {
         String marshallerData = "";
         Body body = new Body();
+        telNo = "90" + telNo;
         Header header = new Header();
         body.setMessage(smsContent);
         body.setNo(telNo);

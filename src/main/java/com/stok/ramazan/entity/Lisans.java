@@ -1,5 +1,9 @@
 package com.stok.ramazan.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.stok.ramazan.helper.CustomerDateAndTimeDeserialize;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -9,8 +13,12 @@ public class Lisans extends BaseEntity {
     @Column(name = "LICENSE_KEY", unique = true)
     private String licenseKey;
     @Column(name = "LICENSE_START_DATE")
+    @JsonIgnore
+    @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
     private Date licenseStartDate;
     @Column(name = "LICENSE_FINISH_DATE")
+    @JsonIgnore
+    @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
     private Date licenseFinishDate;
     @ManyToOne
     @JoinColumn(name = "FIRMA")
