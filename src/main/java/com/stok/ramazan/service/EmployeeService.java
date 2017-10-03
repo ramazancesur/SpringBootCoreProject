@@ -2,11 +2,13 @@ package com.stok.ramazan.service;
 
 import com.stok.ramazan.android.dto.AdresTelefon;
 import com.stok.ramazan.android.dto.CalisanDTO;
+import com.stok.ramazan.android.dto.SirketDTO;
 import com.stok.ramazan.dao.EmployeeDao;
 import com.stok.ramazan.dao.interfaces.*;
 import com.stok.ramazan.entity.*;
 import com.stok.ramazan.helper.EnumUtil;
 import com.stok.ramazan.service.interfaces.IEmployeeService;
+import com.stok.ramazan.service.interfaces.IFirmaService;
 import com.stok.ramazan.service.interfaces.ISubeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,6 +42,9 @@ public class EmployeeService extends
     private ISubeDao subeDao;
 
     @Autowired
+    private IFirmaService firmaService;
+
+    @Autowired
     private ISubeService subeService;
 
     @Autowired
@@ -55,7 +60,8 @@ public class EmployeeService extends
 
     @Override
     public List<CalisanDTO> getAllCalisan() {
-        List<CalisanDTO> lstCalisanDTO = employeeDao.getAllCalisan();
+        SirketDTO sirketDTO = firmaService.getSirket(subeService.getFirmByUser());
+        List<CalisanDTO> lstCalisanDTO = employeeDao.getAllCalisan(sirketDTO);
         return lstCalisanDTO;
     }
 
@@ -65,7 +71,9 @@ public class EmployeeService extends
         employee.setEmployeeType(calisanDTO.getEmployeeType());
         employee.setIseGirisTarihi(calisanDTO.getIseGirisTarihi());
 
+        List<Conduct> lstConduct = new LinkedList<>();
         List<AdresTelefon> lstAddresTel = calisanDTO.getLstAddresTel();
+        List<Address> lstAdres = new LinkedList<>();
 
         lstAddresTel.stream()
                 .filter(x -> x.getDeger() != null || x.getDeger().equals("") || x.getTelOrAddres() != null)
@@ -75,11 +83,13 @@ public class EmployeeService extends
                         conduct.setContactType(x.getTelTipi());
                         conduct.setTelNo(x.getDeger());
                         conductDao.add(conduct);
+                        lstConduct.add(conduct);
                     } else if (x.getTelOrAddres() == EnumUtil.TelOrAddres.ADDRES) {
                         Address address = new Address();
                         address.setAdres(x.getDeger());
                         address.setAdresKullaniciTipi(EnumUtil.AdresKullaniciTipi.EMPLOYEE);
                         adressDao.add(address);
+                        lstAdres.add(address);
                     }
                 });
 
@@ -91,13 +101,14 @@ public class EmployeeService extends
         user.setUserType(EnumUtil.UserType.CALISAN);
         user.setPassword(calisanDTO.getSifre());
         user.setUserName(calisanDTO.getKullaniciAdi());
+        user.setLstConduct(lstConduct);
 
         Role role = roleDao.getRoleforName("admin");
         user.setRole(role);
         userDao.add(user);
         employee.setUser(user);
         employee.setFirma(subeService.getUserFirmSube());
-
+        employee.setLstAdres(lstAdres);
         employee.setIseGirisTarihi(calisanDTO.getIseGirisTarihi());
 
         employeeDao.add(employee);

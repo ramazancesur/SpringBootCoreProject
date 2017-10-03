@@ -11,6 +11,8 @@ public interface IFirmaService extends IGenericService<Firma, Long> {
 
     SirketDTO getSirket(Long sirketOid);
 
+    SirketDTO getSirket(Firma firma);
+
     boolean addSirket(SirketDTO sirketDTO);
 
     boolean updateSirket(SirketDTO sirketDTO);

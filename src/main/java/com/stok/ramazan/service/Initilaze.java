@@ -1,8 +1,10 @@
 package com.stok.ramazan.service;
 
+import com.stok.ramazan.dao.interfaces.ILisansDao;
 import com.stok.ramazan.entity.*;
 import com.stok.ramazan.helper.EnumUtil;
 import com.stok.ramazan.helper.EnumUtil.UserType;
+import com.stok.ramazan.helper.Helper;
 import com.stok.ramazan.service.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -10,6 +12,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 @Component
@@ -24,6 +27,8 @@ public class Initilaze implements ApplicationRunner {
     private IAddresService addresService;
     @Autowired
     private IFirmaService firmaService;
+    @Autowired
+    private ILisansDao lisansDao;
 
     @Override
     public void run(ApplicationArguments arg0) throws Exception {
@@ -39,11 +44,7 @@ public class Initilaze implements ApplicationRunner {
     public boolean check() {
         boolean exist = false;
         try {
-            if (roleService.getAll().size() == 0) {
-                exist = true;
-            } else {
-                exist = false;
-            }
+            exist = roleService.getAll().size() == 0;
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -108,7 +109,19 @@ public class Initilaze implements ApplicationRunner {
             firma.setUser(user);
             firma.setFirmaAdi("TEST");
             firma.setLstConduct(user.getLstConduct());
+
             firmaService.add(firma);
+
+            Lisans lisans = new Lisans();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+            lisans.setFirma(firma);
+            lisans.setLicenseFinishDate(formatter.parse("2400-12-31"));
+            lisans.setLicenseStartDate(formatter.parse("1900-01-01"));
+            String lisansKey = Helper.generateUnique();
+            lisans.setLicenseKey(lisansKey);
+            lisansDao.add(lisans);
+
 
         } catch (Exception e) {
             e.printStackTrace();

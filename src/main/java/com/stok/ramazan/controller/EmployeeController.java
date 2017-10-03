@@ -41,26 +41,26 @@ public class EmployeeController extends BaseController<Employee> {
 
     @PostMapping(value = "/Employee")
     public ResponseEntity<Boolean> addData(@RequestBody Employee Employee) {
-        this.service.add(Employee);
+        this.service.update(Employee);
         return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/Employee/CalisanDTO")
     public ResponseEntity<Void> addCalisan(@RequestBody CalisanDTO calisanDTO) {
-        this.service.addCalsan(calisanDTO);
+        this.service.updateCalisan(calisanDTO);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
 
     @PutMapping(value = "/Employee")
     public ResponseEntity<Boolean> updateData(@RequestBody Employee Employee) {
-        this.service.update(Employee);
+        this.service.add(Employee);
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
     @PutMapping(value = "/Employee/CalisanDTO")
     public ResponseEntity<CalisanDTO> updateCalisan(@RequestBody CalisanDTO calisanDTO) {
-        this.service.updateCalisan(calisanDTO);
+        this.service.addCalsan(calisanDTO);
         return new ResponseEntity<CalisanDTO>(calisanDTO, HttpStatus.OK);
     }
 

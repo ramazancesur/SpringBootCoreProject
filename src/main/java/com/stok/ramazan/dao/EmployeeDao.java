@@ -2,16 +2,14 @@ package com.stok.ramazan.dao;
 
 import com.stok.ramazan.android.dto.AdresTelefon;
 import com.stok.ramazan.android.dto.CalisanDTO;
+import com.stok.ramazan.android.dto.SirketDTO;
 import com.stok.ramazan.dao.interfaces.IEmployeeDao;
-import com.stok.ramazan.dao.interfaces.IUserDao;
 import com.stok.ramazan.entity.Employee;
-import com.stok.ramazan.entity.User;
 import com.stok.ramazan.helper.EnumUtil;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
@@ -22,32 +20,23 @@ public class EmployeeDao extends GenericDaoImpl<Employee, Long>
         implements IEmployeeDao {
 
 
-    @Autowired
-    private IUserDao userDao;
-
     // Firmanın çalışanlarının tamamını listele
 
     @Override
-    public List<CalisanDTO> getAllCalisan() {
+    public List<CalisanDTO> getAllCalisan(SirketDTO sirketDTO) {
         List<CalisanDTO> lstCalisanDTO = new LinkedList<>();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String userName = auth.getName();
-
-        User user = userDao.findByUsername(userName);
-
-        Criteria criteria = getSession().createCriteria(Employee.class, "emp");
-        if (user.getUserType() == EnumUtil.UserType.FIRMA) {
-            criteria.createAlias("emp.firma", "sube");
-            criteria.createAlias("sube.firma", "firma");
-            criteria.createAlias("firma.user", "user");
-        } else if (user.getUserType().equals(EnumUtil.UserType.CALISAN)) {
-            criteria.createAlias("emp.user", "user");
+        String hql = "select emp from Employee as emp ,  Firma as firma \n" +
+                " where emp.user.userType= :userType \n " +
+                " and firma.user.oid = emp.firma.firma.oid  \n";
+        if (sirketDTO != null) {
+            hql += " and firma.oid = :firmaOid";
         }
-        criteria.add(Restrictions.eq("user.userName", userName));
-        criteria.add(Restrictions.eq("user.userType", EnumUtil.UserType.CALISAN));
-        criteria.add(Restrictions.eq("emp.entityState", EnumUtil.EntityState.ACTIVE));
-
-        List<Employee> lstEmp = criteria.list();
+        Query query = currentSession().createQuery(hql);
+        query.setParameter("userType", EnumUtil.UserType.CALISAN);
+        if (sirketDTO != null) {
+            query.setParameter("firmaOid", sirketDTO.getOid());
+        }
+        List<Employee> lstEmp = query.list();
 
         lstEmp.forEach(x -> {
             CalisanDTO calisanDTO = new CalisanDTO();
@@ -57,6 +46,7 @@ public class EmployeeDao extends GenericDaoImpl<Employee, Long>
             calisanDTO.setKullaniciAdi(x.getUser().getUserName());
             calisanDTO.setSifre(x.getUser().getPassword());
             List<AdresTelefon> lstAddresTelefon = new LinkedList<>();
+            Hibernate.initialize(x.getLstAdres());
             x.getLstAdres().stream()
                     .filter(y -> y.getAdres() != null)
                     .forEach(y -> {
@@ -80,11 +70,19 @@ public class EmployeeDao extends GenericDaoImpl<Employee, Long>
                         lstAddresTelefon.add(adresTelefon);
                     });
             calisanDTO.setLstAddresTel(lstAddresTelefon);
+            calisanDTO.setEmployeeType(x.getEmployeeType());
+
+            calisanDTO.setCreatedDate(x.getCreatedDate());
+            calisanDTO.setUpdatedDate(x.getUpdatedDate());
+            calisanDTO.setIseGirisTarihi(x.getIseGirisTarihi());
+
+            calisanDTO.setSirketDTO(sirketDTO);
             lstCalisanDTO.add(calisanDTO);
         });
 
         return lstCalisanDTO;
     }
+
 
     @Override
     public CalisanDTO getCalisan(Long calisanOid) {

@@ -69,7 +69,7 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
         return lstSirket;
     }
 
-    private SirketDTO getSirket(Firma firma) {
+    public SirketDTO getSirket(Firma firma) {
         try {
             SirketDTO sirketDTO = new SirketDTO();
             sirketDTO.setLogoPath(firma.getFirmaLogoYolu());
@@ -112,7 +112,12 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
 
             sirketDTO.setLstAdresTel(lstAdresTel);
             sirketDTO.setUserOid(firma.getUser().getOid());
-            sirketDTO.setKalanSms(firma.getKalanSms());
+            try {
+                sirketDTO.setKalanSms(firma.getKalanSms());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                sirketDTO.setKalanSms(0);
+            }
             sirketDTO.setUserOid(firma.getUser().getOid());
             return sirketDTO;
         } catch (Exception e) {

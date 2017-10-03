@@ -1,8 +1,5 @@
 package com.stok.ramazan.entity;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -27,7 +24,6 @@ public class Firma extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "FIRMA_CONDUCT_ID")
-    @Fetch(value = FetchMode.SUBSELECT)
     private List<Conduct> lstConduct;
 
     @Column(name = "ANDROID_LOGO_PATH")
