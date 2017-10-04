@@ -1,7 +1,6 @@
 package com.stok.ramazan.helper;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
@@ -18,15 +17,22 @@ public class CustomerDateAndTimeDeserialize extends JsonDeserializer<Date> {
     @Override
     public Date deserialize(JsonParser paramJsonParser,
                             DeserializationContext paramDeserializationContext)
-            throws IOException, JsonProcessingException {
-
+            throws IOException {
+        Date date = null;
         String str = paramJsonParser.getText().trim();
         try {
-            Date date = oldFormat.parse(str);
+            date = oldFormat.parse(str);
             //return date;
             oldFormat.applyPattern("dd/MM/yyyy");
             return newFormat.parse(oldFormat.format(date));
         } catch (ParseException e) {
+            oldFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm:ss aaa");
+            try {
+                oldFormat.parse(str);
+                return oldFormat.parse(str);
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
         }
         return paramDeserializationContext.parseDate(str);

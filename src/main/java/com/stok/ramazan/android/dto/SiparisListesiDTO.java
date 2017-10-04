@@ -1,5 +1,6 @@
 package com.stok.ramazan.android.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.stok.ramazan.helper.CustomerDateAndTimeDeserialize;
 import com.stok.ramazan.helper.EnumUtil;
@@ -12,6 +13,7 @@ public class SiparisListesiDTO extends BaseDTO {
     private double siparisBorcuToplami;
     private String musteriNotu;
     private String saticiNotu;
+    @JsonIgnoreProperties(ignoreUnknown = true)
     @JsonDeserialize(using = CustomerDateAndTimeDeserialize.class)
     private Date beklenenTeslimatTarihi;
     private List<SiparisDTO> lstSiparisDTOS;
