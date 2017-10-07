@@ -1,7 +1,5 @@
 package com.stok.ramazan.settings;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.stok.ramazan.securty.JwtAuthenticationRequest;
@@ -20,8 +18,8 @@ import java.io.IOException;
  */
 public class RAuthentication {
     @SuppressWarnings("static-access")
-    public static JwtAuthenticationResponse getAuthTokenCookie(JwtUser user) throws JsonGenerationException, JsonMappingException, IOException {
-        String uri = "http://localhost:9000/auth";
+    public static JwtAuthenticationResponse getAuthTokenCookie(JwtUser user) throws IOException {
+        String uri = "http://localhost:8080/auth";
 
         JwtAuthenticationResponse jwtAuthenticationResponse = null;
 
@@ -60,7 +58,7 @@ public class RAuthentication {
         }
 
 
-        uri = "http://localhost:9000/Payment/OdemeDTO/all";
+        uri = "http://localhost:8080/Payment/OdemeDTO/all";
 
 
         Client client = Client.create();

@@ -96,7 +96,7 @@ public class Initilaze implements ApplicationRunner {
             user.setSoyadi("test verisi");
             user.setUserType(UserType.FIRMA);
             user.setUserName("admin");
-            user.setPassword("$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi");
+            user.setPassword("admin");
             user.setRole(role);
             userService.add(user);
             Firma firma = new Firma();
