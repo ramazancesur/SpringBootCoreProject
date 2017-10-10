@@ -1,5 +1,5 @@
 package com.stok.ramazan.helper;
- 
+
 import com.stok.ramazan.settings.OSDetector;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,7 +22,7 @@ public class FileOperations {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileOperations.class);
 
     private static final String file_DIR = "/C:/FileServer/fileMRP";
-    private static final String file_DIR_LINUX = "/FileServer/haliYikama/Files/tempFile";
+    private static final String file_DIR_LINUX = "var/FileServer/haliYikama/Files/tempFile";
 
     public static byte[] encodeFileToBase64Byte(String filePath) throws IOException {
         byte[] bytes = convertFileToByte(filePath);
@@ -63,11 +65,14 @@ public class FileOperations {
         File parentDir = outputfile.getParentFile();
 
         parentDir.setReadable(true, false);
-        parentDir.setExecutable(true, false);
         parentDir.setWritable(true, false);
+        parentDir.setExecutable(true, false);
 
         if (parentDir != null && !parentDir.exists()) {
-            if (!parentDir.mkdirs()) {
+            try {
+                Files.createDirectories(Paths.get(parentDir.toURI()));
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
                 throw new IOException("error creating directories");
             }
         }
@@ -149,7 +154,7 @@ public class FileOperations {
             baos.flush();
             byte[] imageInByte = baos.toByteArray();
             baos.close();
-            return baos.toByteArray();
+            return imageInByte;
 
         } catch (IOException e) {
             System.out.println("Error: " + e);
