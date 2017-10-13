@@ -57,8 +57,8 @@ public class Helper {
      */
     public static String marshal(Object obj) throws MarshalException {
         try {
-            StringWriter sw = new StringWriter();
             JAXBContext jc = JAXBContext.newInstance(obj.getClass());
+            StringWriter sw = new StringWriter();
             Marshaller m = jc.createMarshaller();
             // m.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -139,7 +139,14 @@ public class Helper {
     public List<String> getSystemUserNameList() {
         List<String> lstMacUser = new LinkedList<>();
 
-        File actual = new File("/Users/");
+        //
+        String searchText = "";
+        if (OSDetector.isMac()) {
+            searchText = "/Users/";
+        } else if (OSDetector.isUnix()) {
+            searchText = "/home/";
+        }
+        File actual = new File(searchText);
         for (File f : actual.listFiles()) {
             if (f.isDirectory()) {
                 System.out.println(f.getName());
@@ -315,7 +322,7 @@ public class Helper {
     public Response getFileResponse(String cyriptedText) {
         // String cyriptedText =
         // uriInfo.getQueryParameters().getFirst("cyriptedText");
-        Response response = (Response) fileMap.get(cyriptedText);
+        Response response = fileMap.get(cyriptedText);
         try {
             fileMap.remove(cyriptedText);
         } catch (Exception ex) {

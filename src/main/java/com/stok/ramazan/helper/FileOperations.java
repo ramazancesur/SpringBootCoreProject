@@ -22,7 +22,7 @@ public class FileOperations {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileOperations.class);
 
     private static final String file_DIR = "/C:/FileServer/fileMRP";
-    private static final String file_DIR_LINUX = "var/FileServer/haliYikama/Files/tempFile";
+    private static final String file_DIR_LINUX = "/var/FileServer/haliYikama/Files/tempFile";
 
     public static byte[] encodeFileToBase64Byte(String filePath) throws IOException {
         byte[] bytes = convertFileToByte(filePath);
@@ -33,14 +33,13 @@ public class FileOperations {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd_MM_yyyy HH:mm:ss.SS");
         String strDate = sdf.format(cal.getTime());
-
         String path = "";
         if (OSDetector.isWindows()) {
-            path = file_DIR;
+            path += file_DIR;
         } else if (OSDetector.isUnix() || OSDetector.isSolaris()) {
-            path = file_DIR_LINUX;
+            path += "/home/" + Helper.getInstance().getSystemUserNameList().get(0) + file_DIR_LINUX;
         } else if (OSDetector.isMac()) {
-            path = "/Users/" + Helper.getInstance().getSystemUserNameList().get(0) + file_DIR_LINUX;
+            path += "/Users/" + Helper.getInstance().getSystemUserNameList().get(0) + file_DIR_LINUX;
         }
         path = path + "/" + fileName;
         if (locationName.contains("/")) {
@@ -72,7 +71,9 @@ public class FileOperations {
             try {
                 Files.createDirectories(Paths.get(parentDir.toURI()));
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                LOGGER.error("******************* " + ex.getMessage() + " ******************************");
+                ex.printStackTrace();
+                LOGGER.error("******************* " + ex.getMessage() + " ******************************");
                 throw new IOException("error creating directories");
             }
         }

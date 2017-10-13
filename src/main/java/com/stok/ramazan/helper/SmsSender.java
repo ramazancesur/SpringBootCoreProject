@@ -4,15 +4,6 @@ import com.stok.ramazan.jaxb.sms.Body;
 import com.stok.ramazan.jaxb.sms.Header;
 import com.stok.ramazan.jaxb.sms.MainBody;
 
-import javax.xml.bind.MarshalException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-
 /**
  * Created by Ramazan on 3.10.2016.
  */
@@ -38,9 +29,8 @@ public class SmsSender {
         mainBody.setHeader(header);
         try {
             marshallerData = Helper.marshal(mainBody);
-            System.out.println(marshallerData);
             return marshallerData;
-        } catch (MarshalException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "";
@@ -49,7 +39,13 @@ public class SmsSender {
 
     public void sendData(String messageContext, String telNumber) {
         System.out.println("SMS Gönderiliyor..");
+        String url = "http://api.netgsm.com.tr/bulkhttppost.asp?usercode=5423695847&password=46CB72&gsmno=90" + telNumber + "&message=" + messageContext + "&msgheader=HALiLARSLAN";
         try {
+            Helper.readUrlNonCookie(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    /*    try {
             URL u = new URL("http://api.netgsm.com.tr/xmlbulkhttppost.asp");
 
             URLConnection uc = u.openConnection();
@@ -76,7 +72,7 @@ public class SmsSender {
         } catch (IOException e) {
             System.err.println(e);
             e.printStackTrace();
-        }
+        }*/
     }
 
 }
