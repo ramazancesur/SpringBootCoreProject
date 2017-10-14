@@ -36,12 +36,11 @@ public class SmsSender {
         return "";
     }
 
-
     public void sendData(String messageContext, String telNumber) {
         System.out.println("SMS Gönderiliyor..");
         String url = "http://api.netgsm.com.tr/bulkhttppost.asp?usercode=5423695847&password=46CB72&gsmno=90" + telNumber + "&message=" + messageContext + "&msgheader=HALiLARSLAN";
         try {
-            Helper.readUrlNonCookie(url);
+            Helper.readUrlNonCookie(new String(url.replace("\n", "").replace(" ", "%20").getBytes("UTF-8")));
         } catch (Exception e) {
             e.printStackTrace();
         }

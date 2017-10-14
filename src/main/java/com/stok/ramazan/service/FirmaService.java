@@ -10,6 +10,7 @@ import com.stok.ramazan.helper.FileOperations;
 import com.stok.ramazan.helper.Helper;
 import com.stok.ramazan.helper.SmsSender;
 import com.stok.ramazan.service.interfaces.IFirmaService;
+import com.stok.ramazan.service.interfaces.IUserService;
 import com.stok.ramazan.settings.SmtpMailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,7 +25,7 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
     private FirmaDao firmaDao;
 
     @Autowired
-    private IUserDao userDao;
+    private IUserService userService;
 
     @Autowired
     private IAdressDao adressDao;
@@ -146,8 +147,11 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
             }
             firma.setAndroidLogoPath(sirketDTO.getAndroidLogoPath());
             // Kalan sms tutarını update edebilir
-            firma.setKalanSms(sirketDTO.getKalanSms());
-
+            if (sirketDTO.getKalanSms() != null) {
+                firma.setKalanSms(sirketDTO.getKalanSms());
+            } else {
+                firma.setKalanSms(0);
+            }
             List<Conduct> lstConduct = new LinkedList<>();
             if (sirketDTO.getLstAdresTel().size() != 0) {
                 for (AdresTelefon adresTelefon : sirketDTO.getLstAdresTel()) {
@@ -185,9 +189,9 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
             user.setUserType(EnumUtil.UserType.FIRMA);
             user.setLstConduct(lstConduct);
             user.setAdi(firma.getFirmaAdi());
-            user.setPassword(sirketDTO.getPassword());
             user.setUserName(sirketDTO.getEmail());
-            userDao.add(user);
+            user.setPassword(sirketDTO.getPassword());
+            userService.add(user);
 
             firma.setLstConduct(lstConduct);
             firma.setUser(user);
@@ -202,8 +206,8 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
             lisans.setLicenseKey(lisansKey);
             lisansDao.add(lisans);
 
-            smsSender.sendData( "Aramıza Hoşgeldiniz "+ sirketDTO.getSirketAdi()+ " lisans bitim tarihiniz :  \n" +
-                lisans.getLicenseFinishDate() +"\n İYİ ÇALIŞMALAR DİLERİZ...",lstConduct.get(0).getTelNo());
+            smsSender.sendData("Aramıza Hoşgeldiniz " + sirketDTO.getSirketAdi() + " lisans bitim tarihiniz   \n" +
+                    lisans.getLicenseFinishDate().toString().replace(":", "_") + "\n İYİ ÇALIŞMALAR DİLERİZ...", lstConduct.get(0).getTelNo());
             smtpMailSender.send(user.getUserName(),"Aramıza Hoşgeldiniz","Aramıza Hoşgeldiniz "+ sirketDTO.getSirketAdi()+ " lisans anahtarınız :  \n" +
                     lisansKey+"\n \n \n Lisans Bitiş Tarihiniz "+   lisans.getLicenseFinishDate() +" İYİ ÇALIŞMALAR DİLERİZ..." );
 
@@ -249,7 +253,7 @@ public class FirmaService extends GenericServiceImpl<Firma, Long> implements IFi
                 }
             }
 
-            User user = userDao.find(firma.getUser().getOid());
+            User user = userService.get(firma.getUser().getOid());
 
             firma.setLstConduct(lstConduct);
             firma.setUser(user);

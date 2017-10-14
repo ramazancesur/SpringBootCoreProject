@@ -42,8 +42,8 @@ public class FirmaDao extends GenericDaoImpl<Firma, Long> implements IFirmaDao {
     public List<Firma> getAllEssentialFirm() {
         String hql = "select firma from Lisans as lisans, Firma as firma  \n" +
                 "where lisans.entityState= :state and firma.entityState =:state \n" +
-                " and lisans.licenseStartDate< :currentDate \n" +
-                " and lisans.licenseFinishDate> :currentDate \n" +
+                " and lisans.licenseStartDate<= :currentDate \n" +
+                " and lisans.licenseFinishDate>= :currentDate \n" +
                 " and lisans.firma = firma  ";
         Query query = currentSession().createQuery(hql);
         query.setParameter("currentDate", new Date());
