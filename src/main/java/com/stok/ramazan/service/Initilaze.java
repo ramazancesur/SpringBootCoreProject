@@ -14,9 +14,11 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Properties;
 
 @Component
 public class Initilaze implements ApplicationRunner {
+    Helper helper = Helper.getInstance();
     @Autowired
     private IRoleService roleService;
     @Autowired
@@ -43,13 +45,18 @@ public class Initilaze implements ApplicationRunner {
 
     public boolean check() {
         boolean exist = false;
-        try {
-            exist = roleService.getAll().size() == 0;
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        Properties properties = helper.getProps("application.properties");
+        if (properties.get("hibernate.hbm2ddl.auto").equals("create")) {
+            exist = true;
         }
+        if (exist != true) {
+            try {
+                exist = roleService.getAll().size() == 0;
 
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
         return exist;
     }
 

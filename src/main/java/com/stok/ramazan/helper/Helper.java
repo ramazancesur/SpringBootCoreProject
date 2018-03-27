@@ -136,6 +136,34 @@ public class Helper {
         System.out.println("************** Sql Query Sistemi ********* \n\n\n");
     }
 
+    public Properties getProps(String configFile) {
+        Properties prop = new Properties();
+        InputStream input = null;
+        try {
+            String filename = configFile;
+            input = Helper.class.getClassLoader().getResourceAsStream(filename);
+            if (input == null) {
+                System.out.println("Sorry, unable to find " + filename);
+                return null;
+            }
+
+            //load a properties file from class path, inside static method
+            prop.load(input);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return prop;
+    }
+
     public List<String> getSystemUserNameList() {
         List<String> lstMacUser = new LinkedList<>();
 
