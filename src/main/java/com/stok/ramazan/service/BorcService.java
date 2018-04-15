@@ -103,12 +103,6 @@ public class BorcService extends GenericServiceImpl<Borc, Long>
             siparisListesiDTO.setKalanBorc(borc.getKalanBorc().doubleValue());
         }
 
-        Payment currentPayment = paymentDao.getLastPayment(borc.getOid());
-        siparisListesiDTO.setSonOdenenTutar(currentPayment.getOdemeTutari().doubleValue());
-
-        // musteri toplam borcunu update edeceğiz  musteriDao da var
-
-        currentMusteriUpdate(borc);
 
         return siparisListesiDTO;
     }
@@ -117,7 +111,6 @@ public class BorcService extends GenericServiceImpl<Borc, Long>
         Musteri musteri = borc.getMusteri();
         BigDecimal musteriToplamBorcu = musteriDao.getMusteriToplamBorcu(musteri.getOid());
         musteri.setMusteriToplamBorcu(musteriToplamBorcu);
-
         musteriDao.update(musteri);
 
     }
@@ -210,7 +203,7 @@ public class BorcService extends GenericServiceImpl<Borc, Long>
                 Calendar calendar = Calendar.getInstance();
                 payment.setGerceklesenOdemeTarihi(calendar.getTime());
                 payment.setOdemeTutari(BigDecimal.valueOf(siparisListesiDTO.getSonOdenenTutar()));
-
+                paymentDao.add(payment);
             }
 
             currentMusteriUpdate(borc);

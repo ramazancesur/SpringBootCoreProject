@@ -38,11 +38,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         final String requestHeader = request.getHeader(this.tokenHeader);
 
         String username = null;
-        String authToken = null;
-        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
-            authToken = requestHeader.substring(7);
+        if (requestHeader != null) {
             try {
-                username = jwtTokenUtil.getUsernameFromToken(authToken);
+                username = jwtTokenUtil.getUsernameFromToken(requestHeader);
             } catch (IllegalArgumentException e) {
                 logger.error("an error occured during getting username from token", e);
             } catch (ExpiredJwtException e) {
@@ -62,7 +60,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
             // For simple validation it is completely sufficient to just check the token integrity. You don't have to call
             // the database compellingly. Again it's up to you ;)
-            if (jwtTokenUtil.validateToken(authToken, userDetails)) {
+            if (jwtTokenUtil.validateToken(requestHeader, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 logger.info("authorizated user '{}', setting security context", username);
