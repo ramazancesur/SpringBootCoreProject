@@ -46,6 +46,7 @@ public class BorcController extends BaseController<Borc> {
         return new ResponseEntity<Boolean>(true, HttpStatus.CREATED);
     }
 
+    // siparisListesiDtoyu güncellemek gerekli ancak onbu yapmıyor
     @PostMapping(value = "/Borc/SiparisListesiDTO")
     public ResponseEntity<SiparisListesiDTO> addSiparisListesi(@RequestBody SiparisListesiDTO siparisListesiDTO) {
         this.service.updateSiparis(siparisListesiDTO);

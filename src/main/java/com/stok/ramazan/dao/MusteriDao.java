@@ -118,28 +118,55 @@ public class MusteriDao extends GenericDaoImpl<Musteri, Long> implements IMuster
         return getMusteriDTO(this.find(musteriOid));
     }
 
+    private BigDecimal musteriToplamBorc(Long musteriOid, Long firmaOid) {
+        String hql = "select sum(borc.toplamBorc) as totalBorc from Borc as borc" +
+                " inner join  borc.musteri as musteri " +
+                " inner join musteri.firma as firma " +
+                "  where musteri.oid= :musteriOid  " +
+                " and musteri.entityState= :entityState " +
+                " and firma.oid= :firmaOid \n " +
+                " and borc.entityState= :entityState group by musteri.oid , borc.oid";
+        Query query = currentSession().createQuery(hql);
+        query.setParameter("musteriOid", musteriOid);
+        query.setParameter("firmaOid", firmaOid);
+        query.setParameter("entityState", EnumUtil.EntityState.ACTIVE);
+        BigDecimal totalBorc = BigDecimal.ZERO;
+        List<BigDecimal> lstTotalBorc = query.list();
+        for (BigDecimal decimal : lstTotalBorc) {
+            totalBorc = totalBorc.add(decimal);
+        }
+        return totalBorc;
+    }
+
     @Override
     public BigDecimal getMusteriToplamBorcu(Long musteriOid) {
         // Borclar Toplamını Bulacan
         // Paymentlar Toplamını Bulacan ikisini çıkartacan
         Firma firma = subeService.getFirmByUser();
 
-        String hql = "select sum( borc.toplamBorc ) -  " +
-                "  sum(payment.odemeTutari )" +
+        String hql = "select sum (payment.odemeTutari) as totalPayment \n " +
+                " from Payment as payment" +
+                " inner join payment.borc as borc  " +
+                " inner join borc.musteri as musteri  inner join musteri.firma as firma \n " +
+                " where musteri.entityState= :entityState and borc.entityState= :entityState \n" +
+                " and payment.entityState= :entityState and musteri.oid= :musteriOid  " +
+                " and firma.oid= :firmaOid \n " +
+                "group by musteri.oid, payment.oid";
 
-                "   from Payment as payment inner join payment.borc as borc inner join borc.musteri as musteri  \n  " +
-                "  inner join musteri.firma as firma  " +
-                " where musteri.oid= :musteriOid  and borc.entityState= :entityState  \n " +
-                " and musteri.entityState = :entityState and payment.entityState= :entityState and" +
-                " firma.entityState = :entityState and firma.oid = :firmaOid \n " +
-                " group by musteri.oid ";
         Query query = currentSession().createQuery(hql);
         query.setParameter("musteriOid", musteriOid);
         query.setParameter("entityState", EnumUtil.EntityState.ACTIVE);
         query.setParameter("firmaOid", firma.getOid());
         try {
-            BigDecimal kalanBorc = (BigDecimal) query.uniqueResult();
-            return kalanBorc;
+            List<BigDecimal> lstTotalOdeme = query.list();
+            BigDecimal totalOdeme = BigDecimal.ZERO;
+
+            for (BigDecimal decimal : lstTotalOdeme) {
+                totalOdeme = totalOdeme.add(decimal);
+            }
+
+            BigDecimal toplamBorc = this.musteriToplamBorc(musteriOid, firma.getOid());
+            return toplamBorc.subtract(totalOdeme);
         } catch (Exception ex) {
             LOGGER.error("musteri Kalan Borcu Hesaplarken hata ", ex.getMessage());
             return BigDecimal.ZERO;

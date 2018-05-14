@@ -140,14 +140,16 @@ public class BorcService extends GenericServiceImpl<Borc, Long>
             borc.setLstBorceDetay(lstBorcDetay);
             borc.setToplamBorc(BigDecimal.valueOf(siparisListesiDTO.getSiparisBorcuToplami()));
             borc.setMusteri(musteriDao.find(siparisListesiDTO.getMusteri().getOid()));
-            borc.setKalanBorc(BigDecimal.valueOf(siparisListesiDTO.getSiparisBorcuToplami()));
+            double kalanBorc = siparisListesiDTO.getSiparisBorcuToplami() - siparisListesiDTO.getSonOdenenTutar();
+
+            borc.setKalanBorc(BigDecimal.valueOf(kalanBorc));
             borc.setMusteriNotu(siparisListesiDTO.getMusteriNotu());
             borc.setSaticiNotu(siparisListesiDTO.getSaticiNotu());
             borc.setBeklenenOdemeTarihi(siparisListesiDTO.getBeklenenTeslimatTarihi());
             borcDao.add(borc);
 
             Payment payment = new Payment();
-            payment.setSaticiSube(subeService.getUserFirmSube());
+            payment.setSaticiSube(borc.getOdemeSube());
             payment.setBorc(borc);
             payment.setBeklenenOdemeTarihi(siparisListesiDTO.getBeklenenTeslimatTarihi());
 
@@ -168,14 +170,17 @@ public class BorcService extends GenericServiceImpl<Borc, Long>
     public boolean updateSiparis(SiparisListesiDTO siparisListesiDTO) {
         try {
             Borc borc = borcDao.find(siparisListesiDTO.getOid());
+
             List<BorcDetay> lstBorcDetay = new LinkedList<>();
             for (SiparisDTO siparisDTO : siparisListesiDTO.getLstSiparisDTOS()) {
                 BorcDetay borcDetay = borcDetayDao.find(siparisDTO.getOid());
-                borcDetay.setAdet(siparisDTO.getAdet());
-                borcDetay.setMetre(siparisDTO.getMetre());
-                Product product = productDao.find(siparisDTO.getUrun().getOid());
-                borcDetay.setProduct(product);
-                borcDetayDao.update(borcDetay);
+                if (borcDetay == null) {
+                    borcDetay.setAdet(siparisDTO.getAdet());
+                    borcDetay.setMetre(siparisDTO.getMetre());
+                    Product product = productDao.find(siparisDTO.getUrun().getOid());
+                    borcDetay.setProduct(product);
+                    borcDetayDao.add(borcDetay);
+                }
                 lstBorcDetay.add(borcDetay);
             }
             borc.setLstBorceDetay(lstBorcDetay);
